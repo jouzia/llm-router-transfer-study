@@ -31,3 +31,9 @@ Thumbs.db
 
 # Downloaded third-party repositories
 repos/
+
+# Local backup copies of scripts and experiment outputs
+*.pre_macro_backup
+*.backup
+*.orig
+
