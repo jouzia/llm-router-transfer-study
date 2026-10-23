@@ -1,0 +1,61 @@
+DAY 5 — MMLU-PRO HELD-OUT TRANSFER EXPERIMENT
+Target split: mmlupro/test_3000
+Target prompts: 3000
+Shared candidate models: 13
+Source rows: 750
+Source domains: arenahard_coding, arenahard_creative_writing, arenahard_math
+Source validation fraction per domain: 20%
+Validation seed: 2026
+Selected alpha: 10.0
+Global baseline model: gemini-2.5-pro
+Router mean score: 0.838667
+Global baseline mean score: 0.856667
+Mean paired difference (router - global): -0.018000
+95% prompt-bootstrap percentile CI: [-0.025000, -0.011333]
+Wins/ties/losses: 31/2884/85
+
+ROUTER SELECTION FREQUENCIES:
+claude-sonnet-4: 0
+deepseek-r1-0528: 0
+deepseek-v3.1-terminus: 0
+deepseek-v3-0324: 0
+gemini-2.5-flash: 0
+gemini-2.5-pro: 2186
+glm-4.6: 0
+gpt-5: 0
+gpt-5-chat: 2
+intern-s1: 0
+kimi-k2-0905: 0
+qwen3-235b-a22b-2507: 0
+qwen3-235b-a22b-thinking-2507: 812
+
+SOURCE VALIDATION UTILITY BY ALPHA:
+alpha=0.1: macro_utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=1.0: macro_utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=10.0: macro_utility=0.78225157; {'arenahard_coding': 0.7745098039215687, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6122448979591837}
+alpha=100.0: macro_utility=0.78198479; {'arenahard_coding': 0.7941176470588235, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.5918367346938775}
+
+GLOBAL BASELINE SOURCE MACRO-MEAN:
+claude-sonnet-4: 0.54597991
+deepseek-r1-0528: 0.63449987
+deepseek-v3.1-terminus: 0.66248811
+deepseek-v3-0324: 0.60097008
+gemini-2.5-flash: 0.55499632
+gemini-2.5-pro: 0.76962897
+glm-4.6: 0.66322453
+gpt-5: 0.69655553
+gpt-5-chat: 0.68845934
+intern-s1: 0.67059914
+kimi-k2-0905: 0.71012195
+qwen3-235b-a22b-2507: 0.73032130
+qwen3-235b-a22b-thinking-2507: 0.73878109
+
+Interpretation: target results are descriptive for this benchmark and
+this candidate pool. A bootstrap interval containing zero does not
+establish a reliable difference. One transfer benchmark cannot establish
+broad generalization or research novelty.
+The prompt bootstrap conditions on the observed benchmark prompts and
+does not quantify training, model-version, or benchmark-construction uncertainty.
+The global baseline is selected on all source rows, whereas alpha is
+selected using source validation. This protocol asymmetry is documented.
+Cost/latency claims are excluded because aggregate metric semantics remain unresolved.

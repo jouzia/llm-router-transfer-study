@@ -1,0 +1,44 @@
+DAY 7 — REPEATED SOURCE-VALIDATION SPLITS
+Target: MMLU-Pro test_3000 (3000 prompts)
+Prespecified seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035]
+Each seed selects alpha and baseline using source validation only.
+Target results are evaluation-only and do not select a seed.
+
+BASELINE SELECTION COUNTS:
+claude-sonnet-4: 0
+deepseek-r1-0528: 0
+deepseek-v3.1-terminus: 0
+deepseek-v3-0324: 0
+gemini-2.5-flash: 0
+gemini-2.5-pro: 6
+glm-4.6: 0
+gpt-5: 0
+gpt-5-chat: 0
+intern-s1: 1
+kimi-k2-0905: 1
+qwen3-235b-a22b-2507: 0
+qwen3-235b-a22b-thinking-2507: 2
+
+PER-SEED RESULTS:
+seed=2026 alpha=10.0 baseline=qwen3-235b-a22b-thinking-2507 router=0.8387 selected_baseline=0.7947 delta_selected=+0.0440 CI=[+0.0330,+0.0557] Gemini=0.8567 delta_Gemini=-0.0180
+seed=2027 alpha=10.0 baseline=gemini-2.5-pro router=0.8387 selected_baseline=0.8567 delta_selected=-0.0180 CI=[-0.0253,-0.0110] Gemini=0.8567 delta_Gemini=-0.0180
+seed=2028 alpha=0.1 baseline=gemini-2.5-pro router=0.8387 selected_baseline=0.8567 delta_selected=-0.0180 CI=[-0.0250,-0.0113] Gemini=0.8567 delta_Gemini=-0.0180
+seed=2029 alpha=0.1 baseline=qwen3-235b-a22b-thinking-2507 router=0.8387 selected_baseline=0.7947 delta_selected=+0.0440 CI=[+0.0333,+0.0553] Gemini=0.8567 delta_Gemini=-0.0180
+seed=2030 alpha=10.0 baseline=gemini-2.5-pro router=0.8387 selected_baseline=0.8567 delta_selected=-0.0180 CI=[-0.0250,-0.0113] Gemini=0.8567 delta_Gemini=-0.0180
+seed=2031 alpha=1.0 baseline=gemini-2.5-pro router=0.8383 selected_baseline=0.8567 delta_selected=-0.0183 CI=[-0.0250,-0.0117] Gemini=0.8567 delta_Gemini=-0.0183
+seed=2032 alpha=100.0 baseline=gemini-2.5-pro router=0.8397 selected_baseline=0.8567 delta_selected=-0.0170 CI=[-0.0237,-0.0100] Gemini=0.8567 delta_Gemini=-0.0170
+seed=2033 alpha=10.0 baseline=intern-s1 router=0.8387 selected_baseline=0.8197 delta_selected=+0.0190 CI=[+0.0063,+0.0313] Gemini=0.8567 delta_Gemini=-0.0180
+seed=2034 alpha=1.0 baseline=kimi-k2-0905 router=0.8383 selected_baseline=0.8030 delta_selected=+0.0353 CI=[+0.0217,+0.0490] Gemini=0.8567 delta_Gemini=-0.0183
+seed=2035 alpha=1.0 baseline=gemini-2.5-pro router=0.8383 selected_baseline=0.8567 delta_selected=-0.0183 CI=[-0.0250,-0.0117] Gemini=0.8567 delta_Gemini=-0.0183
+
+SUMMARY ACROSS PRESPECIFIED SPLITS (descriptive, not independent trials):
+Baseline-selection frequencies: {'qwen3-235b-a22b-thinking-2507': 2, 'gemini-2.5-pro': 6, 'intern-s1': 1, 'kimi-k2-0905': 1}
+Selected-baseline delta mean: +0.0035
+Selected-baseline delta min/max: -0.0183 / +0.0440
+Gemini delta mean: -0.0180
+Gemini delta min/max: -0.0183 / -0.0170
+
+Caution: the same target prompts are reused across seeds. Do not treat
+these ten runs as independent target samples or select a best seed.
+The prompt bootstrap intervals condition on the observed target prompts.
+This experiment covers MMLU-Pro only; it does not establish broad generalization.

@@ -1,0 +1,26 @@
+DAY 4 — HELD-OUT GPQA TRANSFER EVALUATION
+================================================
+Protocol: source-only tuning and baseline selection; GPQA held out.
+Source domains: arenahard_coding, arenahard_creative_writing, arenahard_math
+Source prompts: 750
+Candidate models compared: 33
+GPQA evaluation prompts: 198
+Selected alpha: 10.0
+Global baseline model: gemini-2.5-pro
+
+Router mean GPQA score: 0.818182
+Global baseline mean GPQA score: 0.848485
+Mean paired difference (router - global): -0.030303
+95% prompt-bootstrap percentile CI: [-0.070707, 0.010101]
+Prompt wins / ties / losses: 6 / 180 / 12
+Bootstrap resamples: 10000; seed: 2026
+
+Interpretation guardrails:
+- This estimates performance on this GPQA sample only.
+- A confidence interval including zero does not establish improvement.
+- The prompt bootstrap treats prompts as resampling units.
+- No broad-domain generalization or novelty claim follows from this result.
+- Model scores are benchmark-provided scores; scoring semantics still matter.
+
+Per-prompt output: D:\Research3\day1_audit\DAY4_GPQA_PER_PROMPT_RESULTS.csv
+Source-only config: D:\Research3\day1_audit\DAY4_GPQA_ROUTER_CONFIG.txt
