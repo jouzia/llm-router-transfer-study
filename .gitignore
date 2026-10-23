@@ -28,3 +28,6 @@ venv/
 *.bak
 .DS_Store
 Thumbs.db
+
+# Downloaded third-party repositories
+repos/
