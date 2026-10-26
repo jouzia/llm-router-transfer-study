@@ -56,6 +56,6 @@ establish a reliable difference. One transfer benchmark cannot establish
 broad generalization or research novelty.
 The prompt bootstrap conditions on the observed benchmark prompts and
 does not quantify training, model-version, or benchmark-construction uncertainty.
-The global baseline is selected on all source rows, whereas alpha is
-selected using source validation. This protocol asymmetry is documented.
+The global baseline and Ridge alpha are both selected on the same
+source-only validation split. Selection on one split can be unstable.
 Cost/latency claims are excluded because aggregate metric semantics remain unresolved.

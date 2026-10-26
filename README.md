@@ -113,21 +113,46 @@ The exact set of tracked files may evolve as the reproducibility package is refi
 
 ## Reproducibility
 
-The repository includes Python scripts and audit reports used during the investigation. A complete independent reproduction requires access to compatible source data, the correct model-result records, and the original experimental configuration.
+### Environment
 
-Before attempting to reproduce the results:
+From the repository root, install the pinned dependencies in a virtual environment:
 
-1. Clone the repository.
-2. Inspect the relevant research reports and script entry points.
-3. Review the data provenance and licensing assessment.
-4. Prepare a compatible Python environment and install the dependencies required by the selected script.
-5. Obtain any permitted source data separately and configure the script paths as documented by the relevant experiment.
-6. Run the data-integrity checks before running the experiments.
-7. Compare generated outputs against the reported metrics and confidence intervals.
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
 
-**Reproducibility status:** The scripts have undergone portability and syntax checks. A complete clean-environment reproduction of every reported result has not been established by those checks alone.
+### Required inputs
 
-Dependency versions, dataset acquisition instructions, exact commands for each experiment, and any required configuration should be documented alongside the corresponding scripts before claiming full end-to-end reproducibility.
+The Day 4–6 transfer scripts require the benchmark archive, feature extractor, and prepared source tables. Obtain source data separately under the applicable terms. Do not commit the raw archive or potentially restricted prompt-level records.
+
+Verify the local archive with:
+
+```powershell
+Get-FileHash .\bench-release.tar.gz -Algorithm SHA256
+```
+
+Expected SHA-256:
+
+`B79F8CDE1A6F029C2EFA663A3A3B6F7748DEFB22341FE59F328CEBEF6648C8F1`
+
+### Run the transfer experiments
+
+Run from the repository root after preparing the required inputs:
+
+```powershell
+.\.venv\Scripts\python.exe .\day1_audit\day4_gpqa_transfer.py
+.\.venv\Scripts\python.exe .\day1_audit\day5_mmlupro_transfer.py
+.\.venv\Scripts\python.exe .\day1_audit\day6_fair_baseline_transfer.py
+```
+
+Inspect the generated reports, configurations, and per-prompt outputs under `day1_audit/`.
+
+### Reproducibility status and limitations
+
+Local runs and checks of reported means against per-prompt outputs do not establish complete independent reproduction of every experiment. Confirm that the final Day 4 script version has been rerun before treating its saved result as verified against the corrected feature-column ordering.
+
+Repeated validation splits reuse the same target prompts and are not independent target replications. The results do not establish broad cross-benchmark generalization, superiority to Gemini 2.5 Pro, or a novel routing contribution.
 
 ## Data Provenance and Licensing
 
