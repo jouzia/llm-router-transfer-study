@@ -105,8 +105,8 @@ for domain in source_domains:
     val_indices.extend(indices[:n_val])
     train_indices.extend(indices[n_val:])
 
-train_indices = np.array(train_indices, dtype=int)
-val_indices = np.array(val_indices, dtype=int)
+train_indices = np.array(sorted(train_indices), dtype=int)
+val_indices = np.array(sorted(val_indices), dtype=int)
 
 # Select alpha by equal-weight average routing utility across source domains.
 alpha_results = []
