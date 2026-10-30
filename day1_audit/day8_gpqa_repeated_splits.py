@@ -230,7 +230,7 @@ def main():
         d_selected = router_score - baseline_score
         d_gemini = router_score - gemini_score
         ci_selected = bootstrap_ci(d_selected, seed + 50000)
-        ci_gemini = bootstrap_ci(d_gemini, seed + 60000)
+        ci_gemini = bootstrap_ci(d_gemini, seed + 50000)
 
         results.append({
             "seed": seed,
