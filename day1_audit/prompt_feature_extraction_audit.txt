@@ -1,0 +1,30 @@
+RESEARCH 3 — PROMPT FEATURE EXTRACTION AUDIT
+=======================================================
+Selected metadata files: 99
+Output rows with consistent prompt text: 750
+Feature columns: 11
+Archive errors: 0
+Prompt-text mismatches: 0
+Ground-truth mismatches: 0
+Missing model records: 0
+Score alignment issues: 0
+
+DOMAIN COVERAGE:
+arenahard_coding: 253 distinct indices; 33 models
+arenahard_creative_writing: 250 distinct indices; 33 models
+arenahard_math: 247 distinct indices; 33 models
+
+ARCHIVE ERRORS
+None
+
+PROMPT-TEXT MISMATCHES
+None
+
+GROUND-TRUTH MISMATCHES
+None
+
+MISSING MODEL RECORDS
+None
+
+SCORE ALIGNMENT ISSUES
+None

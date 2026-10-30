@@ -1,0 +1,97 @@
+﻿DAY 10 — BASELINE FEASIBILITY AUDIT
+Generated: 2026-10-23 18:52:28
+
+=== prompt_feature_score_table.csv ===
+Header: dataset,index,prompt_text_source,char_count,word_count,line_count,digit_count,question_mark_count,exclamation_count,code_symbol_count,contains_code_fence,contains_url,contains_equation_symbol,contains_question_word,DeepHermes-3-Llama-3-8B-Preview,DeepSeek-R1-0528-Qwen3-8B,DeepSeek-R1-Distill-Qwen-7B,Fin-R1,GLM-Z1-9B-0414,Intern-S1-mini,Llama-3.1-8B-Instruct,Llama-3.1-8B-UltraMedical,Llama-3.1-Nemotron-Nano-8B-v1,MiMo-7B-RL-0530,MiniCPM4.1-8B,NVIDIA-Nemotron-Nano-9B-v2,OpenThinker3-7B,Qwen2.5-Coder-7B-Instruct,Qwen3-8B,claude-sonnet-4,cogito-v1-preview-llama-8B,deepseek-r1-0528,deepseek-v3-0324,deepseek-v3.1-terminus,gemini-2.5-flash,gemini-2.5-pro,gemma-2-9b-it,glm-4-9b-chat,glm-4.6,gpt-5,gpt-5-chat,granite-3.3-8b-instruct,intern-s1,internlm3-8b-instruct,kimi-k2-0905,qwen3-235b-a22b-2507,qwen3-235b-a22b-thinking-2507
+Sample rows:
+{"dataset":"arenahard_coding","index":"1","prompt_text_source":"origin_query when available, otherwise prompt","char_count":"3329","word_count":"560","line_count":"45","digit_count":"415","question_mark_count":"1","exclamation_count":"6","code_symbol_count":"8","contains_code_fence":"1","contains_url":"0","contains_equation_symbol":"1","contains_question_word":"1","DeepHermes-3-Llama-3-8B-Preview":"0.0","DeepSeek-R1-0528-Qwen3-8B":"0.0","DeepSeek-R1-Distill-Qwen-7B":"0.0","Fin-R1":"0.0","GLM-Z1-9B-0414":"0.0","Intern-S1-mini":"0.0","Llama-3.1-8B-Instruct":"0.0","Llama-3.1-8B-UltraMedical":"0.0","Llama-3.1-Nemotron-Nano-8B-v1":"0.0","MiMo-7B-RL-0530":"0.0","MiniCPM4.1-8B":"0.0","NVIDIA-Nemotron-Nano-9B-v2":"0.0","OpenThinker3-7B":"0.0","Qwen2.5-Coder-7B-Instruct":"0.0","Qwen3-8B":"0.0","claude-sonnet-4":"1.0","cogito-v1-preview-llama-8B":"0.0","deepseek-r1-0528":"0.0","deepseek-v3-0324":"0.0","deepseek-v3.1-terminus":"0.0","gemini-2.5-flash":"0.0","gemini-2.5-pro":"0.0","gemma-2-9b-it":"0.0","glm-4-9b-chat":"0.0","glm-4.6":"0.0","gpt-5":"0.5","gpt-5-chat":"0.0","granite-3.3-8b-instruct":"0.0","intern-s1":"1.0","internlm3-8b-instruct":"0.0","kimi-k2-0905":"0.5","qwen3-235b-a22b-2507":"0.5","qwen3-235b-a22b-thinking-2507":"1.0"}
+{"dataset":"arenahard_coding","index":"2","prompt_text_source":"origin_query when available, otherwise prompt","char_count":"91","word_count":"16","line_count":"1","digit_count":"3","question_mark_count":"0","exclamation_count":"0","code_symbol_count":"0","contains_code_fence":"0","contains_url":"0","contains_equation_symbol":"0","contains_question_word":"0","DeepHermes-3-Llama-3-8B-Preview":"0.0","DeepSeek-R1-0528-Qwen3-8B":"0.0","DeepSeek-R1-Distill-Qwen-7B":"0.0","Fin-R1":"0.0","GLM-Z1-9B-0414":"0.0","Intern-S1-mini":"0.0","Llama-3.1-8B-Instruct":"0.0","Llama-3.1-8B-UltraMedical":"0.0","Llama-3.1-Nemotron-Nano-8B-v1":"0.0","MiMo-7B-RL-0530":"0.0","MiniCPM4.1-8B":"0.0","NVIDIA-Nemotron-Nano-9B-v2":"0.0","OpenThinker3-7B":"0.0","Qwen2.5-Coder-7B-Instruct":"0.0","Qwen3-8B":"0.0","claude-sonnet-4":"0.5","cogito-v1-preview-llama-8B":"0.0","deepseek-r1-0528":"0.0","deepseek-v3-0324":"0.0","deepseek-v3.1-terminus":"0.5","gemini-2.5-flash":"0.0","gemini-2.5-pro":"0.5","gemma-2-9b-it":"0.0","glm-4-9b-chat":"0.0","glm-4.6":"1.0","gpt-5":"0.0","gpt-5-chat":"0.5","granite-3.3-8b-instruct":"0.0","intern-s1":"1.0","internlm3-8b-instruct":"0.0","kimi-k2-0905":"0.0","qwen3-235b-a22b-2507":"0.0","qwen3-235b-a22b-thinking-2507":"1.0"}
+
+=== all_result_metadata.csv ===
+Header: dataset,model,split,demo,fingerprint,records,declared_count,performance,mean_record_score,time_taken,prompt_tokens,completion_tokens,aggregate_cost,sum_record_cost,record_signature,archive_path
+Sample rows:
+{"dataset":"arenahard_coding","model":"DeepHermes-3-Llama-3-8B-Preview","split":"test","demo":"False","fingerprint":"5917b4de49b2567d625dbc5ae94cf375753b36f7713cadffc3e92b5204b81b92","records":"253","declared_count":"253","performance":"0.03359683794466403","mean_record_score":"0.03359683794466403","time_taken":"4100.74977850914","prompt_tokens":"221148","completion_tokens":"688259","aggregate_cost":"0.0","sum_record_cost":"0.0","record_signature":"a87f7a278033aed6d4f55404eaf6f3bbab46ac45a50e666435d512c46daa21ae","archive_path":"bench-release/arenahard_coding/DeepHermes-3-Llama-3-8B-Preview/arenahard-coding-DeepHermes-3-Llama-3-8B-Preview-20251029_012339.json"}
+{"dataset":"arenahard_coding","model":"DeepSeek-R1-Distill-Qwen-7B","split":"test","demo":"False","fingerprint":"5917b4de49b2567d625dbc5ae94cf375753b36f7713cadffc3e92b5204b81b92","records":"253","declared_count":"253","performance":"0.017786561264822136","mean_record_score":"0.017786561264822136","time_taken":"11689.094805955887","prompt_tokens":"226128","completion_tokens":"3222170","aggregate_cost":"0.0","sum_record_cost":"0.0","record_signature":"a87f7a278033aed6d4f55404eaf6f3bbab46ac45a50e666435d512c46daa21ae","archive_path":"bench-release/arenahard_coding/DeepSeek-R1-Distill-Qwen-7B/arenahard-coding-DeepSeek-R1-Distill-Qwen-7B-20251028_184158.json"}
+
+=== DAY4_GPQA_PER_PROMPT_RESULTS.csv ===
+Header: index,router_model,router_score,global_model,global_score,paired_difference
+Sample rows:
+{"index":"1","router_model":"qwen3-235b-a22b-thinking-2507","router_score":"1.0","global_model":"gemini-2.5-pro","global_score":"1.0","paired_difference":"0.0"}
+{"index":"2","router_model":"qwen3-235b-a22b-thinking-2507","router_score":"0.0","global_model":"gemini-2.5-pro","global_score":"1.0","paired_difference":"-1.0"}
+
+=== DAY5_MMLUPRO_PER_PROMPT_RESULTS.csv ===
+Header: index,router_model,router_score,global_model,global_score,paired_difference
+Sample rows:
+{"index":"1","router_model":"gemini-2.5-pro","router_score":"1.0","global_model":"gemini-2.5-pro","global_score":"1.0","paired_difference":"0.0"}
+{"index":"2","router_model":"qwen3-235b-a22b-thinking-2507","router_score":"1.0","global_model":"gemini-2.5-pro","global_score":"1.0","paired_difference":"0.0"}
+
+=== DAY6_MMLUPRO_PER_PROMPT_RESULTS.csv ===
+Header: index,router_model,router_score,global_model,global_score,paired_difference
+Sample rows:
+{"index":"1","router_model":"gemini-2.5-pro","router_score":"1.0","global_model":"qwen3-235b-a22b-thinking-2507","global_score":"1.0","paired_difference":"0.0"}
+{"index":"2","router_model":"qwen3-235b-a22b-thinking-2507","router_score":"1.0","global_model":"qwen3-235b-a22b-thinking-2507","global_score":"1.0","paired_difference":"0.0"}
+
+=== DAY7_REPEATED_SPLIT_RESULTS.csv ===
+Header: seed,alpha,baseline,validation_baseline_utility,router_accuracy,selected_baseline_accuracy,router_minus_selected_baseline,selected_ci_low,selected_ci_high,gemini_accuracy,router_minus_gemini,gemini_ci_low,gemini_ci_high
+Sample rows:
+{"seed":"2026","alpha":"10.0","baseline":"qwen3-235b-a22b-thinking-2507","validation_baseline_utility":"0.7952634387088168","router_accuracy":"0.8386666666666667","selected_baseline_accuracy":"0.7946666666666666","router_minus_selected_baseline":"0.044","selected_ci_low":"0.03299166666666667","selected_ci_high":"0.05566666666666667","gemini_accuracy":"0.8566666666666667","router_minus_gemini":"-0.018","gemini_ci_low":"-0.025","gemini_ci_high":"-0.010666666666666666"}
+{"seed":"2027","alpha":"10.0","baseline":"gemini-2.5-pro","validation_baseline_utility":"0.7958676804054955","router_accuracy":"0.8386666666666667","selected_baseline_accuracy":"0.8566666666666667","router_minus_selected_baseline":"-0.018","selected_ci_low":"-0.025333333333333333","selected_ci_high":"-0.011","gemini_accuracy":"0.8566666666666667","router_minus_gemini":"-0.018","gemini_ci_low":"-0.025","gemini_ci_high":"-0.010666666666666666"}
+
+=== DAY8_GPQA_REPEATED_SPLIT_RESULTS.csv ===
+Header: seed,alpha,baseline,validation_baseline_utility,router_accuracy,selected_baseline_accuracy,router_minus_selected_baseline,selected_ci_low,selected_ci_high,gemini_accuracy,router_minus_gemini,gemini_ci_low,gemini_ci_high
+Sample rows:
+{"seed":"2026","alpha":"10.0","baseline":"qwen3-235b-a22b-thinking-2507","validation_baseline_utility":"0.7952634387088168","router_accuracy":"0.8181818181818182","selected_baseline_accuracy":"0.803030303030303","router_minus_selected_baseline":"0.015151515151515152","selected_ci_low":"-0.020202020202020204","selected_ci_high":"0.050505050505050504","gemini_accuracy":"0.8484848484848485","router_minus_gemini":"-0.030303030303030304","gemini_ci_low":"-0.07575757575757576","gemini_ci_high":"0.010101010101010102"}
+{"seed":"2027","alpha":"10.0","baseline":"gemini-2.5-pro","validation_baseline_utility":"0.7958676804054955","router_accuracy":"0.8181818181818182","selected_baseline_accuracy":"0.8484848484848485","router_minus_selected_baseline":"-0.030303030303030304","selected_ci_low":"-0.07575757575757576","selected_ci_high":"0.010101010101010102","gemini_accuracy":"0.8484848484848485","router_minus_gemini":"-0.030303030303030304","gemini_ci_low":"-0.07575757575757576","gemini_ci_high":"0.010101010101010102"}
+
+=== RELATED AUDIT AND SCRIPT FILES ===
+all_result_metadata.csv
+baseline_results.csv
+baseline_selected_models.csv
+baseline_summary.txt
+DAY2_ARCHIVE_METRIC_SUMMARY.txt
+DAY2_FINAL_REPORT.md
+DAY2_METRIC_FINDINGS.txt
+day2_paired_analysis.txt
+DAY2_PROVENANCE_METRIC_AUDIT.txt
+DAY2_RELATED_WORK_MATRIX.csv
+DAY2_REPRODUCIBILITY_CHECKLIST.md
+DAY3_CROSS_BENCHMARK_FEASIBILITY.csv
+DAY3_CROSS_BENCHMARK_FEASIBILITY.txt
+DAY3_HELDOUT_BENCHMARK_AUDIT.md
+DAY3_MMLUPRO_FOLLOWUP.md
+DAY3_MODEL_POOL_AND_RECORD_SCHEMA.txt
+DAY3_NOVELTY_AUDIT.md
+DAY3_PAPER_COMPARISON_LLMROUTERBENCH.md
+DAY3_QUICK_INTEGRITY.txt
+DAY3_ROUTING_METHODS_COMPARISON.md
+DAY4_FINAL_REPORT.md
+DAY4_GPQA_PER_PROMPT_RESULTS.csv
+DAY4_GPQA_ROUTER_CONFIG.txt
+DAY4_GPQA_RUN_LOG.txt
+day4_gpqa_transfer.py
+DAY4_GPQA_TRANSFER_RESULTS.txt
+DAY5_MMLUPRO_FINAL_REPORT.md
+DAY5_MMLUPRO_PER_PROMPT_RESULTS.csv
+DAY5_MMLUPRO_ROUTER_CONFIG.txt
+day5_mmlupro_transfer.py
+DAY5_MMLUPRO_TRANSFER_RESULTS.txt
+day6_fair_baseline_transfer.py
+DAY6_MMLUPRO_FINAL_REPORT.md
+DAY6_MMLUPRO_PER_PROMPT_RESULTS.csv
+DAY6_MMLUPRO_ROUTER_CONFIG.txt
+DAY6_MMLUPRO_TRANSFER_RESULTS.txt
+DAY7_REPEATED_SPLIT_RESULTS.csv
+day7_repeated_split_robustness.py
+DAY7_REPEATED_SPLIT_SUMMARY.txt
+DAY8_GPQA_REPEATED_SPLIT_RESULTS.csv
+DAY8_GPQA_REPEATED_SPLIT_SUMMARY.txt
+day8_gpqa_repeated_splits.py
+DAY9_PRIOR_ART_MATRIX.md
+prompt_feature_extraction_audit.txt
+prompt_feature_score_table.csv
+prompt_router_experiment_summary.txt
+prompt_router_experiment_summary.txt.pre_macro_backup
+prompt_router_test_predictions.csv
+prompt_router_test_predictions.csv.pre_macro_backup
+
+=== ARCHIVE LICENSE / README CANDIDATES ===

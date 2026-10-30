@@ -1,0 +1,2450 @@
+RESEARCH 3 � METHODS AUDIT BUNDLE
+
+=== GIT STATE ===
+9d0c6b5 research: add repeated-split transfer sensitivity analysis
+72935b8 docs: add cross-benchmark router research package
+6259db6 Add aggregate cross-benchmark transfer results
+## main...origin/main [ahead 2]
+?? README.before-research-package.md
+?? RESEARCH3_AUDIT_BUNDLE.txt
+?? benchmark_archive_inventory.txt
+?? day1_audit/DAY10_BASELINE_FEASIBILITY.txt
+?? day1_audit/DAY2_ARCHIVE_METRIC_SUMMARY.txt
+?? day1_audit/DAY2_METRIC_FINDINGS.txt
+?? day1_audit/DAY2_PROVENANCE_METRIC_AUDIT.txt
+?? day1_audit/DAY2_RELATED_WORK_MATRIX.csv
+?? day1_audit/DAY3_CROSS_BENCHMARK_FEASIBILITY.csv
+?? day1_audit/DAY3_CROSS_BENCHMARK_FEASIBILITY.txt
+?? day1_audit/DAY3_MODEL_POOL_AND_RECORD_SCHEMA.txt
+?? day1_audit/DAY3_QUICK_INTEGRITY.txt
+?? day1_audit/DAY4_GPQA_PER_PROMPT_RESULTS.csv
+?? day1_audit/DAY4_GPQA_ROUTER_CONFIG.txt
+?? day1_audit/DAY4_GPQA_RUN_LOG_STALE_2026-10-16.txt
+?? day1_audit/DAY4_PROVENANCE_NOTE.txt
+?? day1_audit/DAY5_MMLUPRO_PER_PROMPT_RESULTS.csv
+?? day1_audit/DAY5_MMLUPRO_ROUTER_CONFIG.txt
+?? day1_audit/DAY6_MMLUPRO_PER_PROMPT_RESULTS.csv
+?? day1_audit/DAY6_MMLUPRO_ROUTER_CONFIG.txt
+?? day1_audit/all_result_metadata.csv
+?? day1_audit/baseline_results.csv
+?? day1_audit/baseline_selected_models.csv
+?? day1_audit/baseline_summary.txt
+?? day1_audit/compatible_model_groups.csv
+?? day1_audit/dataset_coverage.csv
+?? day1_audit/day2_paired_analysis.txt
+?? day1_audit/pilot_matrix_audit.txt
+?? day1_audit/pilot_score_matrix.csv
+?? day1_audit/prompt_feature_extraction_audit.txt
+?? day1_audit/prompt_feature_score_table.csv
+?? day1_audit/prompt_router_experiment_summary.txt
+?? day1_audit/prompt_router_test_predictions.csv
+?? day1_audit/record_quality_checks.csv
+?? day1_audit/score_distribution_audit.txt
+ README.md                                       |  47 ++++--
+ day1_audit/DAY6_MMLUPRO_TRANSFER_RESULTS.txt    |   4 +-
+ day1_audit/DAY7_REPEATED_SPLIT_RESULTS.csv      |  11 ++
+ day1_audit/DAY8_GPQA_REPEATED_SPLIT_RESULTS.csv |  11 ++
+ day1_audit/DAY8_GPQA_REPEATED_SPLIT_SUMMARY.txt |   3 +-
+ day1_audit/day7_repeated_split_robustness.py    |   2 +-
+ day1_audit/day8_gpqa_repeated_splits.py         |   2 +-
+ docs/FOLLOW_UP_PROTOCOL_PROPOSED.md             |  37 +++++
+ docs/PUBLICATION_RELEASE_CHECKLIST.md           |  72 ++++++++
+ docs/RELATED_WORK_AND_CLAIM_BOUNDARIES.md       |  36 ++++
+ figures/primary_results.csv                     |   3 +
+ paper/manuscript_draft.md                       | 210 ++++++++++++++++++++++++
+ paper/references.bib                            |  17 ++
+ requirements.txt                                |   2 +
+ 14 files changed, 440 insertions(+), 17 deletions(-)
+
+
+========== README.md ==========
+# Evaluating Cross-Benchmark Transfer of a Lightweight LLM Router
+
+**Research type:** Empirical evaluation and reproducibility study  
+**Status:** Experimental results available; broader generalization and algorithmic novelty not established
+
+## Overview
+
+Large language model (LLM) routing selects a model for a given prompt from a pool of candidate models. A router may use prompt characteristics to make this decision, with the goal of balancing response quality, model capability, and inference cost.
+
+This project investigates whether a lightweight router built from lexical prompt features can transfer across benchmark families, and how its performance compares with fixed-model baselines.
+
+The study evaluates a Ridge-based prompt-feature router on source benchmark data and examines transfer to GPQA and MMLU-Pro. It also investigates how the choice of fixed-model baseline changes the interpretation of routing performance.
+
+The central focus is **empirical transfer, baseline selection, and evaluation reliability**, rather than claiming a novel routing algorithm.
+
+## Research Question
+
+How reliably does a lightweight lexical-feature router transfer across benchmark families, and which evaluation choices explain its performance gap relative to fixed-model baselines?
+
+### Research objectives
+
+- Evaluate a lexical-feature Ridge router on held-out benchmark prompts.
+- Compare transfer performance against a strong fixed-model baseline.
+- Examine the sensitivity of comparisons to source-validation baseline selection.
+- Quantify uncertainty using paired differences and bootstrap confidence intervals.
+- Assess whether the available evidence supports claims of reliable transfer or generalization.
+
+## Methodology
+
+### Router
+
+The experimental router uses lexical features extracted from prompts and a Ridge-based prediction approach to select a model from a candidate pool.
+
+The router is evaluated against fixed-model baselines. The experiments distinguish comparisons against a globally selected model, such as Gemini 2.5 Pro, from comparisons against a model selected using source-validation data.
+
+### Evaluation protocol
+
+The experiments include:
+
+1. **Source-data audit:** Inspect benchmark coverage, model pools, record schemas, score distributions, and metric consistency.
+2. **Initial transfer evaluation:** Evaluate on GPQA and MMLU-Pro target prompts.
+3. **Baseline analysis:** Compare the router with a fixed global baseline and a validation-selected baseline.
+4. **Repeated source-validation splits:** Repeat baseline selection to investigate the sensitivity of results to the source-validation split.
+5. **Provenance and prior-work review:** Audit data provenance, licensing caveats, related work, and the strength of potential research claims.
+
+Repeated source-validation splits reuse the same target prompts. They therefore measure sensitivity to the selection procedure and should not be interpreted as independent replications across target datasets.
+
+## Experimental Results
+
+The following results summarize the completed transfer experiments.
+
+| Experiment | Router accuracy | Baseline accuracy | Difference |
+|---|---:|---:|---:|
+| GPQA transfer | 81.82% | 84.85% (Gemini 2.5 Pro) | -3.03 percentage points |
+| MMLU-Pro transfer | 83.87% | 85.67% (Gemini 2.5 Pro) | -1.80 percentage points |
+| MMLU-Pro, validation-selected baseline | 83.87% | 79.47% (Qwen3 Thinking) | +4.40 percentage points |
+
+### GPQA
+
+The router achieved a mean score of 0.8182, compared with 0.8485 for Gemini 2.5 Pro.
+
+- Paired difference: -3.03 percentage points.
+- 95% bootstrap confidence interval: -7.07 to +1.01 percentage points.
+- Interpretation: The experiment does not establish superiority over the fixed Gemini baseline.
+
+### MMLU-Pro
+
+The router achieved a mean score of 0.8387, compared with 0.8567 for Gemini 2.5 Pro.
+
+- Paired difference: -1.80 percentage points.
+- 95% bootstrap confidence interval: -2.50 to -1.13 percentage points.
+- Interpretation: The router underperformed Gemini 2.5 Pro on this evaluation.
+
+Against the validation-selected Qwen3 Thinking baseline, the router scored 4.40 percentage points higher, with a reported 95% confidence interval of +3.3 to +5.5 percentage points.
+
+This result illustrates why baseline-selection protocols matter: the conclusion changes depending on which fixed model is used for comparison.
+
+### Repeated baseline-selection experiments
+
+Across ten source-validation splits on the same target prompts:
+
+- **MMLU-Pro:** The mean difference against the selected baseline was +0.35 percentage points, with a range from -1.83 to +4.40 points.
+- **GPQA:** The mean difference against the selected baseline was +1.21 percentage points, with a range from -3.03 to +16.16 points.
+- Gemini 2.5 Pro was selected as the baseline in six of the ten splits.
+
+The results demonstrate sensitivity to baseline selection. Because the target prompts are reused across splits, these figures do not establish independent cross-dataset replication.
+
+## Main Findings
+
+1. **Transfer performance depends on the comparison baseline.** A router may outperform a source-validation-selected model in a particular experiment while underperforming a stronger fixed baseline.
+2. **The router did not outperform Gemini 2.5 Pro on either reported target benchmark.** The observed differences were -3.03 percentage points on GPQA and -1.80 percentage points on MMLU-Pro.
+3. **Baseline selection is unstable across source-validation splits.** The selected fixed model varies, affecting the measured routing advantage.
+4. **Broad generalization remains unestablished.** The completed experiments do not demonstrate reliable superiority across independent target datasets.
+5. **Algorithmic novelty has not been established.** The current evidence supports an empirical evaluation of transfer behavior and baseline sensitivity, not a claim of a new state-of-the-art routing method.
+
+## Repository Structure
+
+The repository contains experiment scripts, audit utilities, and research reports.
+
+```text
+llm-router-transfer-study/
++-- day1_audit/
+�   +-- DAY10_PRIOR_ART_DECISION.md
+�   +-- DAY11_FINAL_RESEARCH_ASSESSMENT.md
+�   +-- DAY12_DATA_PROVENANCE_AND_LICENSE.md
+�   +-- ...
++-- *.py
++-- .gitignore
++-- README.md
+```
+
+The exact set of tracked files may evolve as the reproducibility package is refined. Experiment outputs and raw benchmark records are not assumed to be part of the public repository.
+
+## Reproducibility
+
+### Environment
+
+From the repository root, install the pinned dependencies in a virtual environment:
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+### Required inputs
+
+The Day 4�6 transfer scripts require the benchmark archive, feature extractor, and prepared source tables. Obtain source data separately under the applicable terms. Do not commit the raw archive or potentially restricted prompt-level records.
+
+Verify the local archive with:
+
+```powershell
+Get-FileHash .\bench-release.tar.gz -Algorithm SHA256
+```
+
+Expected SHA-256:
+
+`B79F8CDE1A6F029C2EFA663A3A3B6F7748DEFB22341FE59F328CEBEF6648C8F1`
+
+### Run the transfer experiments
+
+Run from the repository root after preparing the required inputs:
+
+```powershell
+.\.venv\Scripts\python.exe .\day1_audit\day4_gpqa_transfer.py
+.\.venv\Scripts\python.exe .\day1_audit\day5_mmlupro_transfer.py
+.\.venv\Scripts\python.exe .\day1_audit\day6_fair_baseline_transfer.py
+```
+
+Inspect the generated reports, configurations, and per-prompt outputs under `day1_audit/`.
+
+### Reproducibility status and limitations
+
+Local runs and checks of reported means against per-prompt outputs do not establish complete independent reproduction of every experiment. Confirm that the final Day 4 script version has been rerun before treating its saved result as verified against the corrected feature-column ordering.
+
+Repeated validation splits reuse the same target prompts and are not independent target replications. The results do not establish broad cross-benchmark generalization, superiority to Gemini 2.5 Pro, or a novel routing contribution.
+
+## Data Provenance and Licensing
+
+The project uses benchmark-derived records associated with LLMRouterBench.
+
+The repository includes a provenance and licensing assessment. The maintainer indicated in GitHub issue [#5](https://github.com/ynulihao/LLMRouterBench/issues/5) that the MIT license was intended for the top-level source and discussed non-commercial academic research and reproduction. The scope of the formal licensing documentation has not been conclusively verified here.
+
+Consequently:
+
+- Do not interpret this discussion as blanket permission for commercial use.
+- Do not assume raw benchmark archives, prompts, ground-truth answers, or model outputs can be redistributed without restriction.
+- Review the upstream repository's current license and data terms before reuse or redistribution.
+- Prefer reporting derived aggregate results where permitted, and preserve appropriate attribution.
+
+## Limitations
+
+- The evaluation covers a limited set of target benchmark families.
+- Repeated validation splits reuse target prompts and are not independent target replications.
+- Baseline selection changes the apparent performance advantage.
+- The experiments do not establish superiority over the strongest fixed-model baseline.
+- Cost and latency comparisons are excluded from the conclusions because metric semantics and units require further validation.
+- Broader generalization and algorithmic novelty remain open questions.
+- Complete end-to-end reproducibility and the redistribution rights for all underlying benchmark records have not been established.
+
+## Conclusion
+
+This study evaluates the transfer behavior of a lightweight lexical-feature LLM router and examines the effect of fixed-model baseline selection.
+
+The completed results show that the router underperformed Gemini 2.5 Pro on both GPQA and MMLU-Pro, while comparisons against validation-selected baselines varied across experiments. These findings highlight the importance of baseline selection, paired evaluation, uncertainty quantification, and careful interpretation of repeated-split experiments.
+
+The current contribution is best characterized as an **empirical transfer and evaluation study**. Establishing a novel routing algorithm, reliable generalization, or consistent superiority over strong fixed-model baselines requires further evidence.
+
+## Citation
+
+If you use or build on this work, cite the repository:
+
+**Shaik Jouzia Afreen H.** *Evaluating Cross-Benchmark Transfer of a Lightweight LLM Router.* GitHub repository: https://github.com/jouzia/llm-router-transfer-study
+
+*This citation identifies the project repository; it is not a substitute for a formal publication citation.*
+
+## Acknowledgements
+
+This work builds on publicly available benchmark resources and research on LLM routing and model selection. Please consult the relevant upstream sources and their license terms before reusing benchmark data.
+
+
+========== paper/manuscript_draft.md ==========
+# Evaluating Cross-Benchmark Transfer of a Lightweight LLM Router
+
+**Author:** Shaik Jouzia Afreen H.
+**Status:** Manuscript draft; regenerate and cross-check results against committed artifacts before submission.
+**Repository:** [https://github.com/jouzia/llm-router-transfer-study](https://github.com/jouzia/llm-router-transfer-study)
+
+## Abstract
+
+Large language model (LLM) routers select a model for each input, aiming to exploit complementary model strengths. A router that performs well on source tasks may not retain its advantage on a different benchmark. This study evaluates a lightweight prompt-feature router trained using records from three ArenaHard domains—coding, creative writing, and mathematics—and tests transfer to GPQA and MMLU-Pro. The source extraction audit reports 750 prompts, 33 models, 11 prompt features, and no detected prompt-text, ground-truth, record-availability, or score-alignment inconsistencies. In the current reported evaluation, the router obtains a mean score of 0.8182 on 198 GPQA prompts, compared with 0.8485 for a fixed Gemini 2.5 Pro baseline (difference −3.03 percentage points; reported prompt-bootstrap 95% confidence interval [−7.07, +1.01] percentage points). On 3,000 MMLU-Pro test prompts, the router obtains a mean score of 0.8387, compared with 0.8567 for Gemini 2.5 Pro (difference −1.80 percentage points; reported interval [−2.50, −1.13] percentage points). A source-validation-selected baseline can be weaker: on MMLU-Pro, the router exceeds the selected Qwen3 Thinking baseline by 4.40 percentage points, but this does not establish superiority over the stronger fixed Gemini baseline. Repeated source-validation splits reuse the same target prompts and are sensitivity analyses, not independent replications. The current evidence supports a cautious empirical transfer study, but not a claim that the router outperforms the fixed Gemini baseline or establishes a novel routing algorithm. The score semantics, candidate-model eligibility rules, and correspondence between generated results and committed code must be confirmed before submission.
+
+**Keywords:** large language models; model routing; cross-benchmark transfer; generalization; evaluation methodology; reproducibility
+
+## 1. Introduction
+
+LLM routing assigns each query to a model from a candidate pool. Its motivation is that different models may have complementary strengths, while routing may improve response quality, cost, or latency relative to always using one model. However, source-domain performance does not guarantee transfer to a held-out benchmark, and conclusions can change depending on the fixed-model baseline.
+
+This study asks: **How well does a lightweight prompt-feature router trained on ArenaHard coding, creative-writing, and mathematics records transfer to GPQA and MMLU-Pro?** The aim is evaluation and transfer analysis, not a claim of a new state-of-the-art routing method.
+
+Prior routing benchmarks make unified evaluation and simple baselines important. LLMRouterBench reports a benchmark and unified framework for evaluating LLM routing across many datasets and models [1]. RouterBench provides a framework for evaluating multi-LLM routing systems [2]. RouteLLM investigates routing using preference data and provides a related approach for comparing model-routing strategies [3]. Together, this prior work motivates explicit transfer protocols, transparent candidate pools, and strong baseline comparisons.
+
+### Research questions
+
+- **RQ1:** What is the router's performance on held-out GPQA and MMLU-Pro compared with a fixed strong model?
+- **RQ2:** How sensitive are results to the source-validation seed, regularization selection, and fixed-model baseline selected using source validation?
+- **RQ3:** Do the current experiments support reliable transfer or superiority over a strong fixed model?
+
+## 2. Data and integrity checks
+
+### 2.1 Source data
+
+The source extraction audit reports 750 prompts across three domains.
+
+| Source domain | Prompt count |
+|---|---:|
+| Coding | 253 |
+| Creative writing | 250 |
+| Mathematics | 247 |
+| **Total** | **750** |
+
+The extracted feature table contains 11 prompt features and records for 33 models. The local audit reports zero archive errors, prompt-text mismatches, ground-truth mismatches, missing model records, and score-alignment issues. These are checks reported by the project pipeline; they are not proof that every upstream dataset assumption is valid.
+
+The benchmark archive SHA-256 recorded by the local audit is:
+
+`b79f8cde1a6f029c2efa663a3a3b6f7748defb22341fe59f328cebef6648c8f1`
+
+The hash identifies the inspected archive and supports reproducibility when the same archive is available. It does not independently establish the archive's completeness, license, or correctness.
+
+### 2.2 Target benchmarks and candidate pools
+
+The target evaluation comprises 198 GPQA prompts and 3,000 prompts from the `mmlupro/test_3000` split. The source extraction contains 33 models, while the reported Day 5 and Day 6 MMLU-Pro configurations use 13 candidate models. The Day 4 source-only configuration reports 33 source candidate models.
+
+These counts describe different stages of the experimental pipeline and should not be interpreted as interchangeable candidate pools. The final reproducibility package must identify the exact candidate-model intersection used in each experiment, list the retained model names, and document any eligibility rules involving the availability of compatible source and target records.
+
+The reported evaluation uses benchmark-provided scores. Its results are conditional on the selected benchmark release, retained prompts, available model outputs, candidate pool, and score conventions. The precise prompt-filtering and candidate-intersection procedures must be traceable to the corresponding experiment scripts, configuration files, and audit artifacts.
+
+The terms *score* and *accuracy* are not automatically interchangeable. This manuscript uses *mean score* where the underlying metric semantics have not yet been independently confirmed. The final version should use *accuracy* only if the source records and evaluation scripts establish that the reported values represent correctness proportions under a consistent scoring definition.
+
+### 2.3 Provenance and license caveat
+
+The upstream benchmark repository is [LLMRouterBench](https://github.com/ynulihao/LLMRouterBench), and its associated paper appears in Findings of ACL 2026 [1].
+
+The project's local provenance note reports that a maintainer described the repository source as intended to be MIT-licensed and the archive as usable for non-commercial academic research and reproduction. However, the formal license documentation and terms governing underlying datasets and providers were not fully confirmed in the local audit.
+
+This does not establish blanket permission to redistribute the archive or every underlying record. Before public release, verify the current upstream license, release documentation, and applicable dataset and provider terms. Do not commit or redistribute the raw archive, restricted records, or other material whose redistribution rights remain unclear.
+
+## 3. Method
+
+### 3.1 Prompt-feature router
+
+The router extracts 11 features from each prompt:
+
+1. Character count.
+2. Word count.
+3. Line count.
+4. Digit count.
+5. Question-mark count.
+6. Exclamation-mark count.
+7. Code-symbol count.
+8. Code-fence presence.
+9. URL presence.
+10. Equation-symbol presence.
+11. Question-word presence.
+
+Word counts use a regular-expression tokenizer. Binary indicators capture the presence of code fences, URL patterns, equation symbols, and selected question words. The implementation defines code symbols using occurrences of `{}`, `[]`, parentheses, semicolons, and angle brackets. Equation-symbol presence is detected through a regular expression covering selected arithmetic and equation-related symbols. The question-word indicator checks for selected terms, including “what,” “why,” “how,” “when,” “where,” “which,” “who,” “explain,” and “compare,” without regard to letter case.
+
+The implementation trains a separate pipeline for each candidate model, comprising `StandardScaler` followed by Ridge regression. Each regressor predicts the candidate model's benchmark-provided score from the prompt features. The router selects the candidate with the highest predicted score.
+
+The regularization parameter is selected from the candidate set `{0.1, 1, 10, 100}` using equal-weight average validation utility across the three source domains: ArenaHard coding, creative writing, and mathematics. The primary configuration uses seed 2026 and a validation fraction of 20% within each source domain. If validation utilities tie, the implementation prefers the larger alpha. After selecting alpha, the final per-model regressors are refitted using the complete source feature-and-score table.
+
+Target scores are not used for source fitting or for selecting the regularization parameter in the documented source-only protocol. The final artifact audit should confirm that this separation holds for each reported experiment and that target outcomes were used only for evaluation.
+
+The model-selection operation uses `argmax` over the predicted scores. In an exact prediction tie, this operation selects the first candidate in the model ordering supplied to it. The final implementation record should preserve the candidate ordering because it can affect tie resolution.
+
+### 3.2 Baselines
+
+Two comparisons must remain separate.
+
+1. **Fixed strong baseline:** Gemini 2.5 Pro, used as a stable reference across target evaluations.
+2. **Source-validation-selected baseline:** a candidate model selected using source-validation data only. Its identity can change with the validation split and it can be weaker than Gemini 2.5 Pro.
+
+The selected-baseline comparison is informative about whether the router improves on a model chosen by the source-validation procedure. It is not interchangeable with the fixed-strong-baseline comparison. A gain against a validation-selected baseline does not establish that the router beats the strongest fixed model.
+
+For reproducibility, each experiment should report the candidate pool, baseline-selection rule, selected baseline, validation utility, and seed. Any comparison across different candidate pools should be explicitly identified rather than treated as a like-for-like experiment.
+
+### 3.3 Evaluation and uncertainty
+
+Performance differences are computed as the router's prompt-level score minus the comparison baseline's score on the same target prompts. Positive differences favor the router; negative differences favor the baseline.
+
+Confidence intervals are reported as percentile intervals obtained by resampling target prompts with replacement and calculating the mean paired difference for each bootstrap sample. The primary Day 4 evaluation uses 10,000 resamples with random seed 2026. The repeated source-validation analyses in Days 7 and 8 use 2,000 bootstrap resamples per comparison, with bootstrap seeds derived from each validation seed by adding 50,000.
+
+Positive paired differences count as router wins, negative differences as losses, and exact zero differences as ties. Candidate selection by `argmax` is distinct from these post-evaluation win/tie/loss counts: the former selects a model based on predictions, whereas the latter summarizes observed paired score differences.
+
+These intervals quantify uncertainty from resampling the observed target prompts under the evaluated setup. They do not capture variability across new target datasets, benchmark versions, model releases, or changes in candidate eligibility. Repeated source-validation seeds reuse the same target prompts and therefore represent sensitivity analyses rather than independent replications.
+
+The final submission should verify that the interval endpoints in the manuscript exactly match the archived result files and the scripts that generated them. Bootstrap intervals should not be interpreted as evidence of broad transfer beyond the evaluated prompts.
+
+## 4. Results
+
+### 4.1 Held-out transfer against Gemini 2.5 Pro
+
+The current reported results are summarized below. Values are presented as mean scores pending final confirmation of metric semantics.
+
+| Target | Prompts | Router mean score | Gemini 2.5 Pro mean score | Difference (router − Gemini) | Reported 95% interval |
+|---|---:|---:|---:|---:|---:|
+| GPQA | 198 | 0.8182 | 0.8485 | −0.0303 | [−0.0707, +0.0101] |
+| MMLU-Pro `test_3000` | 3,000 | 0.8387 | 0.8567 | −0.0180 | [−0.0250, −0.0113] |
+
+For GPQA, the router is 3.03 percentage points below Gemini 2.5 Pro. The reported interval includes zero, so this result does not establish a statistically clear difference under the stated prompt-bootstrap procedure.
+
+For MMLU-Pro, the router is 1.80 percentage points below Gemini 2.5 Pro. The reported interval is entirely negative, indicating lower router scores on the evaluated prompts under this procedure.
+
+Taken together, these results do not support a claim of router superiority over the fixed Gemini baseline on either target benchmark.
+
+### 4.2 Source-validation-selected baseline
+
+On MMLU-Pro with validation seed 2026, the selected baseline is Qwen3 Thinking (`qwen3-235b-a22b-thinking-2507`). Its reported mean score is 0.7947. The router's reported mean score is 0.8387, yielding a difference of +0.0440, or +4.40 percentage points, with a reported 95% interval of [+0.0330, +0.0550].
+
+This is not evidence that the router beats the strongest fixed model. Gemini 2.5 Pro scores 0.8567 on the same target prompts, above both the router and the selected Qwen3 Thinking baseline.
+
+The result illustrates why baseline-selection protocols matter. A router can exceed a source-validation-selected model while still underperforming a strong fixed reference. The two comparisons answer different research questions and must be reported separately.
+
+### 4.3 Repeated source-validation splits
+
+Across validation seeds 2026–2035, the reported MMLU-Pro baseline-selection counts are:
+
+| Selected baseline | Number of splits |
+|---|---:|
+| Gemini 2.5 Pro | 6 |
+| Qwen3 Thinking | 2 |
+| Intern-S1 | 1 |
+| Kimi K2 | 1 |
+| **Total** | **10** |
+
+The mean router-minus-selected-baseline difference is reported as +0.35 percentage points, with a range from −1.83 to +4.40 percentage points. Against Gemini 2.5 Pro, the mean difference is approximately −1.80 percentage points.
+
+For GPQA, the reported baseline-selection counts are the same. The mean router-minus-selected-baseline difference is reported as +1.21 percentage points, with a range from −3.03 to +16.16 percentage points. Against Gemini 2.5 Pro, the mean difference is approximately −2.78 percentage points.
+
+Large positive differences occur on seeds where weaker baselines were selected and should not be interpreted as broad router superiority. The comparison against the fixed Gemini baseline remains negative on average for both target benchmarks.
+
+Because the target prompts are reused across seeds, these summaries measure sensitivity to source validation and baseline selection. They are not independent replications across target datasets. The reported means, ranges, and selection frequencies should be checked against the complete Day 7 and Day 8 CSV artifacts before submission.
+
+## 5. Discussion
+
+The current evidence does not show that the router improves on Gemini 2.5 Pro in either target benchmark. It underperforms by 3.03 percentage points on GPQA and 1.80 percentage points on MMLU-Pro. The reported GPQA interval includes zero, while the reported MMLU-Pro interval is entirely negative.
+
+The selected-baseline results illustrate why baseline policy matters. A router may exceed a model chosen by source validation while still underperforming a strong fixed reference. Both comparisons are useful, but they answer different questions. The fixed baseline assesses the router against a stable reference; the selected baseline assesses the effect of a particular source-validation selection procedure.
+
+The repeated-split analyses further demonstrate that the selected baseline is sensitive to the validation split. The observed range of router-minus-selected-baseline differences is wide, especially on GPQA. Since the target prompts are held constant across these runs, this variation should be interpreted as sensitivity to the source-validation and baseline-selection procedure rather than independent evidence of transfer across new datasets.
+
+The defensible contribution at this stage is a structured empirical evaluation of cross-benchmark transfer and baseline sensitivity for a lightweight prompt-feature router on two target benchmarks. The results do not establish algorithmic novelty, robust generalization across a broad benchmark suite, cost savings, or latency benefits. Cost and latency claims should remain excluded until their metric definitions, units, and comparability have been independently validated.
+
+The study is also limited by the candidate pool, the available recorded model outputs, and the benchmark-specific scoring conventions. Any broader claim requires additional target datasets, transparent candidate eligibility, and comparisons against relevant published routing methods under a common evaluation protocol.
+
+## 6. Limitations
+
+1. **Limited target coverage:** Only GPQA and one MMLU-Pro test split are reported. The findings do not establish transfer to other benchmark families or deployment settings.
+
+2. **Baseline dependence:** Conclusions differ between Gemini 2.5 Pro and a source-validation-selected model. A positive difference against a weaker selected baseline should not be treated as superiority over a strong fixed model.
+
+3. **Repeated target reuse:** The ten source-validation seeds share the same target prompts. They are sensitivity analyses, not independent replications across target datasets.
+
+4. **Candidate-pool differences:** The source extraction reports 33 models, whereas the MMLU-Pro configurations report 13 candidates. The final release must document the exact candidate intersection and eligibility rule for each experiment.
+
+5. **Uncertainty scope:** Prompt-bootstrap intervals condition on the observed target prompts and do not quantify dataset-level transfer uncertainty, future model changes, or benchmark-version variation.
+
+6. **Metric provenance:** Reported values are described as mean scores until the source records and evaluation scripts confirm the metric semantics. Cost and latency are excluded until definitions, units, and comparability are validated.
+
+7. **Implementation transparency:** The router uses 11 prompt-level features, standardized Ridge regression, source-domain validation to select regularization, and maximum predicted score to select a candidate model. The primary configuration uses seed 2026, 20% validation data per source domain, and alpha candidates of 0.1, 1, 10, and 100. Reproducibility depends on retaining the corresponding scripts, feature-extraction code, candidate-model lists, configuration files, and compatible benchmark records.
+
+8. **Result provenance:** The manuscript's reported numbers must be cross-checked against the exact generated result files and their generating scripts. The existence of a current script does not, by itself, prove that it generated an earlier result unless the script version or hash was recorded at experiment time.
+
+9. **Novelty not established:** A complete related-work review and direct comparisons with relevant published baselines are required before making a novelty claim. This study should be positioned as an empirical transfer and evaluation study unless stronger evidence is obtained.
+
+10. **Licensing and redistribution:** The source archive and underlying dataset/provider terms require final verification before redistribution. Raw archives or restricted records should not be included in the public repository unless the applicable permissions are clear.
+
+## 7. Conclusion
+
+The current experiments evaluate a lightweight prompt-feature router trained on ArenaHard coding, creative-writing, and mathematics records and tested on GPQA and MMLU-Pro. The reported results do not establish superiority over the fixed Gemini 2.5 Pro baseline. The router scores below Gemini on both GPQA and MMLU-Pro, with the reported MMLU-Pro interval entirely negative and the GPQA interval including zero.
+
+Apparent gains against a source-validation-selected baseline depend on which baseline is selected and must be interpreted separately. Repeated source-validation runs reveal sensitivity to baseline selection, but reuse the same target prompts and do not constitute independent replications.
+
+The appropriate conclusion is a cautious empirical study of transfer and evaluation methodology, not a state-of-the-art or novel-algorithm claim. Before submission, the reported scores, confidence intervals, candidate pools, score semantics, and provenance documentation should be reconciled with the committed experiment artifacts.
+
+## References
+
+[1] Hao Li, Yiqun Zhang, Zhaoyan Guo, Chenxu Wang, Shengji Tang, Qiaosheng Zhang, Yang Chen, Biqing Qi, Peng Ye, Lei Bai, Zhen Wang, and Shuyue Hu. “LLMRouterBench: A Massive Benchmark and Unified Framework for LLM Routing.” *Findings of the Association for Computational Linguistics: ACL 2026*, pp. 37733–37754, 2026. [https://aclanthology.org/2026.findings-acl.1881/](https://aclanthology.org/2026.findings-acl.1881/). DOI: [10.18653/v1/2026.findings-acl.1881](https://doi.org/10.18653/v1/2026.findings-acl.1881).
+
+[2] Qitian Jason Hu, Jacob Bieker, Xiuyu Li, Nan Jiang, Benjamin Keigwin, Gaurav Ranganath, Kurt Keutzer, and Shriyash Kaustubh Upadhyay. “RouterBench: A Benchmark for Multi-LLM Routing System.” arXiv:2403.12031, 2024. [https://arxiv.org/abs/2403.12031](https://arxiv.org/abs/2403.12031).
+
+[3] Isaac Ong, Amjad Almahairi, Vincent Wu, Wei-Lin Chiang, Tianhao Wu, Joseph E. Gonzalez, M. Waleed Kadous, and Ion Stoica. “RouteLLM: Learning to Route LLMs with Preference Data.” *International Conference on Learning Representations (ICLR)*, 2025. [Official proceedings page](https://proceedings.iclr.cc/paper_files/paper/2025/hash/5503a7c69d48a2f86fc00b3dc09de686-Abstract-Conference.html). Project repository: [https://github.com/lm-sys/RouteLLM](https://github.com/lm-sys/RouteLLM).
+
+
+========== paper/references.bib ==========
+@inproceedings{li2026llmrouterbench,
+  title = {LLMRouterBench: A Massive Benchmark and Unified Framework for LLM Routing},
+  author = {Li, Hao and Zhang, Yiqun and Guo, Zhaoyan and Wang, Chenxu and Tang, Shengji and Zhang, Qiaosheng and Chen, Yang and Qi, Biqing and Ye, Peng and Bai, Lei and Wang, Zhen and Hu, Shuyue},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2026},
+  pages = {37733--37754},
+  year = {2026},
+  doi = {10.18653/v1/2026.findings-acl.1881},
+  url = {https://aclanthology.org/2026.findings-acl.1881/}
+}
+
+@article{hu2024routerbench,
+  title = {RouterBench: A Benchmark for Multi-LLM Routing System},
+  author = {Hu, Qitian Jason and Bieker, Jacob and Li, Xiuyu and Jiang, Nan and Keigwin, Benjamin and Ranganath, Gaurav and Keutzer, Kurt and Upadhyay, Shriyash Kaustubh},
+  journal = {arXiv preprint arXiv:2403.12031},
+  year = {2024},
+  url = {https://arxiv.org/abs/2403.12031}
+}
+
+
+========== extract_prompt_features.py ==========
+import csv
+import json
+import re
+import tarfile
+from collections import Counter, defaultdict
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+ARCHIVE = ROOT / "bench-release.tar.gz"
+META = ROOT / "day1_audit" / "all_result_metadata.csv"
+MATRIX = ROOT / "day1_audit" / "pilot_score_matrix.csv"
+OUT = ROOT / "day1_audit" / "prompt_feature_score_table.csv"
+REPORT = ROOT / "day1_audit" / "prompt_feature_extraction_audit.txt"
+
+DOMAINS = {
+    "arenahard_coding",
+    "arenahard_creative_writing",
+    "arenahard_math",
+}
+
+def feature_row(text):
+    text = text or ""
+    words = re.findall(r"\b[\w']+\b", text)
+    lines = text.splitlines()
+
+    return {
+        "char_count": len(text),
+        "word_count": len(words),
+        "line_count": len(lines),
+        "digit_count": sum(c.isdigit() for c in text),
+        "question_mark_count": text.count("?"),
+        "exclamation_count": text.count("!"),
+        "code_symbol_count": sum(text.count(c) for c in "{}[]();<>"),
+        "contains_code_fence": int("```" in text),
+        "contains_url": int(bool(re.search(r"https?://|www\.", text))),
+        "contains_equation_symbol": int(bool(re.search(r"[=+\-*/^]", text))),
+        "contains_question_word": int(bool(re.search(
+            r"\b(what|why|how|when|where|which|who|explain|compare)\b",
+            text, re.I
+        ))),
+    }
+
+for p in (ARCHIVE, META, MATRIX):
+    if not p.is_file():
+        raise SystemExit(f"ERROR: required file missing: {p}")
+
+with META.open(newline="", encoding="utf-8-sig") as f:
+    metadata = list(csv.DictReader(f))
+
+with MATRIX.open(newline="", encoding="utf-8-sig") as f:
+    matrix = list(csv.DictReader(f))
+
+matrix_by_key = {
+    (r["dataset"], str(r["index"])): r
+    for r in matrix
+}
+selected = [
+    r for r in metadata
+    if r.get("dataset", "").lower() in DOMAINS
+    and r.get("split") == "test"
+    and r.get("demo", "").lower() == "false"
+]
+
+if len(selected) != 99:
+    raise SystemExit(
+        f"STOP: expected 99 selected result files, found {len(selected)}."
+    )
+
+audit = []
+records_by_domain = defaultdict(dict)
+score_checks = []
+archive_errors = []
+model_names_by_domain = defaultdict(set)
+
+with tarfile.open(ARCHIVE, "r:gz") as tar:
+    members = {m.name.lstrip("./"): m for m in tar.getmembers() if m.isfile()}
+
+    for meta in selected:
+        dataset = meta["dataset"]
+        model = meta["model"]
+        member_name = meta["archive_path"].lstrip("./")
+
+        member = members.get(member_name)
+        if member is None:
+            archive_errors.append(
+                f"Archive member not found: {member_name}"
+            )
+            continue
+
+        try:
+            handle = tar.extractfile(member)
+            if handle is None:
+                raise ValueError("Unable to read archive member")
+            payload = json.load(handle)
+            records = payload.get("records", [])
+        except Exception as exc:
+            archive_errors.append(f"{member_name}: {type(exc).__name__}: {exc}")
+            continue
+
+        model_names_by_domain[dataset].add(model)
+
+        for rec in records:
+            idx = str(rec.get("index", ""))
+            if not idx:
+                archive_errors.append(
+                    f"Missing record index: {member_name}"
+                )
+                continue
+
+            key = (dataset, idx)
+            origin = rec.get("origin_query")
+            prompt = rec.get("prompt")
+            text = origin if isinstance(origin, str) and origin.strip() else prompt
+
+            if not isinstance(text, str) or not text.strip():
+                archive_errors.append(
+                    f"No usable prompt text: {dataset}, {model}, index={idx}"
+                )
+                continue
+
+            item = records_by_domain[dataset].setdefault(
+                idx, {"texts": {}, "scores": {}, "ground_truths": {}}
+            )
+            item["texts"][model] = text
+            item["scores"][model] = rec.get("score")
+            if "ground_truth" in rec:
+                item["ground_truths"][model] = rec.get("ground_truth")
+
+            matrix_row = matrix_by_key.get(key)
+            if matrix_row is None:
+                score_checks.append(
+                    f"No matrix row for {dataset}, index={idx}"
+                )
+            elif model not in matrix_row:
+                score_checks.append(
+                    f"Model column missing: {dataset}, {model}"
+                )
+            else:
+                try:
+                    archived_score = float(rec["score"])
+                    matrix_score = float(matrix_row[model])
+                    if abs(archived_score - matrix_score) > 1e-9:
+                        score_checks.append(
+                            f"Score mismatch: {dataset}, {model}, index={idx}"
+                        )
+                except (KeyError, TypeError, ValueError):
+                    score_checks.append(
+                        f"Invalid score: {dataset}, {model}, index={idx}"
+                    )
+
+rows_out = []
+prompt_mismatches = []
+ground_truth_mismatches = []
+missing_model_records = []
+
+for dataset in sorted(DOMAINS):
+    expected_models = model_names_by_domain[dataset]
+
+    for idx, item in sorted(
+        records_by_domain[dataset].items(),
+        key=lambda kv: int(kv[0]) if kv[0].isdigit() else kv[0]
+    ):
+        texts = item["texts"]
+        if len(texts) != len(expected_models):
+            missing_model_records.append(
+                f"{dataset}, index={idx}: "
+                f"{len(texts)}/{len(expected_models)} model prompts"
+            )
+
+        distinct_texts = set(texts.values())
+        if len(distinct_texts) != 1:
+            prompt_mismatches.append(
+                f"{dataset}, index={idx}: {len(distinct_texts)} "
+                "distinct text versions"
+            )
+
+        truths = [
+            json.dumps(v, sort_keys=True, ensure_ascii=False)
+            for v in item["ground_truths"].values()
+        ]
+        if truths and len(set(truths)) != 1:
+            ground_truth_mismatches.append(
+                f"{dataset}, index={idx}: ground truth differs across models"
+            )
+
+        # Do not silently select one version when model prompts disagree.
+        # Use only verified-consistent prompt text for feature generation.
+        if len(distinct_texts) != 1:
+            continue
+
+        text = next(iter(distinct_texts))
+        features = feature_row(text)
+        row = {
+            "dataset": dataset,
+            "index": idx,
+            "prompt_text_source": "origin_query when available, otherwise prompt",
+            **features,
+        }
+
+        matrix_row = matrix_by_key.get((dataset, idx))
+        if matrix_row is None:
+            continue
+
+        for model in sorted(expected_models):
+            if model not in matrix_row or model not in item["scores"]:
+                row[model] = ""
+            else:
+                row[model] = matrix_row[model]
+
+        rows_out.append(row)
+
+feature_names = [
+    "char_count", "word_count", "line_count", "digit_count",
+    "question_mark_count", "exclamation_count", "code_symbol_count",
+    "contains_code_fence", "contains_url", "contains_equation_symbol",
+    "contains_question_word",
+]
+model_columns = sorted({
+    model
+    for models in model_names_by_domain.values()
+    for model in models
+})
+fieldnames = [
+    "dataset", "index", "prompt_text_source",
+    *feature_names, *model_columns
+]
+
+with OUT.open("w", newline="", encoding="utf-8-sig") as f:
+    writer = csv.DictWriter(f, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(rows_out)
+
+audit.extend([
+    "RESEARCH 3 — PROMPT FEATURE EXTRACTION AUDIT",
+    "=" * 55,
+    f"Selected metadata files: {len(selected)}",
+    f"Output rows with consistent prompt text: {len(rows_out)}",
+    f"Feature columns: {len(feature_names)}",
+    f"Archive errors: {len(archive_errors)}",
+    f"Prompt-text mismatches: {len(prompt_mismatches)}",
+    f"Ground-truth mismatches: {len(ground_truth_mismatches)}",
+    f"Missing model records: {len(missing_model_records)}",
+    f"Score alignment issues: {len(score_checks)}",
+    "",
+    "DOMAIN COVERAGE:"
+])
+
+for dataset in sorted(DOMAINS):
+    audit.append(
+        f"{dataset}: {len(records_by_domain[dataset])} distinct indices; "
+        f"{len(model_names_by_domain[dataset])} models"
+    )
+
+for title, issues in [
+    ("ARCHIVE ERRORS", archive_errors),
+    ("PROMPT-TEXT MISMATCHES", prompt_mismatches),
+    ("GROUND-TRUTH MISMATCHES", ground_truth_mismatches),
+    ("MISSING MODEL RECORDS", missing_model_records),
+    ("SCORE ALIGNMENT ISSUES", score_checks),
+]:
+    audit.extend(["", title])
+    audit.extend(issues[:20] if issues else ["None"])
+
+if prompt_mismatches or archive_errors or score_checks:
+    audit.extend([
+        "",
+        "CAUTION: Resolve the reported issues before using this table "
+        "for routing experiments."
+    ])
+
+REPORT.write_text("\n".join(audit) + "\n", encoding="utf-8")
+print("\n".join(audit))
+print(f"\nFeature table: {OUT}")
+print(f"Audit report: {REPORT}")
+
+
+========== day1_audit/day4_gpqa_transfer.py ==========
+import ast
+import csv
+import json
+import re
+import tarfile
+from collections import defaultdict
+from pathlib import Path
+
+import numpy as np
+from sklearn.linear_model import Ridge
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+ROOT = Path(__file__).resolve().parent.parent
+AUDIT = ROOT / "day1_audit"
+ARCHIVE = ROOT / "bench-release.tar.gz"
+META = AUDIT / "all_result_metadata.csv"
+SOURCE = AUDIT / "prompt_feature_score_table.csv"
+OUT = AUDIT / "DAY4_GPQA_TRANSFER_RESULTS.txt"
+DETAIL = AUDIT / "DAY4_GPQA_PER_PROMPT_RESULTS.csv"
+CONFIG = AUDIT / "DAY4_GPQA_ROUTER_CONFIG.txt"
+
+FEATURES = [
+    "char_count", "word_count", "line_count", "digit_count",
+    "question_mark_count", "exclamation_count", "code_symbol_count",
+    "contains_code_fence", "contains_url", "contains_equation_symbol",
+    "contains_question_word",
+]
+ALPHAS = [0.1, 1.0, 10.0, 100.0]
+SEED = 2026
+BOOTSTRAPS = 10000
+
+# Load only the feature function from the existing script, without
+# executing its archive-extraction workflow.
+source_code = (ROOT / "extract_prompt_features.py").read_text(encoding="utf-8-sig")
+tree = ast.parse(source_code)
+feature_def = next(
+    node for node in tree.body
+    if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+    and node.name == "feature_row"
+)
+isolated = ast.Module(
+    body=[ast.Import(names=[ast.alias(name="re")]), feature_def],
+    type_ignores=[],
+)
+ast.fix_missing_locations(isolated)
+exec(compile(isolated, "existing_feature_row", "exec"), globals())
+
+def fail(message):
+    raise SystemExit("STOP: " + message)
+
+# Read the three source domains from the existing feature/score table.
+with SOURCE.open(encoding="utf-8-sig", newline="") as f:
+    rows = list(csv.DictReader(f))
+
+if not rows:
+    fail(f"Source feature table is empty: {SOURCE}")
+
+source_domains = sorted({r["dataset"] for r in rows})
+expected_domains = {
+    "arenahard_coding",
+    "arenahard_creative_writing",
+    "arenahard_math",
+}
+if set(source_domains) != expected_domains:
+    fail(f"Unexpected source domains: {source_domains}")
+
+meta_columns = {"dataset", "index", "prompt_text_source", *FEATURES}
+model_names = sorted(set(rows[0]) - meta_columns)
+if len(model_names) != 33:
+    fail(f"Expected 33 source candidate models, found {len(model_names)}")
+
+X = np.array(
+    [[float(r[c]) for c in FEATURES] for r in rows],
+    dtype=float,
+)
+Y = np.array(
+    [[float(r[m]) for m in model_names] for r in rows],
+    dtype=float,
+)
+domains = np.array([r["dataset"] for r in rows])
+
+if not np.isfinite(X).all() or not np.isfinite(Y).all():
+    fail("Source table contains missing or non-finite feature/score values.")
+
+# Hold out 20% of each source domain for alpha selection.
+rng = np.random.default_rng(SEED)
+train_indices, val_indices = [], []
+for domain in source_domains:
+    indices = np.flatnonzero(domains == domain)
+    if len(indices) < 5:
+        fail(f"Too few source prompts in {domain}: {len(indices)}")
+    indices = rng.permutation(indices)
+    n_val = max(1, int(round(0.20 * len(indices))))
+    val_indices.extend(indices[:n_val])
+    train_indices.extend(indices[n_val:])
+
+train_indices = np.array(train_indices, dtype=int)
+val_indices = np.array(val_indices, dtype=int)
+
+# Select alpha by equal-weight average routing utility across source domains.
+alpha_results = []
+for alpha in ALPHAS:
+    predictors = []
+    for j in range(len(model_names)):
+        model = make_pipeline(StandardScaler(), Ridge(alpha=alpha))
+        model.fit(X[train_indices], Y[train_indices, j])
+        predictors.append(model)
+
+    predictions = np.column_stack([
+        model.predict(X[val_indices]) for model in predictors
+    ])
+    selected = predictions.argmax(axis=1)
+    actual = Y[val_indices, :][np.arange(len(val_indices)), selected]
+
+    per_domain = {
+        d: float(np.mean(actual[domains[val_indices] == d]))
+        for d in source_domains
+    }
+    alpha_results.append((float(np.mean(list(per_domain.values()))), alpha, per_domain))
+
+# Select highest validation utility; on ties prefer stronger regularization.
+best_utility, best_alpha, best_domain_utility = max(
+    alpha_results,
+    key=lambda item: (item[0], item[1]),
+)
+# Choose global baseline by equal-weight average model performance
+# across the three source domains. No GPQA scores are used here.
+global_means = {}
+for model in model_names:
+    domain_means = []
+    for domain in source_domains:
+        domain_rows = [r for r in rows if r["dataset"] == domain]
+        domain_means.append(
+            float(np.mean([float(r[model]) for r in domain_rows]))
+        )
+    global_means[model] = float(np.mean(domain_means))
+global_model = max(model_names, key=lambda m: (global_means[m], m))
+
+# Fit the frozen router on all source prompts.
+final_models = []
+for j in range(len(model_names)):
+    model = make_pipeline(StandardScaler(), Ridge(alpha=best_alpha))
+    model.fit(X, Y[:, j])
+    final_models.append(model)
+
+# Save source-only configuration before opening GPQA result files.
+with CONFIG.open("w", encoding="utf-8") as f:
+    f.write("DAY 4 — SOURCE-ONLY ROUTER CONFIGURATION\n")
+    f.write(f"Source rows: {len(rows)}\n")
+    f.write(f"Source domains: {', '.join(source_domains)}\n")
+    f.write(f"Candidate models: {len(model_names)}\n")
+    f.write(f"Alpha candidates: {ALPHAS}\n")
+    f.write(f"Selected alpha: {best_alpha}\n")
+    f.write(f"Global baseline model: {global_model}\n")
+    f.write(f"Global baseline source macro-mean: {global_means[global_model]:.8f}\n")
+    f.write("GPQA scores were not read during source fitting or selection.\n")
+    f.write("\nValidation utility by alpha:\n")
+    for utility, alpha, per_domain in alpha_results:
+        f.write(f"alpha={alpha}: macro_utility={utility:.8f}; {per_domain}\n")
+
+# Load GPQA metadata and the exact candidate model files.
+with META.open(encoding="utf-8-sig", newline="") as f:
+    metadata = list(csv.DictReader(f))
+
+gpqa_meta = [
+    r for r in metadata
+    if "gpqa" in r["dataset"].lower()
+    and r["model"] in model_names
+]
+if len(gpqa_meta) != 33:
+    fail(f"Expected 33 GPQA files for the shared candidate pool; found {len(gpqa_meta)}")
+
+if len({r["model"] for r in gpqa_meta}) != 33:
+    fail("GPQA metadata has duplicate or missing candidate model entries.")
+
+gpqa_records = defaultdict(dict)
+gpqa_texts = defaultdict(dict)
+archive_errors = []
+
+with tarfile.open(ARCHIVE, "r:gz") as tar:
+    members = {
+        m.name.lstrip("./"): m for m in tar.getmembers() if m.isfile()
+    }
+    for meta in gpqa_meta:
+        member_name = meta["archive_path"].lstrip("./")
+        member = members.get(member_name)
+        if member is None:
+            archive_errors.append(f"Missing archive member: {member_name}")
+            continue
+        try:
+            handle = tar.extractfile(member)
+            if handle is None:
+                raise ValueError("Could not read archive member")
+            payload = json.load(handle)
+            records = payload.get("records", [])
+            if not isinstance(records, list):
+                raise ValueError("records is not a list")
+            for rec in records:
+                idx = str(rec.get("index", ""))
+                origin = rec.get("origin_query")
+                prompt = rec.get("prompt")
+                text_value = (
+                    origin if isinstance(origin, str) and origin.strip()
+                    else prompt
+                )
+                if not idx or not isinstance(text_value, str) or not text_value.strip():
+                    raise ValueError(f"Missing index/prompt in {member_name}")
+                score = rec.get("score")
+                if score is None:
+                    raise ValueError(f"Missing score: {member_name}, index={idx}")
+                score = float(score)
+                if not np.isfinite(score):
+                    raise ValueError(f"Non-finite score: {member_name}, index={idx}")
+                if idx in gpqa_records[meta["model"]]:
+                    raise ValueError(f"Duplicate index: {meta['model']}, {idx}")
+                gpqa_records[meta["model"]][idx] = score
+                gpqa_texts[meta["model"]][idx] = text_value
+        except Exception as exc:
+            archive_errors.append(f"{member_name}: {type(exc).__name__}: {exc}")
+
+if archive_errors:
+    fail("GPQA archive errors:\n" + "\n".join(archive_errors[:10]))
+
+# Confirm every candidate has exactly the same 198 prompts in the same order.
+first_model = model_names[0]
+prompt_order = list(gpqa_records[first_model].keys())
+if len(prompt_order) != 198:
+    fail(f"Expected 198 GPQA prompts, found {len(prompt_order)} for {first_model}")
+
+for model in model_names:
+    if list(gpqa_records[model].keys()) != prompt_order:
+        fail(f"Prompt order/index mismatch for GPQA model {model}")
+    for idx in prompt_order:
+        if gpqa_texts[model][idx] != gpqa_texts[first_model][idx]:
+            fail(f"Prompt text mismatch at GPQA index {idx}, model {model}")
+
+# Apply the frozen router; only now are GPQA scores used for evaluation.
+gpqa_X = np.array(
+    [
+        [feature_row(gpqa_texts[first_model][idx])[name] for name in FEATURES]
+        for idx in prompt_order
+    ],
+    dtype=float,
+)
+if gpqa_X.shape != (198, len(FEATURES)):
+    fail(f"Unexpected GPQA feature shape: {gpqa_X.shape}")
+
+predicted = np.column_stack([m.predict(gpqa_X) for m in final_models])
+router_choice = predicted.argmax(axis=1)
+router_model_names = np.array(model_names)[router_choice]
+
+router_scores = np.array([
+    gpqa_records[router_model_names[i]][idx]
+    for i, idx in enumerate(prompt_order)
+], dtype=float)
+global_scores = np.array([
+    gpqa_records[global_model][idx] for idx in prompt_order
+], dtype=float)
+
+differences = router_scores - global_scores
+rng_boot = np.random.default_rng(SEED)
+boot_means = np.empty(BOOTSTRAPS)
+for b in range(BOOTSTRAPS):
+    sample = rng_boot.integers(0, len(differences), len(differences))
+    boot_means[b] = differences[sample].mean()
+ci_low, ci_high = np.quantile(boot_means, [0.025, 0.975])
+
+wins = int(np.sum(differences > 0))
+ties = int(np.sum(differences == 0))
+losses = int(np.sum(differences < 0))
+
+with DETAIL.open("w", encoding="utf-8-sig", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow([
+        "index", "router_model", "router_score",
+        "global_model", "global_score", "paired_difference"
+    ])
+    for i, idx in enumerate(prompt_order):
+        writer.writerow([
+            idx, router_model_names[i], router_scores[i],
+            global_model, global_scores[i], differences[i]
+        ])
+
+with OUT.open("w", encoding="utf-8") as f:
+    f.write("DAY 4 — HELD-OUT GPQA TRANSFER EVALUATION\n")
+    f.write("=" * 48 + "\n")
+    f.write("Protocol: source-only tuning and baseline selection; GPQA held out.\n")
+    f.write(f"Source domains: {', '.join(source_domains)}\n")
+    f.write(f"Source prompts: {len(rows)}\n")
+    f.write(f"Candidate models compared: {len(model_names)}\n")
+    f.write(f"GPQA evaluation prompts: {len(prompt_order)}\n")
+    f.write(f"Selected alpha: {best_alpha}\n")
+    f.write(f"Global baseline model: {global_model}\n\n")
+    f.write(f"Router mean GPQA score: {router_scores.mean():.6f}\n")
+    f.write(f"Global baseline mean GPQA score: {global_scores.mean():.6f}\n")
+    f.write(f"Mean paired difference (router - global): {differences.mean():.6f}\n")
+    f.write(f"95% prompt-bootstrap percentile CI: [{ci_low:.6f}, {ci_high:.6f}]\n")
+    f.write(f"Prompt wins / ties / losses: {wins} / {ties} / {losses}\n")
+    f.write(f"Bootstrap resamples: {BOOTSTRAPS}; seed: {SEED}\n\n")
+    f.write("Interpretation guardrails:\n")
+    f.write("- This estimates performance on this GPQA sample only.\n")
+    f.write("- A confidence interval including zero does not establish improvement.\n")
+    f.write("- The prompt bootstrap treats prompts as resampling units.\n")
+    f.write("- No broad-domain generalization or novelty claim follows from this result.\n")
+    f.write("- Model scores are benchmark-provided scores; scoring semantics still matter.\n")
+    f.write(f"\nPer-prompt output: {DETAIL}\n")
+    f.write(f"Source-only config: {CONFIG}\n")
+
+print("DAY 4 GPQA TRANSFER RUN COMPLETE")
+print(f"Source prompts: {len(rows)}")
+print(f"Validation-selected alpha: {best_alpha}")
+print(f"Source-selected global baseline: {global_model}")
+print(f"GPQA prompts: {len(prompt_order)}")
+print(f"Router mean score: {router_scores.mean():.6f}")
+print(f"Global mean score: {global_scores.mean():.6f}")
+print(f"Mean paired difference: {differences.mean():.6f}")
+print(f"95% bootstrap CI: [{ci_low:.6f}, {ci_high:.6f}]")
+print(f"Wins/ties/losses: {wins}/{ties}/{losses}")
+print(f"Report: {OUT}")
+print(f"Per-prompt CSV: {DETAIL}")
+print(f"Source-only config: {CONFIG}")
+
+
+========== day1_audit/day5_mmlupro_transfer.py ==========
+import ast
+import csv
+import json
+import math
+import re
+import tarfile
+from collections import Counter
+from pathlib import Path
+
+import numpy as np
+from sklearn.linear_model import Ridge
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+ROOT = Path(__file__).resolve().parent.parent
+AUDIT = ROOT / "day1_audit"
+ARCHIVE = ROOT / "bench-release.tar.gz"
+SOURCE_CSV = AUDIT / "prompt_feature_score_table.csv"
+META_CSV = AUDIT / "all_result_metadata.csv"
+EXTRACTOR = ROOT / "extract_prompt_features.py"
+
+OUT_TXT = AUDIT / "DAY5_MMLUPRO_TRANSFER_RESULTS.txt"
+OUT_CSV = AUDIT / "DAY5_MMLUPRO_PER_PROMPT_RESULTS.csv"
+OUT_CONFIG = AUDIT / "DAY5_MMLUPRO_ROUTER_CONFIG.txt"
+OUT_REPORT = AUDIT / "DAY5_MMLUPRO_FINAL_REPORT.md"
+
+SEED = 2026
+BOOTSTRAPS = 10000
+ALPHAS = [0.1, 1.0, 10.0, 100.0]
+FEATURES = [
+    "char_count", "word_count", "line_count", "digit_count",
+    "question_mark_count", "exclamation_count", "code_symbol_count",
+    "contains_code_fence", "contains_url", "contains_equation_symbol",
+    "contains_question_word",
+]
+CANDIDATES = [
+    "claude-sonnet-4",
+    "deepseek-r1-0528",
+    "deepseek-v3.1-terminus",
+    "deepseek-v3-0324",
+    "gemini-2.5-flash",
+    "gemini-2.5-pro",
+    "glm-4.6",
+    "gpt-5",
+    "gpt-5-chat",
+    "intern-s1",
+    "kimi-k2-0905",
+    "qwen3-235b-a22b-2507",
+    "qwen3-235b-a22b-thinking-2507",
+]
+DOMAINS = [
+    "arenahard_coding",
+    "arenahard_creative_writing",
+    "arenahard_math",
+]
+
+def prompt_text(rec):
+    origin = rec.get("origin_query")
+    if isinstance(origin, str) and origin.strip():
+        return origin
+    return rec.get("prompt")
+
+def normalize(text):
+    return re.sub(r"\s+", " ", text).strip().casefold()
+
+def load_feature_function(path):
+    tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+    node = next(
+        n for n in tree.body
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and n.name == "feature_row"
+    )
+    module = ast.Module(body=[node], type_ignores=[])
+    namespace = {"re": re, "math": math}
+    exec(compile(module, str(path), "exec"), namespace)
+    return namespace["feature_row"]
+
+def numeric_feature_row(text, feature_fn):
+    result = feature_fn(text)
+    return [float(result[name]) for name in FEATURES]
+
+def macro_domain_utility(scores, choices, domains, model_names):
+    chosen_scores = scores[np.arange(len(choices)), choices]
+    per_domain = {}
+    for domain in DOMAINS:
+        mask = np.asarray(domains) == domain
+        if not mask.any():
+            raise ValueError(f"Missing source domain: {domain}")
+        per_domain[domain] = float(chosen_scores[mask].mean())
+    return float(np.mean(list(per_domain.values()))), per_domain
+
+def main():
+    for path in [ARCHIVE, SOURCE_CSV, META_CSV, EXTRACTOR]:
+        if not path.exists():
+            raise FileNotFoundError(path)
+
+    feature_fn = load_feature_function(EXTRACTOR)
+
+    with SOURCE_CSV.open(encoding="utf-8-sig", newline="") as f:
+        source_rows = list(csv.DictReader(f))
+    if not source_rows:
+        raise ValueError("Source feature/score table is empty")
+
+    feature_columns = {
+        "dataset", "index", "prompt_text_source", *FEATURES
+    }
+    available_models = set(source_rows[0]) - feature_columns
+    missing = sorted(set(CANDIDATES) - available_models)
+    if missing:
+        raise ValueError(f"Candidate models missing from source table: {missing}")
+
+    source_rows = [
+        row for row in source_rows
+        if row["dataset"] in DOMAINS
+    ]
+    if not source_rows:
+        raise ValueError("No rows found for the three expected source domains")
+
+    X = np.asarray(
+        [[float(row[f]) for f in FEATURES] for row in source_rows],
+        dtype=float,
+    )
+    Y = np.asarray(
+        [[float(row[m]) for m in CANDIDATES] for row in source_rows],
+        dtype=float,
+    )
+    source_domains = np.asarray([r["dataset"] for r in source_rows])
+
+    if not np.isfinite(X).all() or not np.isfinite(Y).all():
+        raise ValueError("Non-finite source feature or score values detected")
+
+    # Reproduce the established source-only, domain-stratified validation split.
+    rng = np.random.default_rng(SEED)
+    train_parts, val_parts = [], []
+    for domain in DOMAINS:
+        idx = np.flatnonzero(source_domains == domain)
+        if len(idx) < 2:
+            raise ValueError(f"Too few source rows in {domain}")
+        permuted = rng.permutation(idx)
+        n_val = max(1, round(0.20 * len(idx)))
+        val_parts.extend(permuted[:n_val].tolist())
+        train_parts.extend(permuted[n_val:].tolist())
+
+    train_idx = np.asarray(sorted(train_parts), dtype=int)
+    val_idx = np.asarray(sorted(val_parts), dtype=int)
+
+    alpha_results = []
+    for alpha in ALPHAS:
+        models = []
+        for j in range(len(CANDIDATES)):
+            model = make_pipeline(
+                StandardScaler(),
+                Ridge(alpha=alpha),
+            )
+            model.fit(X[train_idx], Y[train_idx, j])
+            models.append(model)
+
+        val_predictions = np.column_stack(
+            [model.predict(X[val_idx]) for model in models]
+        )
+        val_choices = val_predictions.argmax(axis=1)
+        utility, per_domain = macro_domain_utility(
+            Y[val_idx], val_choices, source_domains[val_idx], CANDIDATES
+        )
+        alpha_results.append((utility, alpha, per_domain))
+
+    # Tie-break toward stronger regularization, as in Day 4.
+    best_utility, best_alpha, best_domain_scores = max(
+        alpha_results, key=lambda item: (item[0], item[1])
+    )
+
+    # Source-only global baseline: best equal-weight mean across all three
+    # source domains. This intentionally follows the existing Day 4 protocol.
+    global_domain_means = {}
+    for j, model_name in enumerate(CANDIDATES):
+        global_domain_means[model_name] = float(np.mean([
+            Y[source_domains == d, j].mean() for d in DOMAINS
+        ]))
+    global_model = max(CANDIDATES, key=lambda m: global_domain_means[m])
+
+    # Freeze source-side choices before reading target scores.
+    final_models = []
+    for j in range(len(CANDIDATES)):
+        model = make_pipeline(
+            StandardScaler(),
+            Ridge(alpha=best_alpha),
+        )
+        model.fit(X, Y[:, j])
+        final_models.append(model)
+
+    with META_CSV.open(encoding="utf-8-sig", newline="") as f:
+        metadata = list(csv.DictReader(f))
+    target_meta = [
+        r for r in metadata
+        if r["dataset"].lower() == "mmlupro"
+        and r["split"].lower() == "test_3000"
+        and r["model"] in CANDIDATES
+    ]
+    if len(target_meta) != 13 or {r["model"] for r in target_meta} != set(CANDIDATES):
+        raise ValueError("Target metadata does not contain exactly the 13 shared candidates")
+
+    # Read only the target records after the source router is frozen.
+    target_records = {}
+    with tarfile.open(ARCHIVE, "r:gz") as tar:
+        member_map = {
+            m.name.lstrip("./"): m
+            for m in tar.getmembers() if m.isfile()
+        }
+        for row in target_meta:
+            model_name = row["model"]
+            member = member_map.get(row["archive_path"].lstrip("./"))
+            if member is None:
+                raise ValueError(f"Archive member missing for {model_name}")
+            handle = tar.extractfile(member)
+            if handle is None:
+                raise ValueError(f"Could not read archive member for {model_name}")
+            payload = json.load(handle)
+            records = payload.get("records")
+            if not isinstance(records, list) or len(records) != 3000:
+                raise ValueError(f"{model_name}: expected exactly 3000 records")
+
+            indices, texts, scores = [], [], []
+            for rec in records:
+                idx = str(rec.get("index", ""))
+                text = prompt_text(rec)
+                score = rec.get("score")
+                if not idx:
+                    raise ValueError(f"{model_name}: missing index")
+                if not isinstance(text, str) or not text.strip():
+                    raise ValueError(f"{model_name}: missing prompt at {idx}")
+                try:
+                    score = float(score)
+                except (TypeError, ValueError):
+                    raise ValueError(f"{model_name}: invalid score at {idx}")
+                if not math.isfinite(score) or score not in (0.0, 1.0):
+                    raise ValueError(f"{model_name}: unexpected score {score} at {idx}")
+                indices.append(idx)
+                texts.append(text)
+                scores.append(score)
+
+            if len(set(indices)) != 3000:
+                raise ValueError(f"{model_name}: duplicate indices")
+            target_records[model_name] = {
+                "indices": indices, "texts": texts,
+                "scores": np.asarray(scores, dtype=float),
+            }
+
+    reference = target_records[CANDIDATES[0]]
+    ref_norm = [normalize(t) for t in reference["texts"]]
+    for model_name in CANDIDATES:
+        item = target_records[model_name]
+        if item["indices"] != reference["indices"]:
+            raise ValueError(f"{model_name}: target index order mismatch")
+        if [normalize(t) for t in item["texts"]] != ref_norm:
+            raise ValueError(f"{model_name}: target prompt order mismatch")
+
+    # Prompt features are derived from the aligned target prompts.
+    Xt = np.asarray(
+        [numeric_feature_row(t, feature_fn) for t in reference["texts"]],
+        dtype=float,
+    )
+    if not np.isfinite(Xt).all():
+        raise ValueError("Non-finite target features detected")
+
+    target_predictions = np.column_stack(
+        [model.predict(Xt) for model in final_models]
+    )
+    router_choices = target_predictions.argmax(axis=1)
+    router_scores_matrix = np.column_stack(
+        [target_records[m]["scores"] for m in CANDIDATES]
+    )
+    router_scores = router_scores_matrix[
+        np.arange(len(router_choices)), router_choices
+    ]
+    global_scores = target_records[global_model]["scores"]
+    differences = router_scores - global_scores
+
+    n = len(differences)
+    boot_rng = np.random.default_rng(SEED)
+    boot_means = np.empty(BOOTSTRAPS, dtype=float)
+    # Chunked bootstrap limits peak memory use.
+    for start in range(0, BOOTSTRAPS, 200):
+        end = min(start + 200, BOOTSTRAPS)
+        sampled = boot_rng.integers(0, n, size=(end - start, n))
+        boot_means[start:end] = differences[sampled].mean(axis=1)
+    ci_low, ci_high = np.quantile(boot_means, [0.025, 0.975])
+
+    router_mean = float(router_scores.mean())
+    global_mean = float(global_scores.mean())
+    delta = float(differences.mean())
+    wins = int((differences > 0).sum())
+    ties = int((differences == 0).sum())
+    losses = int((differences < 0).sum())
+    selection_counts = Counter(CANDIDATES[i] for i in router_choices)
+
+    result_lines = [
+        "DAY 5 — MMLU-PRO HELD-OUT TRANSFER EXPERIMENT",
+        f"Target split: mmlupro/test_3000",
+        f"Target prompts: {n}",
+        f"Shared candidate models: {len(CANDIDATES)}",
+        f"Source rows: {len(source_rows)}",
+        f"Source domains: {', '.join(DOMAINS)}",
+        f"Source validation fraction per domain: 20%",
+        f"Validation seed: {SEED}",
+        f"Selected alpha: {best_alpha}",
+        f"Global baseline model: {global_model}",
+        f"Router mean score: {router_mean:.6f}",
+        f"Global baseline mean score: {global_mean:.6f}",
+        f"Mean paired difference (router - global): {delta:+.6f}",
+        f"95% prompt-bootstrap percentile CI: [{ci_low:+.6f}, {ci_high:+.6f}]",
+        f"Wins/ties/losses: {wins}/{ties}/{losses}",
+        "",
+        "ROUTER SELECTION FREQUENCIES:",
+    ]
+    result_lines += [
+        f"{model}: {selection_counts.get(model, 0)}"
+        for model in CANDIDATES
+    ]
+    result_lines += ["", "SOURCE VALIDATION UTILITY BY ALPHA:"]
+    for utility, alpha, per_domain in alpha_results:
+        result_lines.append(
+            f"alpha={alpha}: macro_utility={utility:.8f}; {per_domain}"
+        )
+    result_lines += [
+        "",
+        "GLOBAL BASELINE SOURCE MACRO-MEAN:",
+        *[f"{m}: {global_domain_means[m]:.8f}" for m in CANDIDATES],
+        "",
+        "Interpretation: target results are descriptive for this benchmark and",
+        "this candidate pool. A bootstrap interval containing zero does not",
+        "establish a reliable difference. One transfer benchmark cannot establish",
+        "broad generalization or research novelty.",
+        "The prompt bootstrap conditions on the observed benchmark prompts and",
+        "does not quantify training, model-version, or benchmark-construction uncertainty.",
+        "The global baseline is selected on all source rows, whereas alpha is",
+        "selected using source validation. This protocol asymmetry is documented.",
+        "Cost/latency claims are excluded because aggregate metric semantics remain unresolved.",
+    ]
+    OUT_TXT.write_text("\n".join(result_lines) + "\n", encoding="utf-8")
+
+    with OUT_CSV.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            "index", "router_model", "router_score",
+            "global_model", "global_score", "paired_difference",
+        ])
+        for i in range(n):
+            writer.writerow([
+                reference["indices"][i],
+                CANDIDATES[int(router_choices[i])],
+                float(router_scores[i]),
+                global_model,
+                float(global_scores[i]),
+                float(differences[i]),
+            ])
+
+    config_lines = [
+        "DAY 5 — SOURCE-ONLY ROUTER CONFIGURATION",
+        f"Source rows: {len(source_rows)}",
+        f"Source domains: {', '.join(DOMAINS)}",
+        f"Candidate models: {len(CANDIDATES)}",
+        f"Validation seed: {SEED}",
+        f"Validation fraction per source domain: 20%",
+        f"Alpha candidates: {ALPHAS}",
+        f"Selected alpha: {best_alpha}",
+        f"Selected source validation macro utility: {best_utility:.8f}",
+        f"Source-selected global baseline: {global_model}",
+        f"Global baseline source macro-mean: {global_domain_means[global_model]:.8f}",
+        "Target scores were not used for source fitting or model/alpha selection.",
+        "",
+        "Validation utility by alpha:",
+    ]
+    config_lines += [
+        f"alpha={alpha}: utility={utility:.8f}; {per_domain}"
+        for utility, alpha, per_domain in alpha_results
+    ]
+    OUT_CONFIG.write_text("\n".join(config_lines) + "\n", encoding="utf-8")
+
+    report = f"""# Day 5 — MMLU-Pro Held-Out Transfer Results
+
+## Protocol
+
+- Source: {len(source_rows)} ArenaHard rows across coding, creative writing, and math.
+- Features: 11 lexical/structural prompt features.
+- Candidate pool: 13 models shared between source data and MMLU-Pro `test_3000`.
+- Alpha selected from {ALPHAS} using a domain-stratified 20% source validation split (seed {SEED}).
+- Final router refit on all source rows after alpha selection.
+- Target: 3,000 aligned MMLU-Pro prompts; target scores are evaluation-only.
+- Global baseline selected by equal-weight mean performance across source domains: `{global_model}`.
+
+## Results
+
+| Metric | Result |
+|---|---:|
+| Router mean score | {router_mean:.4%} |
+| Global baseline mean score | {global_mean:.4%} |
+| Paired difference (router − baseline) | {delta*100:+.3f} percentage points |
+| 95% prompt-bootstrap percentile interval | [{ci_low*100:+.3f}, {ci_high*100:+.3f}] percentage points |
+| Router wins / ties / losses | {wins} / {ties} / {losses} |
+| Selected alpha | {best_alpha} |
+
+## Interpretation
+
+This is one held-out benchmark transfer result, not evidence by itself of broad generalization or novelty. If the interval contains zero, the observed difference is not statistically distinguishable from zero under this prompt-bootstrap analysis. If the interval excludes zero, that is still limited to the benchmark and evaluation protocol used here.
+
+The baseline is selected using all source rows while alpha is selected using a source validation split. This asymmetry is documented rather than hidden. The bootstrap does not capture variability from training choices, model versions, or benchmark construction. Cost and latency comparisons are omitted pending metric-semantics verification.
+
+## Router model selection frequencies
+
+{chr(10).join(f"- `{m}`: {selection_counts.get(m, 0)} prompts" for m in CANDIDATES)}
+
+## Artifacts
+
+- `DAY5_MMLUPRO_TRANSFER_RESULTS.txt`
+- `DAY5_MMLUPRO_PER_PROMPT_RESULTS.csv`
+- `DAY5_MMLUPRO_ROUTER_CONFIG.txt`
+- `DAY5_MMLUPRO_FINAL_REPORT.md`
+"""
+    OUT_REPORT.write_text(report, encoding="utf-8")
+
+    print("\n".join(result_lines[:18]))
+    print("\nARTIFACTS WRITTEN:")
+    for p in [OUT_TXT, OUT_CSV, OUT_CONFIG, OUT_REPORT]:
+        print(p)
+    print("\nDAY 5 MMLU-PRO TRANSFER RUN COMPLETE")
+
+if __name__ == "__main__":
+    main()
+
+
+========== day1_audit/day7_repeated_split_robustness.py ==========
+import ast
+import csv
+import json
+import math
+import re
+import tarfile
+from collections import Counter
+from pathlib import Path
+
+import numpy as np
+from sklearn.linear_model import Ridge
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+ROOT = Path(__file__).resolve().parent.parent
+AUDIT = ROOT / "day1_audit"
+ARCHIVE = ROOT / "bench-release.tar.gz"
+SOURCE_CSV = AUDIT / "prompt_feature_score_table.csv"
+META_CSV = AUDIT / "all_result_metadata.csv"
+EXTRACTOR = ROOT / "extract_prompt_features.py"
+
+OUT_SUMMARY = AUDIT / "DAY7_REPEATED_SPLIT_SUMMARY.txt"
+OUT_CSV = AUDIT / "DAY7_REPEATED_SPLIT_RESULTS.csv"
+
+SEEDS = list(range(2026, 2036))
+ALPHAS = [0.1, 1.0, 10.0, 100.0]
+BOOTSTRAPS = 2000
+DOMAINS = [
+    "arenahard_coding",
+    "arenahard_creative_writing",
+    "arenahard_math",
+]
+FEATURES = [
+    "char_count", "word_count", "line_count", "digit_count",
+    "question_mark_count", "exclamation_count", "code_symbol_count",
+    "contains_code_fence", "contains_url", "contains_equation_symbol",
+    "contains_question_word",
+]
+CANDIDATES = [
+    "claude-sonnet-4", "deepseek-r1-0528",
+    "deepseek-v3.1-terminus", "deepseek-v3-0324",
+    "gemini-2.5-flash", "gemini-2.5-pro", "glm-4.6",
+    "gpt-5", "gpt-5-chat", "intern-s1", "kimi-k2-0905",
+    "qwen3-235b-a22b-2507", "qwen3-235b-a22b-thinking-2507",
+]
+FIXED_REFERENCE = "gemini-2.5-pro"
+
+
+def load_feature_function(path):
+    tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+    node = next(
+        n for n in tree.body
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and n.name == "feature_row"
+    )
+    namespace = {"re": re, "math": math}
+    exec(compile(ast.Module(body=[node], type_ignores=[]),
+                 str(path), "exec"), namespace)
+    return namespace["feature_row"]
+
+
+def get_text(rec):
+    q = rec.get("origin_query")
+    if isinstance(q, str) and q.strip():
+        return q
+    return rec.get("prompt")
+
+
+def macro_utility(scores, choices, domains):
+    chosen = scores[np.arange(len(choices)), choices]
+    return float(np.mean([
+        chosen[np.asarray(domains) == d].mean() for d in DOMAINS
+    ]))
+
+
+def fit_models(X, Y, alpha, indices):
+    fitted = []
+    for j in range(Y.shape[1]):
+        model = make_pipeline(StandardScaler(), Ridge(alpha=alpha))
+        model.fit(X[indices], Y[indices, j])
+        fitted.append(model)
+    return fitted
+
+
+def bootstrap_ci(differences, seed):
+    rng = np.random.default_rng(seed)
+    n = len(differences)
+    values = np.empty(BOOTSTRAPS)
+    for start in range(0, BOOTSTRAPS, 100):
+        end = min(start + 100, BOOTSTRAPS)
+        sample = rng.integers(0, n, size=(end-start, n))
+        values[start:end] = differences[sample].mean(axis=1)
+    return np.quantile(values, [0.025, 0.975])
+
+
+def main():
+    for p in [ARCHIVE, SOURCE_CSV, META_CSV, EXTRACTOR]:
+        if not p.exists():
+            raise FileNotFoundError(p)
+
+    feature_fn = load_feature_function(EXTRACTOR)
+
+    with SOURCE_CSV.open(encoding="utf-8-sig", newline="") as f:
+        rows = [r for r in csv.DictReader(f) if r["dataset"] in DOMAINS]
+
+    if len(rows) != 750:
+        raise ValueError(f"Expected 750 source rows, found {len(rows)}")
+
+    X = np.asarray([[float(r[c]) for c in FEATURES] for r in rows])
+    Y = np.asarray([[float(r[m]) for m in CANDIDATES] for r in rows])
+    domains = np.asarray([r["dataset"] for r in rows])
+
+    with META_CSV.open(encoding="utf-8-sig", newline="") as f:
+        metadata = list(csv.DictReader(f))
+
+    target_meta = [
+        r for r in metadata
+        if r["dataset"].lower() == "mmlupro"
+        and r["split"].lower() == "test_3000"
+        and r["model"] in CANDIDATES
+    ]
+    if len(target_meta) != len(CANDIDATES):
+        raise ValueError("Expected metadata for all 13 target models")
+
+    target_records = {}
+    with tarfile.open(ARCHIVE, "r:gz") as tar:
+        members = {
+            m.name.lstrip("./"): m for m in tar.getmembers() if m.isfile()
+        }
+        for meta in target_meta:
+            name = meta["model"]
+            member = members.get(meta["archive_path"].lstrip("./"))
+            if member is None:
+                raise ValueError(f"Archive member missing: {name}")
+            payload = json.load(tar.extractfile(member))
+            records = payload.get("records")
+            if not isinstance(records, list) or len(records) != 3000:
+                raise ValueError(f"{name}: expected 3000 records")
+
+            indices, texts, scores = [], [], []
+            for rec in records:
+                idx, txt = str(rec.get("index", "")), get_text(rec)
+                score = float(rec["score"])
+                if not idx or not isinstance(txt, str) or not txt.strip():
+                    raise ValueError(f"Invalid target record in {name}")
+                if score not in (0.0, 1.0):
+                    raise ValueError(f"Unexpected score in {name}: {score}")
+                indices.append(idx)
+                texts.append(re.sub(r"\s+", " ", txt).strip().casefold())
+                scores.append(score)
+            if len(set(indices)) != 3000:
+                raise ValueError(f"Duplicate target indices: {name}")
+            target_records[name] = (indices, texts, np.asarray(scores))
+
+    first = target_records[CANDIDATES[0]]
+    for name in CANDIDATES:
+        item = target_records[name]
+        if item[0] != first[0] or item[1] != first[1]:
+            raise ValueError(f"Target prompt alignment mismatch: {name}")
+
+    Xt = np.asarray([
+        [float(feature_fn(txt)[c]) for c in FEATURES]
+        for txt in [get_text(rec) for rec in []]
+    ]) if False else None
+
+    # Use original target text; features are computed once and reused.
+    target_texts = []
+    first_meta = next(r for r in target_meta if r["model"] == CANDIDATES[0])
+    with tarfile.open(ARCHIVE, "r:gz") as tar:
+        member = next(
+            m for m in tar.getmembers()
+            if m.isfile() and m.name.lstrip("./") ==
+            first_meta["archive_path"].lstrip("./")
+        )
+        payload = json.load(tar.extractfile(member))
+        target_texts = [get_text(rec) for rec in payload["records"]]
+
+    Xt = np.asarray([
+        [float(feature_fn(txt)[c]) for c in FEATURES]
+        for txt in target_texts
+    ])
+    target_Y = np.column_stack([target_records[m][2] for m in CANDIDATES])
+    target_domains = None
+    model_counts = Counter()
+    results = []
+
+    for seed in SEEDS:
+        rng = np.random.default_rng(seed)
+        train_parts, val_parts = [], []
+        for domain in DOMAINS:
+            idx = np.flatnonzero(domains == domain)
+            perm = rng.permutation(idx)
+            n_val = max(1, round(0.20 * len(idx)))
+            val_parts.extend(perm[:n_val].tolist())
+            train_parts.extend(perm[n_val:].tolist())
+
+        train_idx = np.asarray(sorted(train_parts), dtype=int)
+        val_idx = np.asarray(sorted(val_parts), dtype=int)
+
+        alpha_rows = []
+        for alpha in ALPHAS:
+            models = fit_models(X, Y, alpha, train_idx)
+            pred = np.column_stack([m.predict(X[val_idx]) for m in models])
+            choices = pred.argmax(axis=1)
+            utility = macro_utility(Y[val_idx], choices, domains[val_idx])
+            alpha_rows.append((utility, alpha))
+
+        # Fixed tie-break: choose the larger alpha on a utility tie.
+        _, best_alpha = max(alpha_rows, key=lambda x: (x[0], x[1]))
+
+        baseline_validation = {
+            m: float(np.mean([
+                Y[val_idx[domains[val_idx] == d], j].mean()
+                for d in DOMAINS
+            ]))
+            for j, m in enumerate(CANDIDATES)
+        }
+        baseline = max(CANDIDATES, key=lambda m: baseline_validation[m])
+        model_counts[baseline] += 1
+
+        final_models = fit_models(X, Y, best_alpha, np.arange(len(rows)))
+        target_pred = np.column_stack([m.predict(Xt) for m in final_models])
+        choices = target_pred.argmax(axis=1)
+        router_score = target_Y[np.arange(len(Xt)), choices]
+        baseline_score = target_records[baseline][2]
+        gemini_score = target_records[FIXED_REFERENCE][2]
+
+        d_selected = router_score - baseline_score
+        d_gemini = router_score - gemini_score
+        ci_selected = bootstrap_ci(d_selected, seed + 50000)
+        ci_gemini = bootstrap_ci(d_gemini, seed + 50000)
+
+        results.append({
+            "seed": seed,
+            "alpha": best_alpha,
+            "baseline": baseline,
+            "validation_baseline_utility": baseline_validation[baseline],
+            "router_accuracy": router_score.mean(),
+            "selected_baseline_accuracy": baseline_score.mean(),
+            "router_minus_selected_baseline": d_selected.mean(),
+            "selected_ci_low": ci_selected[0],
+            "selected_ci_high": ci_selected[1],
+            "gemini_accuracy": gemini_score.mean(),
+            "router_minus_gemini": d_gemini.mean(),
+            "gemini_ci_low": ci_gemini[0],
+            "gemini_ci_high": ci_gemini[1],
+        })
+
+    fields = list(results[0].keys())
+    with OUT_CSV.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(results)
+
+    lines = [
+        "DAY 7 — REPEATED SOURCE-VALIDATION SPLITS",
+        "Target: MMLU-Pro test_3000 (3000 prompts)",
+        f"Prespecified seeds: {SEEDS}",
+        "Each seed selects alpha and baseline using source validation only.",
+        "Target results are evaluation-only and do not select a seed.",
+        "",
+        "BASELINE SELECTION COUNTS:",
+    ]
+    lines += [f"{m}: {model_counts[m]}" for m in CANDIDATES]
+    lines += ["", "PER-SEED RESULTS:"]
+    for r in results:
+        lines.append(
+            f"seed={r['seed']} alpha={r['alpha']} baseline={r['baseline']} "
+            f"router={r['router_accuracy']:.4f} "
+            f"selected_baseline={r['selected_baseline_accuracy']:.4f} "
+            f"delta_selected={r['router_minus_selected_baseline']:+.4f} "
+            f"CI=[{r['selected_ci_low']:+.4f},{r['selected_ci_high']:+.4f}] "
+            f"Gemini={r['gemini_accuracy']:.4f} "
+            f"delta_Gemini={r['router_minus_gemini']:+.4f}"
+        )
+
+    lines += [
+        "",
+        "SUMMARY ACROSS PRESPECIFIED SPLITS (descriptive, not independent trials):",
+        f"Baseline-selection frequencies: {dict(model_counts)}",
+        f"Selected-baseline delta mean: {np.mean([r['router_minus_selected_baseline'] for r in results]):+.4f}",
+        f"Selected-baseline delta min/max: {min(r['router_minus_selected_baseline'] for r in results):+.4f} / {max(r['router_minus_selected_baseline'] for r in results):+.4f}",
+        f"Gemini delta mean: {np.mean([r['router_minus_gemini'] for r in results]):+.4f}",
+        f"Gemini delta min/max: {min(r['router_minus_gemini'] for r in results):+.4f} / {max(r['router_minus_gemini'] for r in results):+.4f}",
+        "",
+        "Caution: the same target prompts are reused across seeds. Do not treat",
+        "these ten runs as independent target samples or select a best seed.",
+        "The prompt bootstrap intervals condition on the observed target prompts.",
+        "This experiment covers MMLU-Pro only; it does not establish broad generalization.",
+    ]
+    OUT_SUMMARY.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("\n".join(lines))
+    print("\nArtifacts written:")
+    print(OUT_SUMMARY)
+    print(OUT_CSV)
+    print("\nDAY 7 COMPLETE")
+
+
+if __name__ == "__main__":
+    main()
+
+
+========== day1_audit/day8_gpqa_repeated_splits.py ==========
+import ast
+import csv
+import json
+import math
+import re
+import tarfile
+from collections import Counter
+from pathlib import Path
+
+import numpy as np
+from sklearn.linear_model import Ridge
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+
+ROOT = Path(__file__).resolve().parent.parent
+AUDIT = ROOT / "day1_audit"
+ARCHIVE = ROOT / "bench-release.tar.gz"
+SOURCE_CSV = AUDIT / "prompt_feature_score_table.csv"
+META_CSV = AUDIT / "all_result_metadata.csv"
+EXTRACTOR = ROOT / "extract_prompt_features.py"
+
+OUT_SUMMARY = AUDIT / "DAY8_GPQA_REPEATED_SPLIT_SUMMARY.txt"
+OUT_CSV = AUDIT / "DAY8_GPQA_REPEATED_SPLIT_RESULTS.csv"
+
+SEEDS = list(range(2026, 2036))
+ALPHAS = [0.1, 1.0, 10.0, 100.0]
+BOOTSTRAPS = 2000
+DOMAINS = [
+    "arenahard_coding",
+    "arenahard_creative_writing",
+    "arenahard_math",
+]
+FEATURES = [
+    "char_count", "word_count", "line_count", "digit_count",
+    "question_mark_count", "exclamation_count", "code_symbol_count",
+    "contains_code_fence", "contains_url", "contains_equation_symbol",
+    "contains_question_word",
+]
+CANDIDATES = [
+    "claude-sonnet-4", "deepseek-r1-0528",
+    "deepseek-v3.1-terminus", "deepseek-v3-0324",
+    "gemini-2.5-flash", "gemini-2.5-pro", "glm-4.6",
+    "gpt-5", "gpt-5-chat", "intern-s1", "kimi-k2-0905",
+    "qwen3-235b-a22b-2507", "qwen3-235b-a22b-thinking-2507",
+]
+FIXED_REFERENCE = "gemini-2.5-pro"
+
+
+def load_feature_function(path):
+    tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+    node = next(
+        n for n in tree.body
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and n.name == "feature_row"
+    )
+    namespace = {"re": re, "math": math}
+    exec(compile(ast.Module(body=[node], type_ignores=[]),
+                 str(path), "exec"), namespace)
+    return namespace["feature_row"]
+
+
+def get_text(rec):
+    q = rec.get("origin_query")
+    if isinstance(q, str) and q.strip():
+        return q
+    return rec.get("prompt")
+
+
+def macro_utility(scores, choices, domains):
+    chosen = scores[np.arange(len(choices)), choices]
+    return float(np.mean([
+        chosen[np.asarray(domains) == d].mean() for d in DOMAINS
+    ]))
+
+
+def fit_models(X, Y, alpha, indices):
+    fitted = []
+    for j in range(Y.shape[1]):
+        model = make_pipeline(StandardScaler(), Ridge(alpha=alpha))
+        model.fit(X[indices], Y[indices, j])
+        fitted.append(model)
+    return fitted
+
+
+def bootstrap_ci(differences, seed):
+    rng = np.random.default_rng(seed)
+    n = len(differences)
+    values = np.empty(BOOTSTRAPS)
+    for start in range(0, BOOTSTRAPS, 100):
+        end = min(start + 100, BOOTSTRAPS)
+        sample = rng.integers(0, n, size=(end-start, n))
+        values[start:end] = differences[sample].mean(axis=1)
+    return np.quantile(values, [0.025, 0.975])
+
+
+def main():
+    for p in [ARCHIVE, SOURCE_CSV, META_CSV, EXTRACTOR]:
+        if not p.exists():
+            raise FileNotFoundError(p)
+
+    feature_fn = load_feature_function(EXTRACTOR)
+
+    with SOURCE_CSV.open(encoding="utf-8-sig", newline="") as f:
+        rows = [r for r in csv.DictReader(f) if r["dataset"] in DOMAINS]
+
+    if len(rows) != 750:
+        raise ValueError(f"Expected 750 source rows, found {len(rows)}")
+
+    X = np.asarray([[float(r[c]) for c in FEATURES] for r in rows])
+    Y = np.asarray([[float(r[m]) for m in CANDIDATES] for r in rows])
+    domains = np.asarray([r["dataset"] for r in rows])
+
+    with META_CSV.open(encoding="utf-8-sig", newline="") as f:
+        metadata = list(csv.DictReader(f))
+
+    target_meta = [
+        r for r in metadata
+        if r["dataset"].lower() == "gpqa"
+        and r["split"].lower() == "test"
+        and r["model"] in CANDIDATES
+    ]
+    if len(target_meta) != len(CANDIDATES):
+        raise ValueError("Expected metadata for all 13 GPQA target models")
+
+    target_records = {}
+    with tarfile.open(ARCHIVE, "r:gz") as tar:
+        members = {
+            m.name.lstrip("./"): m for m in tar.getmembers() if m.isfile()
+        }
+        for meta in target_meta:
+            name = meta["model"]
+            member = members.get(meta["archive_path"].lstrip("./"))
+            if member is None:
+                raise ValueError(f"Archive member missing: {name}")
+            payload = json.load(tar.extractfile(member))
+            records = payload.get("records")
+            if not isinstance(records, list) or len(records) != 198:
+                raise ValueError(f"{name}: expected 198 records")
+
+            indices, texts, scores = [], [], []
+            for rec in records:
+                idx, txt = str(rec.get("index", "")), get_text(rec)
+                score = float(rec["score"])
+                if not idx or not isinstance(txt, str) or not txt.strip():
+                    raise ValueError(f"Invalid target record in {name}")
+                if score not in (0.0, 1.0):
+                    raise ValueError(f"Unexpected score in {name}: {score}")
+                indices.append(idx)
+                texts.append(re.sub(r"\s+", " ", txt).strip().casefold())
+                scores.append(score)
+            if len(set(indices)) != 198:
+                raise ValueError(f"Duplicate target indices: {name}")
+            target_records[name] = (indices, texts, np.asarray(scores))
+
+    first = target_records[CANDIDATES[0]]
+    for name in CANDIDATES:
+        item = target_records[name]
+        if item[0] != first[0] or item[1] != first[1]:
+            raise ValueError(f"Target prompt alignment mismatch: {name}")
+
+    Xt = np.asarray([
+        [float(feature_fn(txt)[c]) for c in FEATURES]
+        for txt in [get_text(rec) for rec in []]
+    ]) if False else None
+
+    # Use original target text; features are computed once and reused.
+    target_texts = []
+    first_meta = next(r for r in target_meta if r["model"] == CANDIDATES[0])
+    with tarfile.open(ARCHIVE, "r:gz") as tar:
+        member = next(
+            m for m in tar.getmembers()
+            if m.isfile() and m.name.lstrip("./") ==
+            first_meta["archive_path"].lstrip("./")
+        )
+        payload = json.load(tar.extractfile(member))
+        target_texts = [get_text(rec) for rec in payload["records"]]
+
+    Xt = np.asarray([
+        [float(feature_fn(txt)[c]) for c in FEATURES]
+        for txt in target_texts
+    ])
+    target_Y = np.column_stack([target_records[m][2] for m in CANDIDATES])
+    if target_Y.shape[0] != 198:
+        raise ValueError(f"Expected 198 GPQA prompts, found {target_Y.shape[0]}")
+    target_domains = None
+    model_counts = Counter()
+    results = []
+
+    for seed in SEEDS:
+        rng = np.random.default_rng(seed)
+        train_parts, val_parts = [], []
+        for domain in DOMAINS:
+            idx = np.flatnonzero(domains == domain)
+            perm = rng.permutation(idx)
+            n_val = max(1, round(0.20 * len(idx)))
+            val_parts.extend(perm[:n_val].tolist())
+            train_parts.extend(perm[n_val:].tolist())
+
+        train_idx = np.asarray(sorted(train_parts), dtype=int)
+        val_idx = np.asarray(sorted(val_parts), dtype=int)
+
+        alpha_rows = []
+        for alpha in ALPHAS:
+            models = fit_models(X, Y, alpha, train_idx)
+            pred = np.column_stack([m.predict(X[val_idx]) for m in models])
+            choices = pred.argmax(axis=1)
+            utility = macro_utility(Y[val_idx], choices, domains[val_idx])
+            alpha_rows.append((utility, alpha))
+
+        # Fixed tie-break: choose the larger alpha on a utility tie.
+        _, best_alpha = max(alpha_rows, key=lambda x: (x[0], x[1]))
+
+        baseline_validation = {
+            m: float(np.mean([
+                Y[val_idx[domains[val_idx] == d], j].mean()
+                for d in DOMAINS
+            ]))
+            for j, m in enumerate(CANDIDATES)
+        }
+        baseline = max(CANDIDATES, key=lambda m: baseline_validation[m])
+        model_counts[baseline] += 1
+
+        final_models = fit_models(X, Y, best_alpha, np.arange(len(rows)))
+        target_pred = np.column_stack([m.predict(Xt) for m in final_models])
+        choices = target_pred.argmax(axis=1)
+        router_score = target_Y[np.arange(len(Xt)), choices]
+        baseline_score = target_records[baseline][2]
+        gemini_score = target_records[FIXED_REFERENCE][2]
+
+        d_selected = router_score - baseline_score
+        d_gemini = router_score - gemini_score
+        ci_selected = bootstrap_ci(d_selected, seed + 50000)
+        ci_gemini = bootstrap_ci(d_gemini, seed + 50000)
+
+        results.append({
+            "seed": seed,
+            "alpha": best_alpha,
+            "baseline": baseline,
+            "validation_baseline_utility": baseline_validation[baseline],
+            "router_accuracy": router_score.mean(),
+            "selected_baseline_accuracy": baseline_score.mean(),
+            "router_minus_selected_baseline": d_selected.mean(),
+            "selected_ci_low": ci_selected[0],
+            "selected_ci_high": ci_selected[1],
+            "gemini_accuracy": gemini_score.mean(),
+            "router_minus_gemini": d_gemini.mean(),
+            "gemini_ci_low": ci_gemini[0],
+            "gemini_ci_high": ci_gemini[1],
+        })
+
+    fields = list(results[0].keys())
+    with OUT_CSV.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(results)
+
+    lines = [
+        "DAY 8 — REPEATED SOURCE-VALIDATION SPLITS",
+        "Target: GPQA test (198 prompts)",
+        f"Prespecified seeds: {SEEDS}",
+        "Each seed selects alpha and baseline using source validation only.",
+        "Target results are evaluation-only and do not select a seed.",
+        "",
+        "BASELINE SELECTION COUNTS:",
+    ]
+    lines += [f"{m}: {model_counts[m]}" for m in CANDIDATES]
+    lines += ["", "PER-SEED RESULTS:"]
+    for r in results:
+        lines.append(
+            f"seed={r['seed']} alpha={r['alpha']} baseline={r['baseline']} "
+            f"router={r['router_accuracy']:.4f} "
+            f"selected_baseline={r['selected_baseline_accuracy']:.4f} "
+            f"delta_selected={r['router_minus_selected_baseline']:+.4f} "
+            f"CI=[{r['selected_ci_low']:+.4f},{r['selected_ci_high']:+.4f}] "
+            f"Gemini={r['gemini_accuracy']:.4f} "
+            f"delta_Gemini={r['router_minus_gemini']:+.4f}"
+        )
+
+    lines += [
+        "",
+        "SUMMARY ACROSS PRESPECIFIED SPLITS (descriptive, not independent trials):",
+        f"Baseline-selection frequencies: {dict(model_counts)}",
+        f"Selected-baseline delta mean: {np.mean([r['router_minus_selected_baseline'] for r in results]):+.4f}",
+        f"Selected-baseline delta min/max: {min(r['router_minus_selected_baseline'] for r in results):+.4f} / {max(r['router_minus_selected_baseline'] for r in results):+.4f}",
+        f"Gemini delta mean: {np.mean([r['router_minus_gemini'] for r in results]):+.4f}",
+        f"Gemini delta min/max: {min(r['router_minus_gemini'] for r in results):+.4f} / {max(r['router_minus_gemini'] for r in results):+.4f}",
+        "",
+        "Caution: the same target prompts are reused across seeds. Do not treat",
+        "these ten runs as independent target samples or select a best seed.",
+        "The prompt bootstrap intervals condition on the observed target prompts.",
+        "This experiment covers GPQA only; it does not establish broad generalization.",
+    ]
+    OUT_SUMMARY.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("\n".join(lines))
+    print("\nArtifacts written:")
+    print(OUT_SUMMARY)
+    print(OUT_CSV)
+    print("\nDAY 8 COMPLETE")
+
+
+if __name__ == "__main__":
+    main()
+
+
+========== day1_audit/DAY4_GPQA_ROUTER_CONFIG.txt ==========
+DAY 4 — SOURCE-ONLY ROUTER CONFIGURATION
+Source rows: 750
+Source domains: arenahard_coding, arenahard_creative_writing, arenahard_math
+Candidate models: 33
+Alpha candidates: [0.1, 1.0, 10.0, 100.0]
+Selected alpha: 10.0
+Global baseline model: gemini-2.5-pro
+Global baseline source macro-mean: 0.76962897
+GPQA scores were not read during source fitting or selection.
+
+Validation utility by alpha:
+alpha=0.1: macro_utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=1.0: macro_utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=10.0: macro_utility=0.78225157; {'arenahard_coding': 0.7745098039215687, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6122448979591837}
+alpha=100.0: macro_utility=0.78198479; {'arenahard_coding': 0.7941176470588235, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.5918367346938775}
+
+
+========== day1_audit/DAY5_MMLUPRO_ROUTER_CONFIG.txt ==========
+DAY 5 — SOURCE-ONLY ROUTER CONFIGURATION
+Source rows: 750
+Source domains: arenahard_coding, arenahard_creative_writing, arenahard_math
+Candidate models: 13
+Validation seed: 2026
+Validation fraction per source domain: 20%
+Alpha candidates: [0.1, 1.0, 10.0, 100.0]
+Selected alpha: 10.0
+Selected source validation macro utility: 0.78225157
+Source-selected global baseline: gemini-2.5-pro
+Global baseline source macro-mean: 0.76962897
+Target scores were not used for source fitting or model/alpha selection.
+
+Validation utility by alpha:
+alpha=0.1: utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=1.0: utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=10.0: utility=0.78225157; {'arenahard_coding': 0.7745098039215687, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6122448979591837}
+alpha=100.0: utility=0.78198479; {'arenahard_coding': 0.7941176470588235, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.5918367346938775}
+
+
+========== day1_audit/DAY6_MMLUPRO_ROUTER_CONFIG.txt ==========
+DAY 6 — SOURCE-ONLY ROUTER CONFIGURATION
+Source rows: 750
+Source domains: arenahard_coding, arenahard_creative_writing, arenahard_math
+Candidate models: 13
+Validation seed: 2026
+Validation fraction per source domain: 20%
+Alpha candidates: [0.1, 1.0, 10.0, 100.0]
+Selected alpha: 10.0
+Selected source validation macro utility: 0.78225157
+Validation-selected global baseline: qwen3-235b-a22b-thinking-2507
+Global baseline validation macro-mean: 0.79526344
+Target scores were not used for source fitting or model/alpha selection.
+
+Validation utility by alpha:
+alpha=0.1: utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=1.0: utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=10.0: utility=0.78225157; {'arenahard_coding': 0.7745098039215687, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6122448979591837}
+alpha=100.0: utility=0.78198479; {'arenahard_coding': 0.7941176470588235, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.5918367346938775}
+
+
+========== day1_audit/DAY10_BASELINE_FEASIBILITY.txt ==========
+DAY 10 � BASELINE FEASIBILITY AUDIT
+Generated: 2026-10-23 18:52:28
+
+=== prompt_feature_score_table.csv ===
+Header: dataset,index,prompt_text_source,char_count,word_count,line_count,digit_count,question_mark_count,exclamation_count,code_symbol_count,contains_code_fence,contains_url,contains_equation_symbol,contains_question_word,DeepHermes-3-Llama-3-8B-Preview,DeepSeek-R1-0528-Qwen3-8B,DeepSeek-R1-Distill-Qwen-7B,Fin-R1,GLM-Z1-9B-0414,Intern-S1-mini,Llama-3.1-8B-Instruct,Llama-3.1-8B-UltraMedical,Llama-3.1-Nemotron-Nano-8B-v1,MiMo-7B-RL-0530,MiniCPM4.1-8B,NVIDIA-Nemotron-Nano-9B-v2,OpenThinker3-7B,Qwen2.5-Coder-7B-Instruct,Qwen3-8B,claude-sonnet-4,cogito-v1-preview-llama-8B,deepseek-r1-0528,deepseek-v3-0324,deepseek-v3.1-terminus,gemini-2.5-flash,gemini-2.5-pro,gemma-2-9b-it,glm-4-9b-chat,glm-4.6,gpt-5,gpt-5-chat,granite-3.3-8b-instruct,intern-s1,internlm3-8b-instruct,kimi-k2-0905,qwen3-235b-a22b-2507,qwen3-235b-a22b-thinking-2507
+Sample rows:
+{"dataset":"arenahard_coding","index":"1","prompt_text_source":"origin_query when available, otherwise prompt","char_count":"3329","word_count":"560","line_count":"45","digit_count":"415","question_mark_count":"1","exclamation_count":"6","code_symbol_count":"8","contains_code_fence":"1","contains_url":"0","contains_equation_symbol":"1","contains_question_word":"1","DeepHermes-3-Llama-3-8B-Preview":"0.0","DeepSeek-R1-0528-Qwen3-8B":"0.0","DeepSeek-R1-Distill-Qwen-7B":"0.0","Fin-R1":"0.0","GLM-Z1-9B-0414":"0.0","Intern-S1-mini":"0.0","Llama-3.1-8B-Instruct":"0.0","Llama-3.1-8B-UltraMedical":"0.0","Llama-3.1-Nemotron-Nano-8B-v1":"0.0","MiMo-7B-RL-0530":"0.0","MiniCPM4.1-8B":"0.0","NVIDIA-Nemotron-Nano-9B-v2":"0.0","OpenThinker3-7B":"0.0","Qwen2.5-Coder-7B-Instruct":"0.0","Qwen3-8B":"0.0","claude-sonnet-4":"1.0","cogito-v1-preview-llama-8B":"0.0","deepseek-r1-0528":"0.0","deepseek-v3-0324":"0.0","deepseek-v3.1-terminus":"0.0","gemini-2.5-flash":"0.0","gemini-2.5-pro":"0.0","gemma-2-9b-it":"0.0","glm-4-9b-chat":"0.0","glm-4.6":"0.0","gpt-5":"0.5","gpt-5-chat":"0.0","granite-3.3-8b-instruct":"0.0","intern-s1":"1.0","internlm3-8b-instruct":"0.0","kimi-k2-0905":"0.5","qwen3-235b-a22b-2507":"0.5","qwen3-235b-a22b-thinking-2507":"1.0"}
+{"dataset":"arenahard_coding","index":"2","prompt_text_source":"origin_query when available, otherwise prompt","char_count":"91","word_count":"16","line_count":"1","digit_count":"3","question_mark_count":"0","exclamation_count":"0","code_symbol_count":"0","contains_code_fence":"0","contains_url":"0","contains_equation_symbol":"0","contains_question_word":"0","DeepHermes-3-Llama-3-8B-Preview":"0.0","DeepSeek-R1-0528-Qwen3-8B":"0.0","DeepSeek-R1-Distill-Qwen-7B":"0.0","Fin-R1":"0.0","GLM-Z1-9B-0414":"0.0","Intern-S1-mini":"0.0","Llama-3.1-8B-Instruct":"0.0","Llama-3.1-8B-UltraMedical":"0.0","Llama-3.1-Nemotron-Nano-8B-v1":"0.0","MiMo-7B-RL-0530":"0.0","MiniCPM4.1-8B":"0.0","NVIDIA-Nemotron-Nano-9B-v2":"0.0","OpenThinker3-7B":"0.0","Qwen2.5-Coder-7B-Instruct":"0.0","Qwen3-8B":"0.0","claude-sonnet-4":"0.5","cogito-v1-preview-llama-8B":"0.0","deepseek-r1-0528":"0.0","deepseek-v3-0324":"0.0","deepseek-v3.1-terminus":"0.5","gemini-2.5-flash":"0.0","gemini-2.5-pro":"0.5","gemma-2-9b-it":"0.0","glm-4-9b-chat":"0.0","glm-4.6":"1.0","gpt-5":"0.0","gpt-5-chat":"0.5","granite-3.3-8b-instruct":"0.0","intern-s1":"1.0","internlm3-8b-instruct":"0.0","kimi-k2-0905":"0.0","qwen3-235b-a22b-2507":"0.0","qwen3-235b-a22b-thinking-2507":"1.0"}
+
+=== all_result_metadata.csv ===
+Header: dataset,model,split,demo,fingerprint,records,declared_count,performance,mean_record_score,time_taken,prompt_tokens,completion_tokens,aggregate_cost,sum_record_cost,record_signature,archive_path
+Sample rows:
+{"dataset":"arenahard_coding","model":"DeepHermes-3-Llama-3-8B-Preview","split":"test","demo":"False","fingerprint":"5917b4de49b2567d625dbc5ae94cf375753b36f7713cadffc3e92b5204b81b92","records":"253","declared_count":"253","performance":"0.03359683794466403","mean_record_score":"0.03359683794466403","time_taken":"4100.74977850914","prompt_tokens":"221148","completion_tokens":"688259","aggregate_cost":"0.0","sum_record_cost":"0.0","record_signature":"a87f7a278033aed6d4f55404eaf6f3bbab46ac45a50e666435d512c46daa21ae","archive_path":"bench-release/arenahard_coding/DeepHermes-3-Llama-3-8B-Preview/arenahard-coding-DeepHermes-3-Llama-3-8B-Preview-20251029_012339.json"}
+{"dataset":"arenahard_coding","model":"DeepSeek-R1-Distill-Qwen-7B","split":"test","demo":"False","fingerprint":"5917b4de49b2567d625dbc5ae94cf375753b36f7713cadffc3e92b5204b81b92","records":"253","declared_count":"253","performance":"0.017786561264822136","mean_record_score":"0.017786561264822136","time_taken":"11689.094805955887","prompt_tokens":"226128","completion_tokens":"3222170","aggregate_cost":"0.0","sum_record_cost":"0.0","record_signature":"a87f7a278033aed6d4f55404eaf6f3bbab46ac45a50e666435d512c46daa21ae","archive_path":"bench-release/arenahard_coding/DeepSeek-R1-Distill-Qwen-7B/arenahard-coding-DeepSeek-R1-Distill-Qwen-7B-20251028_184158.json"}
+
+=== DAY4_GPQA_PER_PROMPT_RESULTS.csv ===
+Header: index,router_model,router_score,global_model,global_score,paired_difference
+Sample rows:
+{"index":"1","router_model":"qwen3-235b-a22b-thinking-2507","router_score":"1.0","global_model":"gemini-2.5-pro","global_score":"1.0","paired_difference":"0.0"}
+{"index":"2","router_model":"qwen3-235b-a22b-thinking-2507","router_score":"0.0","global_model":"gemini-2.5-pro","global_score":"1.0","paired_difference":"-1.0"}
+
+=== DAY5_MMLUPRO_PER_PROMPT_RESULTS.csv ===
+Header: index,router_model,router_score,global_model,global_score,paired_difference
+Sample rows:
+{"index":"1","router_model":"gemini-2.5-pro","router_score":"1.0","global_model":"gemini-2.5-pro","global_score":"1.0","paired_difference":"0.0"}
+{"index":"2","router_model":"qwen3-235b-a22b-thinking-2507","router_score":"1.0","global_model":"gemini-2.5-pro","global_score":"1.0","paired_difference":"0.0"}
+
+=== DAY6_MMLUPRO_PER_PROMPT_RESULTS.csv ===
+Header: index,router_model,router_score,global_model,global_score,paired_difference
+Sample rows:
+{"index":"1","router_model":"gemini-2.5-pro","router_score":"1.0","global_model":"qwen3-235b-a22b-thinking-2507","global_score":"1.0","paired_difference":"0.0"}
+{"index":"2","router_model":"qwen3-235b-a22b-thinking-2507","router_score":"1.0","global_model":"qwen3-235b-a22b-thinking-2507","global_score":"1.0","paired_difference":"0.0"}
+
+=== DAY7_REPEATED_SPLIT_RESULTS.csv ===
+Header: seed,alpha,baseline,validation_baseline_utility,router_accuracy,selected_baseline_accuracy,router_minus_selected_baseline,selected_ci_low,selected_ci_high,gemini_accuracy,router_minus_gemini,gemini_ci_low,gemini_ci_high
+Sample rows:
+{"seed":"2026","alpha":"10.0","baseline":"qwen3-235b-a22b-thinking-2507","validation_baseline_utility":"0.7952634387088168","router_accuracy":"0.8386666666666667","selected_baseline_accuracy":"0.7946666666666666","router_minus_selected_baseline":"0.044","selected_ci_low":"0.03299166666666667","selected_ci_high":"0.05566666666666667","gemini_accuracy":"0.8566666666666667","router_minus_gemini":"-0.018","gemini_ci_low":"-0.025","gemini_ci_high":"-0.010666666666666666"}
+{"seed":"2027","alpha":"10.0","baseline":"gemini-2.5-pro","validation_baseline_utility":"0.7958676804054955","router_accuracy":"0.8386666666666667","selected_baseline_accuracy":"0.8566666666666667","router_minus_selected_baseline":"-0.018","selected_ci_low":"-0.025333333333333333","selected_ci_high":"-0.011","gemini_accuracy":"0.8566666666666667","router_minus_gemini":"-0.018","gemini_ci_low":"-0.025","gemini_ci_high":"-0.010666666666666666"}
+
+=== DAY8_GPQA_REPEATED_SPLIT_RESULTS.csv ===
+Header: seed,alpha,baseline,validation_baseline_utility,router_accuracy,selected_baseline_accuracy,router_minus_selected_baseline,selected_ci_low,selected_ci_high,gemini_accuracy,router_minus_gemini,gemini_ci_low,gemini_ci_high
+Sample rows:
+{"seed":"2026","alpha":"10.0","baseline":"qwen3-235b-a22b-thinking-2507","validation_baseline_utility":"0.7952634387088168","router_accuracy":"0.8181818181818182","selected_baseline_accuracy":"0.803030303030303","router_minus_selected_baseline":"0.015151515151515152","selected_ci_low":"-0.020202020202020204","selected_ci_high":"0.050505050505050504","gemini_accuracy":"0.8484848484848485","router_minus_gemini":"-0.030303030303030304","gemini_ci_low":"-0.07575757575757576","gemini_ci_high":"0.010101010101010102"}
+{"seed":"2027","alpha":"10.0","baseline":"gemini-2.5-pro","validation_baseline_utility":"0.7958676804054955","router_accuracy":"0.8181818181818182","selected_baseline_accuracy":"0.8484848484848485","router_minus_selected_baseline":"-0.030303030303030304","selected_ci_low":"-0.07575757575757576","selected_ci_high":"0.010101010101010102","gemini_accuracy":"0.8484848484848485","router_minus_gemini":"-0.030303030303030304","gemini_ci_low":"-0.07575757575757576","gemini_ci_high":"0.010101010101010102"}
+
+=== RELATED AUDIT AND SCRIPT FILES ===
+all_result_metadata.csv
+baseline_results.csv
+baseline_selected_models.csv
+baseline_summary.txt
+DAY2_ARCHIVE_METRIC_SUMMARY.txt
+DAY2_FINAL_REPORT.md
+DAY2_METRIC_FINDINGS.txt
+day2_paired_analysis.txt
+DAY2_PROVENANCE_METRIC_AUDIT.txt
+DAY2_RELATED_WORK_MATRIX.csv
+DAY2_REPRODUCIBILITY_CHECKLIST.md
+DAY3_CROSS_BENCHMARK_FEASIBILITY.csv
+DAY3_CROSS_BENCHMARK_FEASIBILITY.txt
+DAY3_HELDOUT_BENCHMARK_AUDIT.md
+DAY3_MMLUPRO_FOLLOWUP.md
+DAY3_MODEL_POOL_AND_RECORD_SCHEMA.txt
+DAY3_NOVELTY_AUDIT.md
+DAY3_PAPER_COMPARISON_LLMROUTERBENCH.md
+DAY3_QUICK_INTEGRITY.txt
+DAY3_ROUTING_METHODS_COMPARISON.md
+DAY4_FINAL_REPORT.md
+DAY4_GPQA_PER_PROMPT_RESULTS.csv
+DAY4_GPQA_ROUTER_CONFIG.txt
+DAY4_GPQA_RUN_LOG.txt
+day4_gpqa_transfer.py
+DAY4_GPQA_TRANSFER_RESULTS.txt
+DAY5_MMLUPRO_FINAL_REPORT.md
+DAY5_MMLUPRO_PER_PROMPT_RESULTS.csv
+DAY5_MMLUPRO_ROUTER_CONFIG.txt
+day5_mmlupro_transfer.py
+DAY5_MMLUPRO_TRANSFER_RESULTS.txt
+day6_fair_baseline_transfer.py
+DAY6_MMLUPRO_FINAL_REPORT.md
+DAY6_MMLUPRO_PER_PROMPT_RESULTS.csv
+DAY6_MMLUPRO_ROUTER_CONFIG.txt
+DAY6_MMLUPRO_TRANSFER_RESULTS.txt
+DAY7_REPEATED_SPLIT_RESULTS.csv
+day7_repeated_split_robustness.py
+DAY7_REPEATED_SPLIT_SUMMARY.txt
+DAY8_GPQA_REPEATED_SPLIT_RESULTS.csv
+DAY8_GPQA_REPEATED_SPLIT_SUMMARY.txt
+day8_gpqa_repeated_splits.py
+DAY9_PRIOR_ART_MATRIX.md
+prompt_feature_extraction_audit.txt
+prompt_feature_score_table.csv
+prompt_router_experiment_summary.txt
+prompt_router_experiment_summary.txt.pre_macro_backup
+prompt_router_test_predictions.csv
+prompt_router_test_predictions.csv.pre_macro_backup
+
+=== ARCHIVE LICENSE / README CANDIDATES ===
+
+
+========== day1_audit/DAY11_FINAL_RESEARCH_ASSESSMENT.md ==========
+# Research 3 � Consolidated Research Assessment
+
+Date: 2026-10-23
+
+## Decision
+
+CONDITIONAL GO for an empirical study of cross-benchmark routing transfer.
+NO-GO for claiming a novel routing algorithm or superiority over the strongest
+fixed-model baseline on the evidence currently available.
+
+## Research question
+
+How reliably does a lightweight lexical-feature router transfer across
+benchmark families, and which error patterns explain its performance gap
+relative to the strongest fixed-model baseline?
+
+This question is provisional. Novelty is not established until the closest
+prior work and supplementary materials have been reviewed in full.
+
+## Method
+
+- Source data: 750 ArenaHard prompts across coding, creative writing, and math.
+- Features: 11 lexical and structural prompt features.
+- Router: Ridge regression predicting per-model scores.
+- Source tuning: source-domain validation; selected regularization varies
+  across repeated validation splits.
+- Target evaluations: GPQA and MMLU-Pro test_3000.
+- Candidate pool: Day 4 uses 33 models; Days 5�8 use 13.
+- Repeated splits: seeds 2026�2035; target prompts are reused across seeds.
+
+## Main results
+
+### MMLU-Pro
+
+- Router accuracy: 83.8667%.
+- Gemini 2.5 Pro: 85.6667%.
+- Difference: -1.80 percentage points.
+- Paired prompt-bootstrap 95% CI: [-2.50, -1.133] percentage points
+  in the Day 5 report's rounded values.
+- The router trails Gemini across all ten Day 7 source-validation splits.
+
+### GPQA
+
+- Day 4 router: 81.8182%.
+- Gemini 2.5 Pro: 84.8485%.
+- Day 4 difference: -3.0303 percentage points.
+- Day 4 paired prompt-bootstrap 95% CI:
+  [-7.0707, +1.0101] percentage points.
+- Across Day 8 source-validation splits, the router trails Gemini by
+  approximately 2.53�3.03 percentage points.
+
+### Baseline sensitivity
+
+The apparent advantage changes with the source-validation-selected
+baseline. The positive Day 6 comparison is against Qwen3 Thinking, not
+Gemini 2.5 Pro. It does not establish superiority over the strongest
+fixed-model reference.
+
+The repeated seeds share the same target prompts and are not independent
+target replications.
+
+## Permitted conclusions
+
+- The evaluated lexical-feature Ridge router underperformed Gemini 2.5 Pro
+  on the two held-out benchmarks reported here.
+- Apparent gains over a source-validation-selected baseline depend on
+  which baseline is selected.
+- The current evidence does not establish reliable superiority, broad
+  cross-benchmark generalization, or a novel routing contribution.
+- The results may motivate a careful empirical study of routing failure
+  under benchmark-family shift.
+
+## Limitations and unresolved work
+
+1. Complete direct review of the closest papers and supplementary materials.
+2. Resolve archive provenance, dataset terms, licenses, and redistribution rights.
+3. Verify the semantics of archived scores and keep cost/latency claims excluded
+   until aggregation and units are validated.
+4. Audit source selection, feature construction, prompt alignment, and target
+   evaluation paths across all scripts.
+5. Recompute paired results from the aligned per-prompt score matrices where
+   needed and document the analysis protocol.
+6. Define any subgroup or error analysis before inspecting subgroup outcomes;
+   treat exploratory analyses as descriptive.
+7. Compare against published routing baselines only where a fair and reproducible
+   comparison is feasible.
+
+## Reproducibility note
+
+The Day 4 feature-column ordering was hardened after the saved Day 4 run.
+The corrected script passed Python syntax validation, but the experiment was
+not rerun. The saved Day 4 results therefore remain the output of the original
+execution. The current extractor's feature order matches the explicit FEATURES
+list, so the change is defensive rather than evidence of a known result error.
+
+The Day 8 script heading was corrected after the summary artifact was generated.
+The summary heading correction is documentation-only and does not change results.
+
+## Final recommendation
+
+Do not add another experiment until the provenance and prior-art blockers
+are resolved and a specific, preregisterable analysis is defined. If those
+checks reveal no defensible gap, retain this work as a transparent negative
+result and research-portfolio artifact rather than claiming a novel method.
+
+
+========== day1_audit/DAY12_DATA_PROVENANCE_AND_LICENSE.md ==========
+# Day 12 � Data Provenance and Usage Permissions
+
+**Review date:** 23 October 2026
+
+## 1. Archive provenance and integrity
+
+The study uses the `bench-release.tar.gz` benchmark-results archive associated with the LLMRouterBench project.
+
+Expected SHA-256:
+
+`b79f8cde1a6f029c2efa663a3a3b6f7748defb22341fe59f328cebef6648c8f1`
+
+The local archive hash was checked against this value.
+
+## 2. Maintainer permission
+
+In [LLMRouterBench GitHub issue #5](https://github.com/ynulihao/LLMRouterBench/issues/5), the repository maintainer stated on 26 August 2026 that:
+
+- The MIT license is intended to apply to the top-level repository source code.
+- The `bench-release.tar.gz` benchmark data may be used for non-commercial academic research and reproduction of research results.
+- The maintainers intended to add license files and update the Hugging Face dataset card to make these terms explicit.
+
+This is written maintainer confirmation of the stated intended use. It is not treated as blanket permission for commercial use or unrestricted redistribution.
+
+## 3. Underlying benchmark terms
+
+The archive contains results associated with multiple benchmark families. Underlying dataset licenses and model-provider terms may impose additional conditions.
+
+The licenses and terms applicable to the exact versions and records used in this study have not all been independently established. The maintainer's permission does not replace that verification.
+
+## 4. Research handling decision
+
+- Continue non-commercial academic analysis and preparation of research reports, consistent with the maintainer's written clarification.
+- Cite the LLMRouterBench paper, repository, and maintainer clarification.
+- Preserve the archive hash, extraction details, scripts, experiment configurations, and aggregate results for reproducibility.
+- Do not redistribute the raw archive or potentially restricted prompt, ground-truth, or model-output records until the relevant terms have been checked.
+- Do not claim commercial-use permission.
+- Recheck the repository's LICENSE file and Hugging Face dataset-card metadata before public release.
+
+## 5. Outstanding limitation
+
+The maintainer's response was located, but the promised formal license documentation was not confirmed during the checks conducted on 23 October 2026.
+
+**Status:** Written maintainer clarification located; formal documentation and complete third-party terms verification remain outstanding.
+
+## 6. Research interpretation
+
+This licensing review is a provenance and compliance limitation. It does not change the experimental results or establish that the proposed routing method is novel. Claims about routing performance must continue to reflect the observed benchmark results and baseline sensitivity.

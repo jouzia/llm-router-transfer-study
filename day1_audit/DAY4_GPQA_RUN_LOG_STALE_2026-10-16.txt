@@ -1,0 +1,13 @@
+DAY 4 GPQA TRANSFER RUN COMPLETE
+Source prompts: 750
+Validation-selected alpha: 10.0
+Source-selected global baseline: gemini-2.5-pro
+GPQA prompts: 198
+Router mean score: 0.818182
+Global mean score: 0.848485
+Mean paired difference: -0.030303
+95% bootstrap CI: [-0.070707, 0.010101]
+Wins/ties/losses: 6/180/12
+Report: D:\Research3\day1_audit\DAY4_GPQA_TRANSFER_RESULTS.txt
+Per-prompt CSV: D:\Research3\day1_audit\DAY4_GPQA_PER_PROMPT_RESULTS.csv
+Source-only config: D:\Research3\day1_audit\DAY4_GPQA_ROUTER_CONFIG.txt

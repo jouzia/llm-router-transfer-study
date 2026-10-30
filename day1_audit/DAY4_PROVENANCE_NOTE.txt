@@ -1,0 +1,21 @@
+﻿DAY 4 PROVENANCE NOTE
+Recorded: 2026-10-26
+
+The current Day 4 script writes:
+- DAY4_GPQA_ROUTER_CONFIG.txt
+- DAY4_GPQA_PER_PROMPT_RESULTS.csv
+- DAY4_GPQA_TRANSFER_RESULTS.txt
+
+The script does not write DAY4_GPQA_RUN_LOG.txt.
+
+The historical run log had a last-modified timestamp of 2026-10-16.
+It was preserved as DAY4_GPQA_RUN_LOG_STALE_2026-10-16.txt and is
+not a canonical record of the October 26 artifacts.
+
+The October 26 report, configuration, and per-prompt CSV were
+numerically consistent in the audit: 198 prompts; router mean
+0.818182; global baseline mean 0.848485; mean paired difference
+-0.030303; 95% prompt-bootstrap percentile CI [-0.070707, 0.010101].
+
+These checks establish numerical consistency, not by themselves
+the exact execution provenance of the October 26 artifacts.

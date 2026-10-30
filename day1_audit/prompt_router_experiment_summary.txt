@@ -1,0 +1,147 @@
+RESEARCH 3 — PROMPT-FEATURE ROUTING EXPERIMENT
+=================================================================
+Input: D:\Research3\day1_audit\prompt_feature_score_table.csv
+Domains: 3
+Prompts: 750
+Candidate models: 33
+Features: 11
+Seeds: [42, 43, 44, 45, 46]
+Ridge alpha candidates: [0.1, 1.0, 10.0, 100.0]
+
+Protocol: per-domain random prompt split; 60% train, 20% validation, 20% test.
+Alpha selected using validation only. Final models and baseline policies use train+validation.
+All policies are evaluated on identical test prompts.
+Oracle is test-informed and is only an upper bound.
+
+SEED 42 | selected alpha=100.0 | validation scores={0.1: 0.7880952380952381, 1.0: 0.7882312925170067, 10.0: 0.7879591836734693, 100.0: 0.791360544217687}
+  global: pooled test mean=0.750000
+  domain_aware: pooled test mean=0.773026
+  prompt_feature_ridge: pooled test mean=0.789474
+  oracle_upper_bound: pooled test mean=0.983553
+  feature minus domain-aware: +0.016447
+  feature minus global: +0.039474
+  oracle minus feature: +0.194079
+  DOMAIN arenahard_coding
+    global: 0.740385
+    domain_aware: 0.740385
+    prompt_feature_ridge: 0.788462
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_creative_writing
+    global: 0.840000
+    domain_aware: 0.910000
+    prompt_feature_ridge: 0.910000
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_math
+    global: 0.670000
+    domain_aware: 0.670000
+    prompt_feature_ridge: 0.670000
+    oracle_upper_bound: 0.950000
+
+SEED 43 | selected alpha=100.0 | validation scores={0.1: 0.7813605442176871, 1.0: 0.78156462585034, 10.0: 0.7849659863945577, 100.0: 0.8118367346938774}
+  global: pooled test mean=0.740132
+  domain_aware: pooled test mean=0.766447
+  prompt_feature_ridge: pooled test mean=0.766447
+  oracle_upper_bound: pooled test mean=0.996711
+  feature minus domain-aware: +0.000000
+  feature minus global: +0.026316
+  oracle minus feature: +0.230263
+  DOMAIN arenahard_coding
+    global: 0.721154
+    domain_aware: 0.721154
+    prompt_feature_ridge: 0.759615
+    oracle_upper_bound: 0.990385
+  DOMAIN arenahard_creative_writing
+    global: 0.860000
+    domain_aware: 0.940000
+    prompt_feature_ridge: 0.930000
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_math
+    global: 0.640000
+    domain_aware: 0.640000
+    prompt_feature_ridge: 0.610000
+    oracle_upper_bound: 1.000000
+
+SEED 44 | selected alpha=100.0 | validation scores={0.1: 0.7777551020408163, 1.0: 0.7777551020408163, 10.0: 0.7744897959183673, 100.0: 0.7912925170068027}
+  global: pooled test mean=0.809211
+  domain_aware: pooled test mean=0.773026
+  prompt_feature_ridge: pooled test mean=0.802632
+  oracle_upper_bound: pooled test mean=0.996711
+  feature minus domain-aware: +0.029605
+  feature minus global: -0.006579
+  oracle minus feature: +0.194079
+  DOMAIN arenahard_coding
+    global: 0.778846
+    domain_aware: 0.778846
+    prompt_feature_ridge: 0.721154
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_creative_writing
+    global: 0.890000
+    domain_aware: 0.910000
+    prompt_feature_ridge: 0.910000
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_math
+    global: 0.760000
+    domain_aware: 0.630000
+    prompt_feature_ridge: 0.780000
+    oracle_upper_bound: 0.990000
+
+SEED 45 | selected alpha=1.0 | validation scores={0.1: 0.8354421768707483, 1.0: 0.8354421768707483, 10.0: 0.8051020408163265, 100.0: 0.8114965986394558}
+  global: pooled test mean=0.733553
+  domain_aware: pooled test mean=0.763158
+  prompt_feature_ridge: pooled test mean=0.782895
+  oracle_upper_bound: pooled test mean=0.990132
+  feature minus domain-aware: +0.019737
+  feature minus global: +0.049342
+  oracle minus feature: +0.207237
+  DOMAIN arenahard_coding
+    global: 0.740385
+    domain_aware: 0.740385
+    prompt_feature_ridge: 0.798077
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_creative_writing
+    global: 0.850000
+    domain_aware: 0.940000
+    prompt_feature_ridge: 0.930000
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_math
+    global: 0.610000
+    domain_aware: 0.610000
+    prompt_feature_ridge: 0.620000
+    oracle_upper_bound: 0.970000
+
+SEED 46 | selected alpha=100.0 | validation scores={0.1: 0.7676190476190476, 1.0: 0.7778231292517007, 10.0: 0.7810884353741496, 100.0: 0.7980272108843538}
+  global: pooled test mean=0.753289
+  domain_aware: pooled test mean=0.782895
+  prompt_feature_ridge: pooled test mean=0.802632
+  oracle_upper_bound: pooled test mean=0.993421
+  feature minus domain-aware: +0.019737
+  feature minus global: +0.049342
+  oracle minus feature: +0.190789
+  DOMAIN arenahard_coding
+    global: 0.769231
+    domain_aware: 0.769231
+    prompt_feature_ridge: 0.788462
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_creative_writing
+    global: 0.840000
+    domain_aware: 0.930000
+    prompt_feature_ridge: 0.950000
+    oracle_upper_bound: 1.000000
+  DOMAIN arenahard_math
+    global: 0.650000
+    domain_aware: 0.650000
+    prompt_feature_ridge: 0.670000
+    oracle_upper_bound: 0.980000
+
+INTERPRETATION NOTES
+-----------------------------------------------------------------
+1. These are benchmark-specific held-out results, not proof of
+   generalization to unseen domains or new benchmark families.
+2. Five seeds provide split-sensitivity checks; they are not five
+   independent studies.
+3. The oracle sees test outcomes and is not deployable.
+4. No statistical-significance claim is made by this script.
+5. Prompt features are intentionally simple and interpretable.
+
+Predictions CSV: D:\Research3\day1_audit\prompt_router_test_predictions.csv
+Summary: D:\Research3\day1_audit\prompt_router_experiment_summary.txt
