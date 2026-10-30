@@ -142,7 +142,7 @@ for j, model in enumerate(model_names):
         Y[val_indices[domains[val_indices] == d], j].mean()
         for d in source_domains
     ]))
-global_model = max(model_names, key=lambda m: (global_means[m], m))
+global_model = max(model_names, key=lambda m: global_means[m])
 
 # Fit the frozen router on all source prompts.
 final_models = []
@@ -291,10 +291,12 @@ global_scores = np.array([
 
 differences = router_scores - global_scores
 rng_boot = np.random.default_rng(SEED)
-boot_means = np.empty(BOOTSTRAPS)
-for b in range(BOOTSTRAPS):
-    sample = rng_boot.integers(0, len(differences), len(differences))
-    boot_means[b] = differences[sample].mean()
+boot_means = np.empty(BOOTSTRAPS, dtype=float)
+n = len(differences)
+for start in range(0, BOOTSTRAPS, 200):
+    end = min(start + 200, BOOTSTRAPS)
+    sampled = rng_boot.integers(0, n, size=(end - start, n))
+    boot_means[start:end] = differences[sampled].mean(axis=1)
 ci_low, ci_high = np.quantile(boot_means, [0.025, 0.975])
 
 wins = int(np.sum(differences > 0))
