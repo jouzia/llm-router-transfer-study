@@ -311,7 +311,7 @@ def main():
     experiment_scripts = [
         AUDIT_DIR / name for name in (
             "day4_gpqa_transfer.py", "day5_mmlupro_transfer.py",
-            "day6_mmlupro_transfer.py", "day7_repeated_split_robustness.py",
+            "day6_fair_baseline_transfer.py", "day7_repeated_split_robustness.py",
             "day8_gpqa_repeated_splits.py",
         )
     ]
