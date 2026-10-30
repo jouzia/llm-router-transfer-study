@@ -177,9 +177,9 @@ gpqa_meta = [
     if "gpqa" in r["dataset"].lower()
     and r["model"] in model_names
 ]
-if len(gpqa_meta) != 33:
+if len(gpqa_meta) != len(CANDIDATES):
     fail(
-        "Expected exactly 33 GPQA metadata rows for the shared candidate pool "
+        f"Expected exactly {len(CANDIDATES)} GPQA metadata rows for the matched candidate pool "
         f"before split/demo validation; found {len(gpqa_meta)}"
     )
 
@@ -197,8 +197,8 @@ invalid_demo = [
 if invalid_demo:
     fail("GPQA candidate metadata contains demonstration records: " + ", ".join(invalid_demo))
 
-if len({r["model"] for r in gpqa_meta}) != 33:
-    fail("GPQA metadata has duplicate or missing candidate model entries.")
+if len({r["model"] for r in gpqa_meta}) != len(CANDIDATES):
+    fail("GPQA metadata has duplicate or missing matched candidate model entries.")
 
 if {r["split"].strip().lower() for r in gpqa_meta} != {"test"}:
     fail("GPQA metadata split is not exclusively test.")
