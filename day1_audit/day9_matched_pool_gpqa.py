@@ -62,14 +62,33 @@ with SOURCE.open(encoding="utf-8-sig", newline="") as f:
 if not rows:
     fail(f"Source feature table is empty: {SOURCE}")
 
-source_domains = sorted({r["dataset"] for r in rows})
-expected_domains = {
-    "arenahard_coding",
-    "arenahard_creative_writing",
-    "arenahard_math",
+expected_domain_counts = {
+    "arenahard_coding": 253,
+    "arenahard_creative_writing": 250,
+    "arenahard_math": 247,
 }
+expected_domains = set(expected_domain_counts)
+source_domains = sorted({r["dataset"] for r in rows})
+if len(rows) != 750:
+    fail(f"Expected exactly 750 source prompts; found {len(rows)}")
 if set(source_domains) != expected_domains:
     fail(f"Unexpected source domains: {source_domains}")
+
+source_keys = [(r["dataset"], str(r["index"]).strip()) for r in rows]
+if any(not index for _, index in source_keys):
+    fail("Source feature table contains a blank prompt index.")
+if len(set(source_keys)) != len(source_keys):
+    fail("Source feature table contains duplicate (dataset, index) keys.")
+
+observed_domain_counts = {
+    domain: sum(r["dataset"] == domain for r in rows)
+    for domain in expected_domain_counts
+}
+if observed_domain_counts != expected_domain_counts:
+    fail(
+        "Unexpected source-domain prompt counts: "
+        f"{observed_domain_counts}; expected {expected_domain_counts}"
+    )
 
 meta_columns = {"dataset", "index", "prompt_text_source", *FEATURES}
 available_models = set(rows[0]) - meta_columns
@@ -92,6 +111,8 @@ domains = np.array([r["dataset"] for r in rows])
 
 if not np.isfinite(X).all() or not np.isfinite(Y).all():
     fail("Source table contains missing or non-finite feature/score values.")
+if not np.isin(Y, [0.0, 0.5, 1.0]).all():
+    fail("Source table contains scores outside the audited {0.0, 0.5, 1.0} domain.")
 
 # Hold out 20% of each source domain for alpha selection.
 rng = np.random.default_rng(SEED)
