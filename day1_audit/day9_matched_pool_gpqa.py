@@ -243,6 +243,11 @@ with tarfile.open(ARCHIVE, "r:gz") as tar:
                 score = float(score)
                 if not np.isfinite(score):
                     raise ValueError(f"Non-finite score: {member_name}, index={idx}")
+                if score not in {0.0, 1.0}:
+                    raise ValueError(
+                        f"GPQA score must be binary (0.0 or 1.0): "
+                        f"{meta['model']}, index={idx}, score={score}"
+                    )
                 if idx in gpqa_records[meta["model"]]:
                     raise ValueError(f"Duplicate index: {meta['model']}, {idx}")
                 gpqa_records[meta["model"]][idx] = score
@@ -289,7 +294,19 @@ global_scores = np.array([
     gpqa_records[global_model][idx] for idx in prompt_order
 ], dtype=float)
 
+if not np.isfinite(router_scores).all() or not np.isfinite(global_scores).all():
+    fail("Selected GPQA router/global scores contain non-finite values.")
+if not np.isin(router_scores, [0.0, 1.0]).all():
+    fail("Selected router GPQA scores are not binary.")
+if not np.isin(global_scores, [0.0, 1.0]).all():
+    fail("Global-baseline GPQA scores are not binary.")
+
 differences = router_scores - global_scores
+if not np.isfinite(differences).all():
+    fail("Paired GPQA differences contain non-finite values.")
+if not np.array_equal(differences, router_scores - global_scores):
+    fail("Paired-difference values do not equal router_score - global_score.")
+
 rng_boot = np.random.default_rng(SEED)
 boot_means = np.empty(BOOTSTRAPS, dtype=float)
 n = len(differences)
