@@ -197,6 +197,20 @@ The repeated source-validation splits reuse the same target prompts. They are se
 6. **Prior-art completion:** inspect the full RACER and LENS methods/supplements and the full DSC paper before marking the literature review complete.
 7. **Manuscript synchronization:** update the references and contribution language only after the direct comparison is complete.
 
+### Day 14 release and OOD preflight
+
+A standard-library-only local preflight script has been added at `day1_audit/day14_release_ood_preflight.py`. It verifies the official archive SHA-256, checks the 13 candidate model files across the three source partitions and both target splits, compares the source partitions with the archive's aggregate ArenaHard directory at normalized prompt and score-multiset level, and reports the internal `dataset_name`/`split` values required to configure the official OOD loader.
+
+Run after syncing the branch:
+
+```powershell
+python .\day1_audit\day14_release_ood_preflight.py
+```
+
+The resulting report is written to `day1_audit/DAY14_RELEASE_OOD_PREFLIGHT.txt`. It does not modify the archive or experiment outputs. Its output is needed before generating the Avengers-Pro data config because the official loader filters by the JSON payload's internal `dataset_name`, not just the directory name.
+
+The official loader's OOD split places every record from named OOD datasets in test and splits source datasets by prompt, keeping all model records for each prompt together. Its `train_ratio` validator requires a strict value between 0 and 1, so a 70% source-train setting matches the paper's reported 30% test split; a full-750-source refit would require preparing a custom train JSONL rather than using that splitter unchanged.
+
 ## 8. Review status
 
 - [x] LLMRouterBench official paper reviewed directly, including model pools, dataset sizes, metrics, baseline definitions, and routing-baseline families.
