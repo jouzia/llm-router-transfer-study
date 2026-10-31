@@ -325,8 +325,8 @@ if not np.isin(global_scores, [0.0, 1.0]).all():
 differences = router_scores - global_scores
 if not np.isfinite(differences).all():
     fail("Paired GPQA differences contain non-finite values.")
-if not np.array_equal(differences, router_scores - global_scores):
-    fail("Paired-difference values do not equal router_score - global_score.")
+if not np.isin(differences, [-1.0, 0.0, 1.0]).all():
+    fail("Binary GPQA paired differences must be one of -1.0, 0.0, or 1.0.")
 
 rng_boot = np.random.default_rng(SEED)
 boot_means = np.empty(BOOTSTRAPS, dtype=float)
