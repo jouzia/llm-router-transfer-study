@@ -63,6 +63,10 @@ Implementation caveats found:
 
 **Updated feasibility assessment:** at least one official baseline path (Avengers-Pro) appears technically adaptable to a source-to-target OOD evaluation without recollecting model outputs. A fair, reproducible baseline comparison is therefore plausible, but not yet demonstrated. Check the exact dataset mapping, split behavior, baseline implementation, dependency/resource requirements, and whether the method can be run without paid inference APIs before selecting it.
 
+A further code inspection shows the Avengers-Pro router loads `baseline_scores` in its evaluation/reporting path after routing results have been computed; the adaptor generates that file from test records. This appears intended for post-hoc baseline comparison, but the complete execution path should be checked before ruling out any target-score influence.
+
+The checked-in simple configuration uses a hosted embedding endpoint and an embedding model substantially larger than the current lexical-feature router. Thus, the official code path is not yet confirmed as zero-cost or suitable for the available CPU-only local environment. A local embedding backend or a different lightweight baseline may be needed. Do not start a paid embedding/API run.
+
 ### Immediate implication
 
 A defensible comparison should:
