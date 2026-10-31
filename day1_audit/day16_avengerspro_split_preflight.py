@@ -90,7 +90,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--train", required=True, type=Path)
     parser.add_argument("--test", required=True, type=Path)
+    parser.add_argument("--train-ratio", type=float, default=0.7)
     args = parser.parse_args()
+    if not 0.0 < args.train_ratio < 1.0:
+        raise ValueError("--train-ratio must be between 0 and 1")
 
     train = load_jsonl(args.train)
     test = load_jsonl(args.test)
@@ -116,10 +119,20 @@ def main() -> int:
         raise ValueError(f"prompt leakage across train/test: {sample}")
 
     source_test_counts = {k: v for k, v in test_counts.items() if k in SOURCE_DATASETS}
+    for dataset in SOURCE_DATASETS:
+        n_train = train_counts.get(dataset, 0)
+        n_test = test_counts.get(dataset, 0)
+        total = n_train + n_test
+        if total and n_train != int(total * args.train_ratio):
+            raise ValueError(
+                f"{dataset}: expected floor({args.train_ratio} * {total})="
+                f"{int(total * args.train_ratio)} source-train prompts, found {n_train}"
+            )
     ood_test_counts = {k: v for k, v in test_counts.items() if k in OOD_DATASETS}
     print("AVENGERS-PRO SPLIT PREFLIGHT PASSED")
     print(f"Train prompts: {len(train)}; source datasets: {dict(train_counts)}")
     print(f"Test prompts: {len(test)}; source holdout: {source_test_counts}; OOD: {ood_test_counts}")
+    print(f"Source train ratio: {args.train_ratio:.2f} per dataset (floor rule)")
     print(f"Candidate models per prompt: exactly {len(EXPECTED_MODELS)}")
     print("OOD targets appear only in test; no (dataset, query) crosses the split.")
     print("Note: this validates prepared-file structure, not the runtime's internal data flow.")
