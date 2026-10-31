@@ -112,11 +112,11 @@ This paper trains an input-only logistic gate on text embeddings and uses Cloppe
 
 Paper: https://aclanthology.org/2026.eacl-long.351/
 
-This work introduces the DSC benchmark with categorized query types and evaluates routing behavior across code, translation, math, instruction, knowledge, jailbreak, privacy, and safety-related cases. It reports category-driven routing failures and risks.
+This work introduces the DSC benchmark with categorized query types and evaluates preference-based and commercial routers across code, translation, math, instruction, knowledge, jailbreak, privacy, and safety-related cases. It finds that routers can rely on category-level heuristics rather than query difficulty: in its tested setup, simple code/math queries were often sent to the stronger model. It also perturbs queries with category keywords and reports an average 98% routing-decision flipping rate for the tested keyword additions.
 
-**Overlap:** category-dependent router behavior and error analysis are already studied.
+**Overlap:** category-dependent router behavior, routing concentration, and prompt-keyword sensitivity are already studied. This is particularly relevant because the current Ridge router uses lexical/structural prompt features. A keyword-perturbation audit is therefore a necessary robustness check: test whether adding or removing domain-indicative terms changes the selected model when the underlying task and answer should remain unchanged.
 
-**Difference / feasibility:** the current source domains and two target benchmarks do not cover the full safety, privacy, or jailbreak scope. The current project should not use broad “router robustness” language without expanding and separately validating those dimensions.
+**Difference / feasibility:** DSC evaluates preference-based pairwise routers and commercial routers on its own datasets; it does not establish the behavior of this 13-model, score-regression, source-to-target router. The current source domains and two target benchmarks also do not cover the full safety, privacy, or jailbreak scope. The current project should not use broad “router robustness” language without expanding and separately validating those dimensions.
 
 ## 4. Additional methodological issue: evaluator/metric shift
 
@@ -180,12 +180,12 @@ The repeated source-validation splits reuse the same target prompts. They are se
 
 - [x] LLMRouterBench official paper reviewed directly, including model pools, dataset sizes, metrics, baseline definitions, and routing-baseline families.
 - [x] Conformal LLM Routing paper reviewed directly for its gate, label definition, calibration, and exchangeability condition.
-- [x] EACL robustness paper identified and its published abstract reviewed.
+- [x] EACL robustness paper reviewed directly, including methodology, keyword perturbation analysis, router types, and limitations.
 - [x] RACER official publication record and abstract reviewed.
 - [x] LENS official publication record and abstract reviewed.
 - [x] RACER full method reviewed directly; supplementary implementation remains to be inspected.
 - [ ] LENS full method and supplement reviewed.
-- [ ] DSC full method and supplement reviewed.
+- [x] DSC full paper reviewed; no separate supplementary package identified in the reviewed publication.
 - [ ] Exact row-level ArenaHard release identity verified.
 - [ ] Official baseline reproduction feasibility completed.
 - [ ] Novelty decision finalized.
