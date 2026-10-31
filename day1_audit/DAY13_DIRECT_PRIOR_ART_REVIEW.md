@@ -82,11 +82,11 @@ A defensible comparison should:
 
 Paper: https://proceedings.mlr.press/v306/hao26c.html
 
-RACER formulates routing as a risk-controlled model-set problem. It constructs nested candidate model sets, calibrates thresholds with finite-sample concentration bounds, and permits variable set sizes and abstention. Its stated objective and guarantee concern distribution-free control of misrouting risk under the paper's assumptions.
+RACER formulates routing as the **α-Valid Optimal Routing (α-VOR)** problem: minimize expected selected-model-set size while controlling the probability that the selected set excludes every ground-truth-correct model. It adds a virtual null model to represent cases where no candidate is correct, constructs nested model sets from an arbitrary base router's scores, calibrates a threshold on labelled calibration data using finite-sample concentration bounds, and can abstain or aggregate selected model outputs. Its distribution-free risk guarantee is explicitly conditional on exchangeability between calibration and test examples.
 
 **Overlap:** calibrated risk-aware routing, model selection uncertainty, and fallback/abstention are already active research directions.
 
-**Difference / feasibility:** the current project is a single-model argmax router and does not implement nested model sets or a risk-control guarantee. A static score matrix may support exploratory model-set analysis, but it does not by itself establish that RACER's precise risk labels, assumptions, or calibration protocol can be reproduced. The full method and supplementary implementation still require direct inspection before a fair reproduction decision.
+**Difference / feasibility:** the current project is a single-model argmax router and does not implement nested model sets or a risk-control guarantee. More importantly, RACER's calibration requires a ground-truth set of all candidate models that answer each calibration query correctly. The current ArenaHard source audit reports no independent ground-truth answers (0% coverage); its judge-derived ternary scores are not automatically equivalent to RACER's correctness sets. In addition, calibrating on ArenaHard and evaluating on GPQA/MMLU-Pro is precisely a cross-benchmark shift, so RACER's exchangeability condition cannot simply be assumed. A faithful distribution-free guarantee is therefore not supported by the current source data and transfer protocol. A static score matrix may support descriptive model-set analysis, but not the published guarantee without valid correctness labels and defensible calibration/test assumptions.
 
 ### LENS — UAI 2026
 
@@ -183,7 +183,7 @@ The repeated source-validation splits reuse the same target prompts. They are se
 - [x] EACL robustness paper identified and its published abstract reviewed.
 - [x] RACER official publication record and abstract reviewed.
 - [x] LENS official publication record and abstract reviewed.
-- [ ] RACER full method and supplement reviewed.
+- [x] RACER full method reviewed directly; supplementary implementation remains to be inspected.
 - [ ] LENS full method and supplement reviewed.
 - [ ] DSC full method and supplement reviewed.
 - [ ] Exact row-level ArenaHard release identity verified.
