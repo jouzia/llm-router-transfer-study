@@ -102,11 +102,11 @@ LENS models latent precision in interaction-derived behavioral signals and uses 
 
 Paper: https://aclanthology.org/2026.acl-srw.70/
 
-This paper trains an input-only logistic gate on text embeddings and uses Clopper–Pearson calibration to bound the violation rate among queries routed to a cheaper model, under exchangeability between calibration and test data. Its safety label compares cheap- and expensive-model correctness against ground truth.
+This paper trains an input-only logistic gate on BGE text embeddings and uses Clopper–Pearson calibration to bound, with confidence level 1−δ, the violation rate among queries routed to a cheaper model. Its binary safety label is 0 only when the cheap model is wrong and the expensive model is correct; it uses a held-out calibration set and requires exchangeability between calibration and test data. The experiments use four disjoint partitions (55/15/15/15%) for gate training, calibration, validation, and testing. The paper explicitly distinguishes its input-only conditional violation guarantee from RACER's output-dependent expected-risk/model-set guarantee.
 
-**Overlap:** input-based gating, calibrated fallback, and explicit safety criteria.
+**Overlap:** input-based gating, calibrated fallback, explicit safety criteria, and the model/task-dependent feasibility diagnostic.
 
-**Difference / feasibility:** the current archive audit found no ground-truth answers in the inspected records (0% ground-truth coverage). The recorded scores therefore cannot automatically be treated as the paper's independent binary correctness labels. A faithful safety guarantee cannot be claimed by simply thresholding the current score matrix; the label definition and exchangeability assumptions would need to be justified independently.
+**Difference / feasibility:** the current source audit found no independent ground-truth answers in the inspected ArenaHard records (0% source ground-truth coverage). Its ternary judge-derived scores are not automatically equivalent to independently verified correctness labels. Target GPQA/MMLU-Pro ground-truth availability has not yet been audited in this project. If target labels are available, a separate within-target conformal experiment may be feasible using a target-specific train/calibration/test split; that would not be source-only cross-benchmark transfer. Calibrating on ArenaHard and claiming a guarantee on GPQA/MMLU-Pro would require exchangeability across those benchmark/evaluator distributions, which is not established. Do not claim the paper's safety guarantee from the current source-to-target experiment.
 
 ### How Robust Are Router-LLMs? — EACL 2026
 
@@ -179,7 +179,7 @@ The repeated source-validation splits reuse the same target prompts. They are se
 ## 8. Review status
 
 - [x] LLMRouterBench official paper reviewed directly, including model pools, dataset sizes, metrics, baseline definitions, and routing-baseline families.
-- [x] Conformal LLM Routing paper reviewed directly for its gate, label definition, calibration, and exchangeability condition.
+- [x] Conformal LLM Routing full paper reviewed directly, including binary safety labels, four-way split, calibration guarantee, and exchangeability requirement.
 - [x] EACL robustness paper reviewed directly, including methodology, keyword perturbation analysis, router types, and limitations.
 - [x] RACER official publication record and abstract reviewed.
 - [x] LENS official publication record and abstract reviewed.
