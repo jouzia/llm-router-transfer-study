@@ -118,7 +118,20 @@ This work introduces the DSC benchmark with categorized query types and evaluate
 
 **Difference / feasibility:** the current source domains and two target benchmarks do not cover the full safety, privacy, or jailbreak scope. The current project should not use broad “router robustness” language without expanding and separately validating those dimensions.
 
-## 4. Interpretation of the current results after this review
+## 4. Additional methodological issue: evaluator/metric shift
+
+The official LLMRouterBench paper's dataset table describes ArenaHard as an instruction-following benchmark scored by an LLM judge, while GPQA and MMLU-Pro are scored using accuracy. The current source audit records a ternary ArenaHard score domain (0, 0.5, 1); the Day 9 GPQA script explicitly validates binary target scores (0, 1). The target MMLU-Pro score matrix is also treated as correctness/accuracy in the experiment reports.
+
+Consequently, the current transfer experiment changes more than prompt domain or benchmark family. It also transfers a score predictor trained against a judge-derived, ternary source metric to targets evaluated with binary accuracy. This is a substantive **evaluator/metric shift**.
+
+Implications:
+- Do not attribute the observed performance gap solely to semantic benchmark-family shift.
+- Describe the setup as joint task/benchmark and evaluator/score-semantic transfer unless the metric shift is separately controlled.
+- The source archive's lack of independent ground-truth answers prevents a simple post-hoc conversion of ArenaHard judge scores into independently verified binary correctness labels.
+- A stronger design would include an additional source/target pair scored under a common metric, or a controlled experiment that separates prompt-domain shift from evaluator/label shift.
+- Any comparison with the conformal safety-gate paper must respect its binary correctness label definition; the current ternary judge scores are not automatically interchangeable.
+
+## 5. Interpretation of the current results after this review
 
 The Day 9 matched-pool GPQA run is an important protocol correction: it uses the same 13-model candidate pool as Day 6 and selects its global baseline from source validation only.
 
@@ -134,7 +147,7 @@ For MMLU-Pro Day 6, the router exceeds the source-selected Qwen3 Thinking baseli
 
 The repeated source-validation splits reuse the same target prompts. They are selection-sensitivity analyses, not independent target replications.
 
-## 5. Contribution boundary
+## 6. Contribution boundary
 
 ### Supported at present
 
@@ -153,7 +166,7 @@ The repeated source-validation splits reuse the same target prompts. They are se
 - Cost or latency savings.
 - Generalization to arbitrary benchmark families.
 
-## 6. Required next steps
+## 7. Required next steps
 
 1. **Release identity check:** compare the local 750 ArenaHard prompt identifiers and exact prompt text with the official LLMRouterBench release; document the domain-partition mapping.
 2. **Candidate-pool check:** compare all 13 names and their order with the official performance–cost model pool.
@@ -163,7 +176,7 @@ The repeated source-validation splits reuse the same target prompts. They are se
 6. **Prior-art completion:** inspect the full RACER and LENS methods/supplements and the full DSC paper before marking the literature review complete.
 7. **Manuscript synchronization:** update the references and contribution language only after the direct comparison is complete.
 
-## 7. Review status
+## 8. Review status
 
 - [x] LLMRouterBench official paper reviewed directly, including model pools, dataset sizes, metrics, baseline definitions, and routing-baseline families.
 - [x] Conformal LLM Routing paper reviewed directly for its gate, label definition, calibration, and exchangeability condition.
