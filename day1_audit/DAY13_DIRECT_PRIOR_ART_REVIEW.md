@@ -48,6 +48,21 @@ The current repository's source-only cross-dataset training/evaluation question 
 
 The paper's Best Single baseline is selected in hindsight across the evaluation suite. It should not be conflated with the current source-validation-selected baseline, which is selected without target scores. Conversely, Gemini 2.5 Pro is a useful descriptive fixed-model reference, but if it was designated as the strongest fixed model after inspecting target outcomes, it must be labelled a retrospective benchmark reference—not a source-only selected deployment baseline.
 
+### Official code and OOD-baseline feasibility check
+
+A first direct inspection of the official LLMRouterBench repository confirms that its baseline data loader exposes `split_by_dataset_then_prompt(..., ood_datasets=...)`. The documented behavior is to split prompts within in-distribution datasets while placing every record from named OOD datasets in the test set. The Avengers-Pro adaptor exposes this option through `--ood-datasets`.
+
+This is important: the official framework has an explicit code path for dataset-level OOD evaluation, so the current ArenaHard-to-GPQA/MMLU-Pro protocol should not be described as absent from the benchmark infrastructure. However, the existence of an OOD option does not prove that the published paper reports this exact source/target combination, nor that the current study has reproduced it.
+
+Implementation caveats found:
+- The official performance–cost config lists the 13 flagship models used by the current Day 6/Day 9 pool.
+- That config uses dataset identifiers such as `arenahard`, `gpqa`, and `mmlupro`; the current feature table uses `arenahard_coding`, `arenahard_creative_writing`, and `arenahard_math`. The mapping and prompt identity must be verified before reusing the config unchanged.
+- The Avengers-Pro adaptor supports the OOD argument, but its algorithm-level fairness, data requirements, model-pool ordering, and evaluation behavior still need review.
+- The inspected GraphRouter adaptor currently calls the split function with `ood_datasets=None`; it does not expose the same OOD path without modification.
+- The official framework's general adaptor documentation describes OOD support, but this does not mean every individual router adaptor implements it.
+
+**Updated feasibility assessment:** at least one official baseline path (Avengers-Pro) appears technically adaptable to a source-to-target OOD evaluation without recollecting model outputs. A fair, reproducible baseline comparison is therefore plausible, but not yet demonstrated. Check the exact dataset mapping, split behavior, baseline implementation, dependency/resource requirements, and whether the method can be run without paid inference APIs before selecting it.
+
 ### Immediate implication
 
 A defensible comparison should:
