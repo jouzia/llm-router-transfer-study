@@ -17,6 +17,26 @@ The most consequential overlap is with **LLMRouterBench (Findings of ACL 2026)**
 Paper: https://aclanthology.org/2026.findings-acl.1881/  
 Code/data: https://github.com/ynulihao/LLMRouterBench
 
+### Archive identity and exact overlap
+
+The repository README records the expected SHA-256 of the local `bench-release.tar.gz` as:
+
+`B79F8CDE1A6F029C2EFA663A3A3B6F7748DEFB22341FE59F328CEBEF6648C8F1`
+
+The official Hugging Face dataset `NPULH/LLMRouterBench` publishes the exact same SHA-256 and a 1.28 GB `bench-release.tar.gz`. The project history records that the local archive hash was verified. Therefore the local archive is byte-for-byte identical to the official LLMRouterBench release; this is stronger than a similarity inferred from matching dataset sizes.
+
+The archive inventory in this repository contains:
+- 27 top-level dataset directories.
+- ArenaHard-derived source partitions `arenahard_coding`, `arenahard_creative_writing`, and `arenahard_math`, with 253, 250, and 247 prompts respectively (750 total), and 33 model files in each partition.
+- GPQA test records with 198 prompts in the experiment's matched 13-model pool.
+- MMLU-Pro `test_3000` records with 3,000 prompts in the experiment's matched 13-model pool.
+
+The current Day 6/Day 9 candidate set is exactly the same 13-model membership as the official performance–cost pool. The list order differs from the upstream YAML order, but the names match.
+
+**Novelty consequence:** the underlying benchmark records, model pool, and benchmark task selection are not new. The project must be framed as a secondary analysis / protocol-specific transfer evaluation over LLMRouterBench data, not as an independently assembled benchmark or new benchmark suite.
+
+The archive also contains an `arenahard` directory in addition to the three subcategory directories. The 750-row sum of the subcategories matches the published ArenaHard count, but a row-by-row key and normalized-prompt comparison between the three subcategory tables and the aggregate `arenahard` directory has not yet been run. Do not claim that mapping is verified until that check passes.
+
 ### What the paper covers
 
 The paper introduces a unified benchmark with 13 flagship models in its performance–cost setting and 20 lightweight models in its performance-oriented setting. It evaluates nine representative routing methods with available open-source implementations, plus OpenRouter, and reports five-run results for dataset-level evaluations.
@@ -55,13 +75,14 @@ A first direct inspection of the official LLMRouterBench repository confirms tha
 This is important: the official framework has an explicit code path for dataset-level OOD evaluation, so the current ArenaHard-to-GPQA/MMLU-Pro protocol should not be described as absent from the benchmark infrastructure. However, the existence of an OOD option does not prove that the published paper reports this exact source/target combination, nor that the current study has reproduced it.
 
 Implementation caveats found:
-- The official performance–cost config lists the 13 flagship models used by the current Day 6/Day 9 pool.
-- That config uses dataset identifiers such as `arenahard`, `gpqa`, and `mmlupro`; the current feature table uses `arenahard_coding`, `arenahard_creative_writing`, and `arenahard_math`. The mapping and prompt identity must be verified before reusing the config unchanged.
-- The Avengers-Pro adaptor supports the OOD argument, but its algorithm-level fairness, data requirements, model-pool ordering, and evaluation behavior still need review.
+- The official performance–cost config's 13-model membership matches the current Day 6/Day 9 pool exactly.
+- The checked-in config whitelists `arenahard`, `gpqa`, and `mmlupro`, but not the three source IDs `arenahard_coding`, `arenahard_creative_writing`, and `arenahard_math`. A custom config is required to include the three source partitions and both targets.
+- The loader's dataset-level OOD option can place all GPQA and MMLU-Pro records in test while retaining the ArenaHard subcategories for training. Its split operates on prompts and keeps all model records for a prompt together.
+- The Avengers-Pro adaptor supports the OOD argument and writes test-set baseline scores separately for post-hoc reporting. Its router training method builds clusters and per-cluster model rankings from training records, then routes test prompts from their embeddings. The target score matrix is used for evaluation/reporting, not for the cluster ranking step, but the full execution should still be checked in an end-to-end run.
 - The inspected GraphRouter adaptor currently calls the split function with `ood_datasets=None`; it does not expose the same OOD path without modification.
-- The official framework's general adaptor documentation describes OOD support, but this does not mean every individual router adaptor implements it.
+- The default Avengers-Pro simple config uses hosted `gte_Qwen2-7B-instruct` embeddings. The upstream paper reports an embedding ablation that includes `all-MiniLM-L6-v2`, but the checked-in router code expects an OpenAI-compatible embedding endpoint. A no-paid-API run would require a local compatible embedding service or a carefully documented local-backend adaptation. This has not yet been implemented or tested.
 
-**Updated feasibility assessment:** at least one official baseline path (Avengers-Pro) appears technically adaptable to a source-to-target OOD evaluation without recollecting model outputs. A fair, reproducible baseline comparison is therefore plausible, but not yet demonstrated. Check the exact dataset mapping, split behavior, baseline implementation, dependency/resource requirements, and whether the method can be run without paid inference APIs before selecting it.
+**Updated feasibility assessment:** the official archive and model pool are now identified exactly. The Avengers-Pro OOD path can be configured for the three ArenaHard source partitions and GPQA/MMLU-Pro targets, using only the pre-collected score matrix. However, a fair, reproducible run is not yet demonstrated: the config must be adapted, the local embedding backend must be implemented or served, and the resulting protocol must be compared against the paper's published configuration.
 
 A further code inspection shows the Avengers-Pro router loads `baseline_scores` in its evaluation/reporting path after routing results have been computed; the adaptor generates that file from test records. This appears intended for post-hoc baseline comparison, but the complete execution path should be checked before ruling out any target-score influence.
 
@@ -70,7 +91,7 @@ The checked-in simple configuration uses a hosted embedding endpoint and an embe
 ### Immediate implication
 
 A defensible comparison should:
-1. Verify that the 750 source rows map exactly to the ArenaHard rows in the release, including the coding/creative-writing/math partition labels.
+1. Compare the three source partitions against the aggregate `arenahard` directory at row-key and normalized-prompt level; document any differences.
 2. Verify the 13 candidate names and ordering against the benchmark's performance–cost pool.
 3. Inspect the official adapters and reproduce at least the most relevant published baseline(s) on the same eligible rows and split conditions, if technically feasible.
 4. Keep the current source-only selection protocol separate from hindsight Best Single and target-best fixed-model references.
@@ -186,8 +207,8 @@ The repeated source-validation splits reuse the same target prompts. They are se
 - [x] RACER full method reviewed directly; supplementary implementation remains to be inspected.
 - [ ] LENS full method and supplement reviewed.
 - [x] DSC full paper reviewed; no separate supplementary package identified in the reviewed publication.
-- [ ] Exact row-level ArenaHard release identity verified.
-- [ ] Official baseline reproduction feasibility completed.
+- [x] Local archive byte identity with official LLMRouterBench release verified via matching SHA-256; source-partition-to-aggregate ArenaHard row mapping still pending.
+- [ ] Avengers-Pro OOD baseline adapted to the three source partitions and two target datasets, with a free local embedding backend.
 - [ ] Novelty decision finalized.
 
 **Current decision:** retain the empirical transfer study as a conditional research direction. Do not present it as a novel routing method.
