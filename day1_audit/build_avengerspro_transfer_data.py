@@ -132,16 +132,22 @@ def main():
                 idx=str(rec.get("index","")).strip()
                 if not idx or idx in seen: stop(f"{ds}/{model}: blank/duplicate index {idx!r}")
                 seen.add(idx); q=query_of(rec); score=number(rec.get("score"),f"{ds}/{model}/{idx}/score")
-                item=by.setdefault(idx,{"queries":{},"records":{},"usages":{}})
-                item["queries"][model]=q; item["records"][model]=score
+                item=by.setdefault(idx,{"queries":{},"split_prompts":{},"records":{},"usages":{}})
+                raw_prompt=rec.get("prompt")
+                if not isinstance(raw_prompt,str) or not raw_prompt.strip():
+                    stop(f"{ds}/{model}/{idx}: missing formatted prompt field")
+                item["queries"][model]=q; item["split_prompts"][model]=raw_prompt; item["records"][model]=score
                 item["usages"][model]={
                     "completion_tokens":int(rec.get("completion_tokens") or 0),
                     "prompt_tokens":int(rec.get("prompt_tokens") or 0),
                     "cost":number(rec.get("cost") or 0,f"{ds}/{model}/{idx}/cost")}
         for idx,item in by.items():
             if set(item["records"])!=set(CANDIDATES): stop(f"{ds}/{idx}: incomplete model pool")
-            if len(set(item["queries"].values()))!=1: stop(f"{ds}/{idx}: prompt mismatch across models")
-            item["query"]=next(iter(item["queries"].values())); del item["queries"]
+            if len(set(item["queries"].values()))!=1: stop(f"{ds}/{idx}: selected query mismatch across models")
+            if len(set(item["split_prompts"].values()))!=1: stop(f"{ds}/{idx}: formatted prompt mismatch across models")
+            item["query"]=next(iter(item["queries"].values()))
+            item["_split_prompt"]=next(iter(item["split_prompts"].values()))
+            del item["queries"]; del item["split_prompts"]
             item["records"]={m:item["records"][m] for m in CANDIDATES}
             item["usages"]={m:item["usages"][m] for m in CANDIDATES}
         if expected_count is not None and len(by)!=expected_count:
@@ -169,11 +175,14 @@ def main():
             for idx,item in by.items(): item.update(dataset=ds,index=int(idx)); rows.append(item)
             notes.append(f"{ds}: {len(by)} target prompts; 13 model records and prompt strings aligned")
 
-    seen=set()
+    seen_queries=set(); seen_split_prompts=set()
     for r in rows:
         k=(r["dataset"],r["query"])
-        if k in seen: stop(f"Duplicate query in {r['dataset']}: index {r['index']}")
-        seen.add(k)
+        if k in seen_queries: stop(f"Duplicate selected query in {r['dataset']}: index {r['index']}")
+        seen_queries.add(k)
+        sk=(r["dataset"],r["_split_prompt"])
+        if sk in seen_split_prompts: stop(f"Duplicate formatted prompt would be merged by upstream adaptor: {r['dataset']} index {r['index']}")
+        seen_split_prompts.add(sk)
 
     # Upstream split mechanics: per-dataset prompt shuffle, floor count,
     # one Python RNG stream; OOD datasets are held entirely for test.
