@@ -1,0 +1,40 @@
+RESEARCH 3 ? QUICK RECORD INTEGRITY CHECK
+Archive JSON entries scanned: 700
+Matched target files: 226
+
+arenahard_coding: matched files=33
+  record counts: [253]
+  score values: ['0.0', '0.5', '1.0']
+  records missing prompt text: 0
+  prompt sequence consistent across models: YES
+arenahard_creative_writing: matched files=33
+  record counts: [250]
+  score values: ['0.0', '0.5', '1.0']
+  records missing prompt text: 0
+  prompt sequence consistent across models: YES
+arenahard_math: matched files=33
+  record counts: [247]
+  score values: ['0.0', '0.5', '1.0']
+  records missing prompt text: 0
+  prompt sequence consistent across models: YES
+gpqa: matched files=38
+  record counts: [198]
+  score values: ['0.0', '1.0']
+  records missing prompt text: 0
+  prompt sequence consistent across models: YES
+livecodebench: matched files=38
+  record counts: [1055]
+  score values: ['0.0', '1.0']
+  records missing prompt text: 0
+  prompt sequence consistent across models: YES
+mmlupro: matched files=51
+  record counts: [1001, 3000]
+  score values: ['0.0', '1.0']
+  records missing prompt text: 0
+  prompt sequence consistent across models: NO
+  mismatching models: DeepHermes-3-Llama-3-8B-Preview, qwen3-235b-a22b-no-thinking, DeepSeek-R1-Distill-Qwen-7B, gpt-4.1, Qwen2.5-Coder-7B-Instruct, qwen3-235b-a22b-2507, Llama-3.1-8B-Instruct, MiniCPM4.1-8B, MiMo-7B-RL-0530, gemini-2.5-flash
+
+READ ERRORS / UNRESOLVED FILES
+None detected.
+
+Caution: prompt alignment does not prove scoring equivalence, benchmark independence, or generalization.

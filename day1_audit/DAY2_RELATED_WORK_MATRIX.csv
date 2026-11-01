@@ -1,0 +1,13 @@
+﻿paper_or_system,year,topic,implication_for_research_3,remaining_review
+LLMRouterBench,2026,"Unified routing benchmark; performance and performance-cost; many baselines","Generic LLM routing and model selection are established","Read full paper; verify benchmark split design and license/provenance"
+RouteLLM,2024,"Routing between models with different capability/cost profiles","Model routing and quality-cost trade-offs are established","Compare training signal, thresholds, and evaluation protocol"
+RouterBench,2024,"Multi-LLM routing dataset and benchmark","Benchmark-driven router evaluation is established","Verify data terms and source-level split leakage concerns"
+FrugalGPT,2023,"Cost-efficient cascades and model selection","Cost-aware model cascades are established","Compare assumptions and budget/quality objective"
+EmbedLLM,2025,"Embedding-based LLM routing","Learned prompt representations for routing are established","Compare features, training objective, and OOD evaluation"
+Model-SAT,2025,"Model selection and routing","Model selection is established","Read full method and baseline results"
+RACER,2026,"Calibrated routing and misrouting risk / abstention","Uncertainty and risk-aware routing are established directions","Verify exact contribution and evaluation protocol"
+LENS,2026,"Routing under noisy feedback and temporal drift","Drift-aware routing is an existing research direction","Verify full paper and relationship to proposed shift evaluation"
+RouterEval,2025,"Evaluation of LLM routers","Router evaluation itself is established","Compare metrics and benchmark coverage"
+TwinRouterBench,2026,"Benchmarking router methods","Additional router benchmark prior art exists","Inspect datasets, licensing, and methods"
+R2-Router,2026,"LLM routing methods","Routing algorithm design is an active area","Read full paper and compare objective"
+The Routing Plateau,2026,"Empirical limits of routing performance","Routing gains may be constrained by baseline and dataset structure","Inspect findings before framing contribution"

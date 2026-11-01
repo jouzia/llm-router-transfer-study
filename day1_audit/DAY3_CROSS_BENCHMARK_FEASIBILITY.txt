@@ -1,0 +1,34 @@
+Research 3 ? Cross-benchmark feasibility audit
+Metadata rows: 700
+Dataset groups: 27
+ArenaHard-related dataset names: 4
+Distinct models across ArenaHard-related datasets: 35
+
+Top datasets by overlap with ArenaHard models:
+arenahard: files=35, models=35, ArenaHard model overlap=35, splits=1, fingerprints=1, record_signatures=2
+mmlupro: files=51, models=38, ArenaHard model overlap=34, splits=2, fingerprints=2, record_signatures=2
+aime: files=38, models=38, ArenaHard model overlap=34, splits=1, fingerprints=1, record_signatures=1
+gpqa: files=38, models=38, ArenaHard model overlap=34, splits=1, fingerprints=1, record_signatures=1
+livecodebench: files=38, models=38, ArenaHard model overlap=34, splits=1, fingerprints=1, record_signatures=1
+livemathbench: files=35, models=35, ArenaHard model overlap=34, splits=1, fingerprints=2, record_signatures=1
+arenahard_coding: files=33, models=33, ArenaHard model overlap=33, splits=1, fingerprints=1, record_signatures=1
+arenahard_creative_writing: files=33, models=33, ArenaHard model overlap=33, splits=1, fingerprints=1, record_signatures=1
+arenahard_math: files=33, models=33, ArenaHard model overlap=33, splits=1, fingerprints=1, record_signatures=1
+humaneval: files=22, models=22, ArenaHard model overlap=21, splits=1, fingerprints=1, record_signatures=1
+arcc: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=1, record_signatures=1
+bbh: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=0, record_signatures=1
+emorynlp: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=1, record_signatures=1
+finqa: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=0, record_signatures=1
+kandk: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=0, record_signatures=1
+korbench: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=0, record_signatures=1
+math500: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=0, record_signatures=1
+mathbench: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=1, record_signatures=1
+mbpp: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=0, record_signatures=2
+medqa: files=20, models=20, ArenaHard model overlap=20, splits=1, fingerprints=1, record_signatures=1
+
+Interpretation cautions:
+- Model-name overlap is only a first feasibility check.
+- Matching model names do not guarantee identical model versions or evaluation conditions.
+- Fingerprints and record signatures describe groups in the current metadata; inspect how they were constructed.
+- This audit does not establish benchmark independence, license compatibility, or leakage-free transfer.
+- A held-out dataset must be selected before tuning the router on it.

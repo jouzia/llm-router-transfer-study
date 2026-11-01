@@ -1,0 +1,23 @@
+RESEARCH 3: INITIAL OFFLINE BASELINE
+Input: D:\Research3\day1_audit\pilot_score_matrix.csv
+Models: 33
+Domains: 3
+Seeds: [42, 43, 44, 45, 46]
+Split: 60% train / 20% validation / 20% test per domain
+Validation is reserved and not used in this baseline.
+Global model selected on macro-average training performance.
+Domain-aware model selected separately per domain on training data.
+Oracle uses test labels and is only an upper bound.
+Primary score: mean per-record score; higher is better.
+Regret: oracle score minus selected model score; lower is better.
+
+MACRO-AVERAGED TEST RESULTS ACROSS DOMAINS
+global: score mean=0.779872, split SD=0.027373, regret mean=0.206154, regret split SD=0.028641
+domain_aware: score mean=0.777615, split SD=0.018723, regret mean=0.208410, regret split SD=0.018402
+oracle_upper_bound: score mean=0.986026, split SD=0.001506, regret mean=0.000000, regret split SD=0.000000
+
+Per-seed values reflect repeated random splits, not independent studies.
+Do not interpret split SD as a confidence interval.
+These results evaluate domain-level model selection, not yet a learned per-prompt router.
+Detailed results: D:\Research3\day1_audit\baseline_results.csv
+Selected models: D:\Research3\day1_audit\baseline_selected_models.csv

@@ -1,0 +1,34 @@
+DAY 2 — PAIRED ROUTING ANALYSIS
+=================================================================
+Prediction rows: 760
+Positive difference means the feature selector scored higher.
+Bootstrap intervals resample prompts within each seed/domain.
+They do not account for benchmark provenance, prompt dependence,
+or uncertainty from choosing the method using validation results.
+
+COMPARISON: feature_minus_domain
+  Seed 42: n=152, mean_diff=+0.016447, prompt_wins=17, ties=121, losses=14, paired_bootstrap_95%_CI=[-0.032895, +0.069079]
+  Seed 43: n=152, mean_diff=+0.000000, prompt_wins=13, ties=128, losses=11, paired_bootstrap_95%_CI=[-0.039474, +0.039474]
+  Seed 44: n=152, mean_diff=+0.029605, prompt_wins=25, ties=112, losses=15, paired_bootstrap_95%_CI=[-0.032895, +0.092105]
+  Seed 45: n=152, mean_diff=+0.019737, prompt_wins=14, ties=128, losses=10, paired_bootstrap_95%_CI=[-0.026316, +0.065789]
+  Seed 46: n=152, mean_diff=+0.019737, prompt_wins=12, ties=134, losses=6, paired_bootstrap_95%_CI=[-0.023026, +0.062500]
+  Across-seed mean of split differences: +0.017105
+  Across-seed range: [+0.000000, +0.029605]
+  Per-domain differences:
+    arenahard_coding: seed 42: +0.0481, seed 43: +0.0385, seed 44: -0.0577, seed 45: +0.0577, seed 46: +0.0192
+    arenahard_creative_writing: seed 42: +0.0000, seed 43: -0.0100, seed 44: +0.0000, seed 45: -0.0100, seed 46: +0.0200
+    arenahard_math: seed 42: +0.0000, seed 43: -0.0300, seed 44: +0.1500, seed 45: +0.0100, seed 46: +0.0200
+
+COMPARISON: feature_minus_global
+  Seed 42: n=152, mean_diff=+0.039474, prompt_wins=26, ties=108, losses=18, paired_bootstrap_95%_CI=[-0.023026, +0.101974]
+  Seed 43: n=152, mean_diff=+0.026316, prompt_wins=21, ties=118, losses=13, paired_bootstrap_95%_CI=[-0.023026, +0.075658]
+  Seed 44: n=152, mean_diff=-0.006579, prompt_wins=24, ties=107, losses=21, paired_bootstrap_95%_CI=[-0.069079, +0.052632]
+  Seed 45: n=152, mean_diff=+0.049342, prompt_wins=23, ties=117, losses=12, paired_bootstrap_95%_CI=[-0.006579, +0.105263]
+  Seed 46: n=152, mean_diff=+0.049342, prompt_wins=22, ties=121, losses=9, paired_bootstrap_95%_CI=[-0.003289, +0.098684]
+  Across-seed mean of split differences: +0.031579
+  Across-seed range: [-0.006579, +0.049342]
+  Per-domain differences:
+    arenahard_coding: seed 42: +0.0481, seed 43: +0.0385, seed 44: -0.0577, seed 45: +0.0577, seed 46: +0.0192
+    arenahard_creative_writing: seed 42: +0.0700, seed 43: +0.0700, seed 44: +0.0200, seed 45: +0.0800, seed 46: +0.1100
+    arenahard_math: seed 42: +0.0000, seed 43: -0.0300, seed 44: +0.0200, seed 45: +0.0100, seed 46: +0.0200
+

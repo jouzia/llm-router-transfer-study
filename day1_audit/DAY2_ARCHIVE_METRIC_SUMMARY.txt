@@ -1,0 +1,10 @@
+Research 3 ? Day 2 archive metric summary
+JSON files: 700
+Parse errors: 0
+Datasets: 27
+Models: 40
+Performance mismatches: 2
+Cost mismatches: 39
+SHA256: b79f8cde1a6f029c2efa663a3a3b6f7748defb22341fe59f328cebef6648c8f1
+
+Caution: metadata comparison cannot establish units or provenance.

@@ -1,0 +1,135 @@
+RESEARCH 3 — SCORE DISTRIBUTION AUDIT
+=======================================================
+Input rows: 750
+Model columns: 33
+Total individual scores: 24750
+Distinct pooled score values: 3
+Distinct pooled values (first 30): [0.0, 0.5, 1.0]
+
+DOMAIN: arenahard_coding
+Prompts: 253
+Individual scores: 8349
+Mean score: 0.304887
+Median score: 0.000000
+Distinct score values: 3
+Most common individual scores:
+  score=0.000000: 5252 (62.9%)
+  score=1.000000: 1994 (23.9%)
+  score=0.500000: 1103 (13.2%)
+Number of prompts by number of tied top-scoring models:
+  1 model(s): 6 prompts
+  2 model(s): 8 prompts
+  3 model(s): 18 prompts
+  4 model(s): 19 prompts
+  5 model(s): 17 prompts
+  6 model(s): 28 prompts
+  7 model(s): 26 prompts
+  8 model(s): 28 prompts
+  9 model(s): 27 prompts
+  10 model(s): 12 prompts
+  11 model(s): 16 prompts
+  12 model(s): 22 prompts
+  13 model(s): 12 prompts
+  14 model(s): 8 prompts
+  16 model(s): 2 prompts
+  17 model(s): 1 prompts
+  18 model(s): 1 prompts
+  24 model(s): 1 prompts
+  25 model(s): 1 prompts
+Most common per-prompt maximum scores:
+  max=1.000000: 252 prompts
+  max=0.500000: 1 prompts
+
+DOMAIN: arenahard_creative_writing
+Prompts: 250
+Individual scores: 8250
+Mean score: 0.401576
+Median score: 0.000000
+Distinct score values: 3
+Most common individual scores:
+  score=0.000000: 4410 (53.5%)
+  score=1.000000: 2786 (33.8%)
+  score=0.500000: 1054 (12.8%)
+Number of prompts by number of tied top-scoring models:
+  1 model(s): 1 prompts
+  2 model(s): 4 prompts
+  3 model(s): 9 prompts
+  4 model(s): 10 prompts
+  5 model(s): 13 prompts
+  6 model(s): 7 prompts
+  7 model(s): 10 prompts
+  8 model(s): 16 prompts
+  9 model(s): 21 prompts
+  10 model(s): 18 prompts
+  11 model(s): 21 prompts
+  12 model(s): 23 prompts
+  13 model(s): 21 prompts
+  14 model(s): 26 prompts
+  15 model(s): 13 prompts
+  16 model(s): 9 prompts
+  17 model(s): 10 prompts
+  18 model(s): 3 prompts
+  19 model(s): 6 prompts
+  20 model(s): 2 prompts
+  21 model(s): 2 prompts
+  22 model(s): 1 prompts
+  23 model(s): 1 prompts
+  25 model(s): 1 prompts
+  30 model(s): 1 prompts
+  33 model(s): 1 prompts
+Most common per-prompt maximum scores:
+  max=1.000000: 250 prompts
+
+DOMAIN: arenahard_math
+Prompts: 247
+Individual scores: 8151
+Mean score: 0.266777
+Median score: 0.000000
+Distinct score values: 3
+Most common individual scores:
+  score=0.000000: 5398 (66.2%)
+  score=1.000000: 1596 (19.6%)
+  score=0.500000: 1157 (14.2%)
+Number of prompts by number of tied top-scoring models:
+  1 model(s): 18 prompts
+  2 model(s): 19 prompts
+  3 model(s): 26 prompts
+  4 model(s): 22 prompts
+  5 model(s): 25 prompts
+  6 model(s): 27 prompts
+  7 model(s): 23 prompts
+  8 model(s): 13 prompts
+  9 model(s): 19 prompts
+  10 model(s): 15 prompts
+  11 model(s): 12 prompts
+  12 model(s): 5 prompts
+  13 model(s): 4 prompts
+  14 model(s): 5 prompts
+  15 model(s): 5 prompts
+  16 model(s): 1 prompts
+  17 model(s): 2 prompts
+  18 model(s): 3 prompts
+  23 model(s): 1 prompts
+  27 model(s): 1 prompts
+  33 model(s): 1 prompts
+Most common per-prompt maximum scores:
+  max=1.000000: 235 prompts
+  max=0.500000: 11 prompts
+  max=0.000000: 1 prompts
+
+MODEL MEANS — descriptive, not test-set routing results
+gemini-2.5-pro: mean=0.770000; n=750
+qwen3-235b-a22b-thinking-2507: mean=0.739333; n=750
+qwen3-235b-a22b-2507: mean=0.730667; n=750
+kimi-k2-0905: mean=0.710667; n=750
+gpt-5: mean=0.697333; n=750
+gpt-5-chat: mean=0.688667; n=750
+intern-s1: mean=0.670667; n=750
+glm-4.6: mean=0.664000; n=750
+deepseek-v3.1-terminus: mean=0.662667; n=750
+deepseek-r1-0528: mean=0.635333; n=750
+deepseek-v3-0324: mean=0.601333; n=750
+gemini-2.5-flash: mean=0.555333; n=750
+claude-sonnet-4: mean=0.546667; n=750
+Qwen3-8B: mean=0.246667; n=750
+DeepSeek-R1-0528-Qwen3-8B: mean=0.230000; n=750

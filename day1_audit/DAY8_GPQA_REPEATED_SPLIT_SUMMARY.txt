@@ -1,4 +1,4 @@
-﻿DAY 8 â€” REPEATED SOURCE-VALIDATION SPLITS
+DAY 8 — REPEATED SOURCE-VALIDATION SPLITS
 Target: GPQA test (198 prompts)
 Prespecified seeds: [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035]
 Each seed selects alpha and baseline using source validation only.
@@ -42,4 +42,3 @@ Caution: the same target prompts are reused across seeds. Do not treat
 these ten runs as independent target samples or select a best seed.
 The prompt bootstrap intervals condition on the observed target prompts.
 This experiment covers GPQA only; it does not establish broad generalization.
-

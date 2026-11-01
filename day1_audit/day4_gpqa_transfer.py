@@ -169,10 +169,32 @@ gpqa_meta = [
     and r["model"] in model_names
 ]
 if len(gpqa_meta) != 33:
-    fail(f"Expected 33 GPQA files for the shared candidate pool; found {len(gpqa_meta)}")
+    fail(
+        "Expected exactly 33 GPQA metadata rows for the shared candidate pool "
+        f"before split/demo validation; found {len(gpqa_meta)}"
+    )
+
+invalid_split = [
+    r["model"] for r in gpqa_meta
+    if r["split"].strip().lower() != "test"
+]
+if invalid_split:
+    fail("GPQA candidate metadata contains non-test records: " + ", ".join(invalid_split))
+
+invalid_demo = [
+    r["model"] for r in gpqa_meta
+    if r["demo"].strip().lower() not in {"false", "0"}
+]
+if invalid_demo:
+    fail("GPQA candidate metadata contains demonstration records: " + ", ".join(invalid_demo))
 
 if len({r["model"] for r in gpqa_meta}) != 33:
     fail("GPQA metadata has duplicate or missing candidate model entries.")
+
+if {r["split"].strip().lower() for r in gpqa_meta} != {"test"}:
+    fail("GPQA metadata split is not exclusively test.")
+if {r["demo"].strip().lower() for r in gpqa_meta} - {"false", "0"}:
+    fail("GPQA metadata demo flag is not exclusively false.")
 
 gpqa_records = defaultdict(dict)
 gpqa_texts = defaultdict(dict)

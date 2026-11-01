@@ -1,0 +1,18 @@
+DAY 6 — SOURCE-ONLY ROUTER CONFIGURATION
+Source rows: 750
+Source domains: arenahard_coding, arenahard_creative_writing, arenahard_math
+Candidate models: 13
+Validation seed: 2026
+Validation fraction per source domain: 20%
+Alpha candidates: [0.1, 1.0, 10.0, 100.0]
+Selected alpha: 10.0
+Selected source validation macro utility: 0.78225157
+Validation-selected global baseline: qwen3-235b-a22b-thinking-2507
+Global baseline validation macro-mean: 0.79526344
+Target scores were not used for source fitting or model/alpha selection.
+
+Validation utility by alpha:
+alpha=0.1: utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=1.0: utility=0.77558223; {'arenahard_coding': 0.7647058823529411, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6020408163265306}
+alpha=10.0: utility=0.78225157; {'arenahard_coding': 0.7745098039215687, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.6122448979591837}
+alpha=100.0: utility=0.78198479; {'arenahard_coding': 0.7941176470588235, 'arenahard_creative_writing': 0.96, 'arenahard_math': 0.5918367346938775}

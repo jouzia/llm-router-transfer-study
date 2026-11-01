@@ -1,0 +1,728 @@
+﻿RESEARCH 3 — PROVENANCE AND METRIC AUDIT
+
+=== REPOSITORY LICENSE FILES ===
+.\baselines\Best-route-llm\LICENSE.md
+.\baselines\GraphRouter\LICENSE
+
+=== LICENSE AND DATA PROVENANCE REFERENCES ===
+
+
+Path       : D:\Research3\repos\LLMRouterBench\README.md
+LineNumber : 13
+Line       : [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+Path       : D:\Research3\repos\LLMRouterBench\README_zh.md
+LineNumber : 13
+Line       : [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\README.md
+LineNumber : 11
+Line       : [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\CONTRIBUTING.md
+LineNumber : 4
+Line       : agree to a Contributor License Agreement (CLA) declaring that you have the right to,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\LICENSE.md
+LineNumber : 1
+Line       : Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\README.md
+LineNumber : 3
+Line       : ![License](https://img.shields.io/badge/License-MIT-blue.svg)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\setup.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\train_router.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\train_router_gte.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\hybrid_llm\pair_ranker\collator.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\hybrid_llm\pair_ranker\config.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\hybrid_llm\pair_ranker\data.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\hybrid_llm\pair_ranker\model_util.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\hybrid_llm\pair_ranker\ranker.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\hybrid_llm\pair_ranker\trainer.py
+LineNumber : 1
+Line       : # Copyright (c) Microsoft Corporation.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\notebooks\reward_modeling.py
+LineNumber : 1
+Line       : # Copyright 2023 The HuggingFace Inc. team. All rights reserved.
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\GraphRouter\README.md
+LineNumber : 13
+Line       :     <a href="https://github.com/ulab-uiuc/GraphRouter/blob/master/LICENSE">
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\GraphRouter\data_processing\multidata_unify.py
+LineNumber : 7
+Line       :     Generate a unified question-answering dataset from multiple data sources.
+
+Path       : D:\Research3\repos\LLMRouterBench\config\baseline_config.yaml
+LineNumber : 7
+Line       :   # Data Source
+
+Path       : D:\Research3\repos\LLMRouterBench\config\baseline_config_performance_cost.yaml
+LineNumber : 7
+Line       :   # Data Source
+
+Path       : D:\Research3\repos\LLMRouterBench\data\README.md
+LineNumber : 2
+Line       : license: mit
+
+Path       : D:\Research3\repos\LLMRouterBench\data\AIME\total.json
+LineNumber : 282
+Line       : {"ID":"2002-I-1","Problem":"Many states use a sequence of three letters followed by a sequence of three digits as their standard license-plate pattern. Given that each three-letter three-digit arrangement 
+             is equally likely, the probability that such a license plate will contain at least one palindrome (a three-letter arrangement or a three-digit arrangement that reads the same left-to-right as it does 
+             right-to-left) is $m\/n$ , where $m$ and $n$ are relatively prime positive integers. Find $m+n$ . ","Answer":"59"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\EmoryNLP\test.json
+LineNumber : 302
+Line       : {"history":["Ooh, ooh, ooh,ooh,ooh. Hi.","Hello.","Hello. Umm, when is your next flight to London?","There's one leaving in thirty minutes.","Ohh, good.","And I do have one seat left.","Ohh, thank you, 
+             thank you, thank you.","The last minute fare on this ticket is twenty seven hundred dollars.","Huh.. How about 600?","Sorry.","How about 600 and these earrings?","They prefer it if I don't barter.","Ohh, I 
+             just don't think I have enough left on my credit card.","Well you can split it with another credit card.","Ohh, okay, how about five. Ohh, thank you.","I'm just going to need to see your 
+             passport."],"utterance":"Okay, you know what? I don't have it, but I can tell you exactly where it is on my night stand, and...okay. But you know what? I have my drivers license and I have a 
+             twenty.","candidate":{"A":"Neutral","B":"Joyful","C":"Peaceful","D":"Powerful","E":"Scared","F":"Mad","G":"Sad"},"answer":"E"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\FinQA\test.json
+LineNumber : 61
+Line       : {"id":"CME\/2010\/page_91.pdf-1","pre_text":["5 .","other current assets other current assets consisted of the following at december 31: ."],"post_text":["6 .","performance bonds and guaranty fund 
+             contributions cme clears and guarantees the settlement of cme , cbot and nymex contracts traded in their respective markets .","in its guarantor role , cme has precisely equal and offsetting claims to and 
+             from clearing firms on opposite sides of each contract , standing as an intermediary on every contract cleared .","clearing firm positions are combined to create a single portfolio for each clearing firm 
+             2019s regulated and non-regulated accounts with cme for which performance bond and guaranty fund requirements are calculated .","to the extent that funds are not otherwise available to satisfy an obligation 
+             under the applicable contract , cme bears counterparty credit risk in the event that future market movements create conditions that could lead to clearing firms failing to meet their obligations to cme 
+             .","cme reduces its exposure through a risk management program that includes initial and ongoing financial standards for designation as a clearing firm , performance bond requirements and mandatory guaranty 
+             fund contributions .","each clearing firm is required to deposit and maintain balances in the form of cash , u.s .","government securities , bank letters of credit or other approved investments to satisfy 
+             performance bond and guaranty fund requirements .","all obligations and non-cash deposits are marked to market on a daily basis .","in addition , the rules and regulations of cbot require certain minimum 
+             financial requirements for delivery of physical commodities , maintenance of capital requirements and deposits on pending arbitration matters .","to satisfy these requirements , cbot clearing firms have 
+             deposited cash , u.s .","treasury securities and letters of credit .","cme marks-to-market open positions at least twice a day , and requires payment from clearing firms whose positions have lost value and 
+             makes payments to clearing firms whose positions have gained value .","for select product offerings within newer markets , positions are marked-to-market once daily , with the capability to mark-to-market 
+             more frequently as market conditions warrant .","under the extremely unlikely scenario of simultaneous default by every clearing firm who has open positions with unrealized losses , the maximum exposure 
+             related to cme 2019s guarantee would be one half day of changes in fair value of all open positions , before considering cme 2019s ability to access defaulting clearing firms 2019 performance bond and 
+             guaranty fund balances as well as other available resources .","during 2010 , cme transferred an average of approximately $ 2.4 billion a day through its clearing system for settlement from clearing firms 
+             whose positions had lost value to clearing firms whose positions had gained value .","cme reduces its guarantee exposure through initial and maintenance performance bond requirements and mandatory guaranty 
+             fund contributions .","the company believes that the guarantee liability is immaterial and therefore has not recorded any liability at december 31 , 2010. ."],"table":[["( in millions 
+             )","2010","2009"],["refundable income tax","$ 61.0","$ 24.1"],["net deferred income taxes ( note 14 )","18.3","23.8"],["prepaid technology license and maintenance contracts","18.0","17.0"],["forward 
+             contract receivable ( note 20 )","11.8","27.3"],["receivables from brokers","11.2","8.8"],["other prepaid expenses","9.6","13.5"],["prepaid insurance","6.3","7.0"],["cboe exercise rights 
+             privilege","2014","39.8"],["other","9.9","4.3"],["total","$ 146.1","$ 165.6"]],"question":"what was the percentage change in receivables from brokers with in other current assets from 2009 to 
+             2010?","answer":"29%","final_result":"29%","program_re":"subtract(11.2, 8.8), divide(#0, 8.8)","gold_inds":["( in millions ) the receivables from brokers of 2010 is 11.2 ; the receivables from brokers of 
+             2009 is 8.8 ;"]}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\LiveCodeBench\README.md
+LineNumber : 81
+Line       : ## License
+
+Path       : D:\Research3\repos\LLMRouterBench\data\MATH500\test.json
+LineNumber : 51
+Line       : {"problem": "You have seven bags of gold coins. Each bag has the same number of gold coins. One day, you find a bag of 53 coins. You decide to redistribute the number of coins you have so that all eight 
+             bags you hold have the same number of coins. You successfully manage to redistribute all the coins, and you also note that you have more than 200 coins. What is the smallest number of coins you could have 
+             had before finding the bag of 53 coins?", "solution": "If there are $b$ gold coins in each of the original 7 bags, then $7b+53$ is divisible by 8. In other words, $7b + 53 \\equiv 0 \\pmod{8}$. Since $53 
+             \\equiv 5 \\pmod{8}$ and $7 \\equiv -1 \\pmod{8}$, we have that $-b \\equiv -5 \\pmod{8}$. Multiplying both sides by $-1$, we get that $b \\equiv 5 \\pmod{8}$. Now, we want $7b + 53 > 200$, so as a result, 
+             $b > \\frac{200-53}{7} \\implies b > 21$. Therefore, we want an integer greater than 21 which leaves a remainder of 5 when divided by 8. The least such integer is 29, so you had $29 \\cdot 7 = \\boxed{203}$ 
+             coins before finding the bag of 53 coins.", "answer": "203", "subject": "Number Theory", "level": 5, "unique_id": "test/number_theory/1055.json"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\Mathbench\single_choice.json
+LineNumber : 39
+Line       : {"question":"How many different license plates are possible if a state uses two letters followed by a four-digit integer (leading zeros are permissible and the letters and digits can be 
+             repeated)?","options":["6760000.0","6716652.7","-5479496.5","-6759998.0"],"answer":"A","topic":"College--Discrete Mathematics--Combinatorics","category":"college"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\MedQA\test.json
+LineNumber : 556
+Line       : {"id":"test-00555","question":"A previously healthy 14-year-old boy is brought to the physician for evaluation because of loss of appetite, sleeplessness, and extreme irritability for the past 3 weeks. He 
+             was recently kicked off of the school's football team after missing too many practices. He has also been avoiding his family and friends because he is not in the mood to see them, but he admits that he is 
+             lonely. He has not left his room for 2 days, which prompted his father to bring him to the physician. He has no medical conditions and does not take any medications. He does not drink alcohol or use 
+             recreational drugs. While the father is in the waiting room, a mental status examination is conducted, which shows a constricted affect. Cognition is intact. He says that he would be better off dead and 
+             refuses to be treated. He says he wants to use his father's licensed firearm to \u201cend his misery\u201d over the weekend when his parents are at church. Which of the following is the most appropriate 
+             next step in management?","options":{"A":"Agree to his wish for no further treatment","B":"Involuntary hospitalization after informing the parents","C":"Reassure the patient that he will feel 
+             better","D":"Start outpatient psychotherapy"},"answer":"B"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\MedQA\train.json
+LineNumber : 1952
+Line       : {"id":"train-01951","question":"A 38-year-old man presents to the endocrinologist with complaints of increased shoe size and headaches in the morning. These symptoms have developed gradually over the past 
+             year but have become especially concerning because he can no longer wear his normal-sized boots. He denies any other symptoms, including visual changes. He was recently started on lisinopril by his primary 
+             care physician for high blood pressure. His vital signs are within normal limits and stable. On exam, the endocrinologist notes the findings shown in Figures A and B. These facial features are especially 
+             striking when contrasted with his drivers license from 10 years prior, when his jaw was much less prominent. The endocrinologist sends a screening blood test to work-up the likely diagnosis. Which of the 
+             following organs or glands produces the molecule being tested in this screening?","options":{"A":"Liver","B":"Posterior pituitary gland","C":"Pancreas","D":"Kidney"},"answer":"A"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\MedQA\valid.json
+LineNumber : 909
+Line       : {"id":"dev-00908","question":"A 75-year-old man was brought in by his daughter since he was having increased incidences of forgetting things. His daughter said that he becomes increasingly frustrated 
+             searching for his glasses and keys most of the time. He was helped out a couple of times in the supermarket for forgetting the way out. He recently lost his driving license when he was spotted by the cops 
+             driving in the wrong direction on the interstate. Which of the following is the most likely pathology for this presentation?","options":{"A":"Prion infection","B":"\u03b1-synuclein defect","C":"Depigmented 
+             substantia nigra and locus cerulus","D":"Abnormal cleavage of amyloid precursor protein"},"answer":"D"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\MELD\test.json
+LineNumber : 509
+Line       : {"history":["How could you pick up a hitchhiker?! He could be a rape\u2014, a rapist or a killer or something!","Don\u2019t you think I asked him that before he got in?!","Y\u2019know what? I\u2019m not 
+             talking to you! You go back to sleep!  And you, are you a rapist?!","No!","Do you like car games?","Yeah, y\u2019know the license plate game?","I","Ooh, I\u2019ll play! I\u2019ll play!"],"utterance":"No-No! 
+             You need your sleep. Night-night! Shh!","candidate":{"A":"neutral","B":"joy","C":"sadness","D":"fear","E":"anger","F":"surprise","G":"disgust"},"answer":"E"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\MMLUPro\all.json
+LineNumber : 398
+Line       : {"question": "The village of Lynbrook has a capital budget of $125,626.79 for the current year. Through fines and issuing of licenses, the village expects to raise $4,256.30. If the total assessed valuation 
+             of the property in Lynbrook is $2,697,112, what is the town's tax rate in dollars per $1,000?", "options": {"A": "$65 per $1,000 of assessed valuation", "B": "$35 per $1,000 of assessed valuation", "C": 
+             "$60 per $1,000 of assessed valuation", "D": "$25 per $1,000 of assessed valuation", "E": "$30 per $1,000 of assessed valuation", "F": "$45 per $1,000 of assessed valuation", "G": "$50 per $1,000 of 
+             assessed valuation", "H": "$40 per $1,000 of assessed valuation", "I": "$55 per $1,000 of assessed valuation", "J": "$70 per $1,000 of assessed valuation"}, "answer": "F", "category": "business"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\MMLUPro\test.json
+LineNumber : 9
+Line       : {"question":"Government intervention in the economy not only effects the level of economic activity, but it can also result in the redistribution of resources (from rich to poor people, for example ). What 
+             school of economists hastraditionally supported government intervention for both of these reasons ?","options":{"A":"The Supply-side Economists","B":"The Classical Economists","C":"The Neoclassical 
+             Economists","D":"The Mercantilists","E":"The Chicago School of Economics","F":"The Institutional Economists","G":"The Keynesians","H":"The Austrian School of Economics","I":"The 
+             Monetarists","J":null},"answer":"G","category":"economics"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\MMLUPro\test_3000.json
+LineNumber : 9
+Line       : {"question": "Government intervention in the economy not only effects the level of economic activity, but it can also result in the redistribution of resources (from rich to poor people, for example ). What 
+             school of economists hastraditionally supported government intervention for both of these reasons ?", "options": {"A": "The Supply-side Economists", "B": "The Classical Economists", "C": "The Neoclassical 
+             Economists", "D": "The Mercantilists", "E": "The Chicago School of Economics", "F": "The Institutional Economists", "G": "The Keynesians", "H": "The Austrian School of Economics", "I": "The Monetarists", 
+             "J": null}, "answer": "G", "category": "economics"}
+
+Path       : D:\Research3\repos\LLMRouterBench\data\winogrande\valid.json
+LineNumber : 873
+Line       : {"sentence":"Christine told Samantha at court their reasons for their expired license, since _ had the responsibility to attend.","option1":"Christine","option2":"Samantha","answer":"1"}
+
+
+
+
+
+=== METRIC DEFINITIONS IN CODE ===
+
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 73
+Line       :                 total_cost=0.0,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 75
+Line       :                 total_prompt_tokens=0,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 76
+Line       :                 total_completion_tokens=0,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 77
+Line       :                 avg_prompt_tokens=0.0,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 78
+Line       :                 avg_completion_tokens=0.0
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 84
+Line       :         total_cost = sum(r.cost for r in records)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 85
+Line       :         total_prompt_tokens = sum(r.prompt_tokens for r in records)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 86
+Line       :         total_completion_tokens = sum(r.completion_tokens for r in records)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 95
+Line       :             total_cost=total_cost,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 96
+Line       :             avg_cost_per_record=total_cost / total_records,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 97
+Line       :             total_prompt_tokens=total_prompt_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 98
+Line       :             total_completion_tokens=total_completion_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 99
+Line       :             avg_prompt_tokens=total_prompt_tokens / total_records,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 100
+Line       :             avg_completion_tokens=total_completion_tokens / total_records
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 136
+Line       :     def _compute_oracle_cost_by_dataset(self, cost_metric: str = 'total_cost', exclude_models: Optional[List[str]] = None) -> Dict[str, float]:
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 148
+Line       :             cost_metric: Cost metric to use ('total_cost' or 'avg_cost_per_record')
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 165
+Line       :                     'cost': record.cost
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 188
+Line       :             if cost_metric == 'total_cost':
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 197
+Line       :     def _compute_max_expert_cost_by_dataset(self, cost_metric: str = 'total_cost', exclude_models: Optional[List[str]] = None) -> Dict[str, float]:
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 205
+Line       :             cost_metric: Cost metric to use ('total_cost' or 'avg_cost_per_record')
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 257
+Line       :                 'prompt_tokens': int,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 258
+Line       :                 'completion_tokens': int
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 283
+Line       :                     'cost': sampled_record.cost,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 284
+Line       :                     'prompt_tokens': sampled_record.prompt_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 285
+Line       :                     'completion_tokens': sampled_record.completion_tokens
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 314
+Line       :     def _compute_random_router_cost_by_dataset(self, sampled_data: Dict[Tuple[str, str, int], Dict[str, Any]], cost_metric: str = 'total_cost') -> Dict[str, float]:
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 321
+Line       :             cost_metric: Cost metric to use ('total_cost' or 'avg_cost_per_record')
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 335
+Line       :             if cost_metric == 'total_cost':
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 680
+Line       :                 'total_cost': 0.0
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 685
+Line       :         total_cost = sum(r.cost for r in self.records)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 686
+Line       :         total_prompt_tokens = sum(r.prompt_tokens for r in self.records)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 687
+Line       :         total_completion_tokens = sum(r.completion_tokens for r in self.records)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 699
+Line       :             'total_cost': total_cost,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 700
+Line       :             'avg_cost_per_record': total_cost / total_records,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 701
+Line       :             'total_prompt_tokens': total_prompt_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 702
+Line       :             'total_completion_tokens': total_completion_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 703
+Line       :             'avg_prompt_tokens': total_prompt_tokens / total_records,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 704
+Line       :             'avg_completion_tokens': total_completion_tokens / total_records,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 710
+Line       :                          cost_metric: str = 'total_cost',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 719
+Line       :             cost_metric: Cost metric to use ('total_cost' or 'avg_cost_per_record')
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 881
+Line       :         if cost_metric not in ['total_cost', 'avg_cost_per_record']:
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 884
+Line       :                 f"Must be 'total_cost' or 'avg_cost_per_record'"
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 923
+Line       :             performance_df.loc['AVG'] = performance_df.loc[main_models].mean(axis=0, skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 926
+Line       :             performance_df.loc['AVG'] = performance_df.mean(axis=0, skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1003
+Line       :                     performance_df.loc[model, 'In-Dist-Avg'] = performance_df.loc[model, in_dist_keys].mean(skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1008
+Line       :                 performance_df.loc['AVG', 'In-Dist-Avg'] = performance_df.loc[main_models, 'In-Dist-Avg'].mean(skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1026
+Line       :                     performance_df.loc[model, 'OOD-Avg'] = performance_df.loc[model, ood_keys].mean(skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1031
+Line       :                 performance_df.loc['AVG', 'OOD-Avg'] = performance_df.loc[main_models, 'OOD-Avg'].mean(skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1063
+Line       :                 if cost_metric == 'total_cost':
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1070
+Line       :                 if cost_metric == 'total_cost':
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1087
+Line       :                 if cost_metric == 'total_cost':
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1094
+Line       :                 if cost_metric == 'total_cost':
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1103
+Line       :                 performance_df.loc[model, 'Dataset-Avg'] = performance_df.loc[model, ordered_columns].mean(skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1108
+Line       :             performance_df.loc['AVG', 'Dataset-Avg'] = performance_df.loc[main_models, 'Dataset-Avg'].mean(skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1110
+Line       :             performance_df.loc['Max Expert', 'Dataset-Avg'] = performance_df.loc['Max Expert', ordered_columns].mean(skipna=True)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1134
+Line       :             if cost_metric == 'total_cost':
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1140
+Line       :             if cost_metric == 'total_cost':
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1173
+Line       :                             cost_metric: str = 'total_cost',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1187
+Line       :             cost_metric: Cost metric to use ('total_cost' or 'avg_cost_per_record')
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1217
+Line       :             ========== Cost Table (total_cost) ==========
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1294
+Line       :                                      cost_metric: str = 'total_cost',
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1312
+Line       :             cost_metric: Cost metric to use ('total_cost' or 'avg_cost_per_record')
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\data_loader.py
+LineNumber : 266
+Line       :                         prompt_tokens=record_data.get('prompt_tokens', 0),
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\data_loader.py
+LineNumber : 267
+Line       :                         completion_tokens=record_data.get('completion_tokens', 0),
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\data_loader.py
+LineNumber : 268
+Line       :                         cost=record_data.get('cost', 0.0)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 36
+Line       :         prompt_tokens: Number of tokens in the prompt
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 37
+Line       :         completion_tokens: Number of tokens in the completion
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 60
+Line       :     prompt_tokens: int
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 61
+Line       :     completion_tokens: int
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 119
+Line       :     total_cost: float
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 121
+Line       :     total_prompt_tokens: int
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 122
+Line       :     total_completion_tokens: int
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 123
+Line       :     avg_prompt_tokens: float
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 124
+Line       :     avg_completion_tokens: float
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 146
+Line       :         return self.total_prompt_tokens + self.total_completion_tokens
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 29
+Line       :         "usages": {model_name: {completion_tokens, cost, prompt_tokens}, ...}
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 166
+Line       :                     'completion_tokens': record.completion_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 167
+Line       :                     'cost': record.cost,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 168
+Line       :                     'prompt_tokens': record.prompt_tokens
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 176
+Line       :                     'completion_tokens': 0,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 178
+Line       :                     'prompt_tokens': 0
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 30
+Line       :         "usages": {model_name: {completion_tokens, cost, prompt_tokens}, ...}
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 175
+Line       :                     'completion_tokens': record.completion_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 176
+Line       :                     'cost': record.cost,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 177
+Line       :                     'prompt_tokens': record.prompt_tokens
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 185
+Line       :                     'completion_tokens': 0,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 187
+Line       :                     'prompt_tokens': 0
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\graphrouter_adaptor.py
+LineNumber : 308
+Line       :                     cost_usd = record.cost
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 39
+Line       :                 "token_num_prompt": num_prompt_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 40
+Line       :                 "token_num_responses": num_completion_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 243
+Line       :                             "token_num_prompt": record.prompt_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 244
+Line       :                             "token_num_responses": record.completion_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 245
+Line       :                             "cost": [float(record.cost)]
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\routerembedding_adaptor.py
+LineNumber : 187
+Line       :                             "prompt_tokens": r.prompt_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\routerembedding_adaptor.py
+LineNumber : 188
+Line       :                             "completion_tokens": r.completion_tokens,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\balance_cluster_router.py
+LineNumber : 40
+Line       :         total_cost (float): Total cost incurred
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\balance_cluster_router.py
+LineNumber : 48
+Line       :     total_cost: float
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\balance_cluster_router.py
+LineNumber : 128
+Line       :                 total_cost = sum(costs)
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\balance_cluster_router.py
+LineNumber : 145
+Line       :                     total_cost=total_cost,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\balance_cluster_router.py
+LineNumber : 156
+Line       :                     total_cost=0.0,
+Context    : Microsoft.PowerShell.Commands.MatchInfoContext
+
+
+
+
+
+=== ARCHIVE CHECKSUM ===
+
+
+Algorithm : SHA256
+Hash      : B79F8CDE1A6F029C2EFA663A3A3B6F7748DEFB22341FE59F328CEBEF6648C8F1
+Path      : D:\Research3\bench-release.tar.gz
+
+
+
+
+
+=== AUDIT COMPLETE ===

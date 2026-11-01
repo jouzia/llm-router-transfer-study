@@ -1,0 +1,374 @@
+﻿RESEARCH 3 — TARGETED METRIC FINDINGS
+
+=== TOP-LEVEL LICENSE STATUS ===
+Top-level LICENSE exists: False
+Repository HEAD:
+c77cb0506949d8f959e97967d2fefca0e8ff1b05
+
+=== CODE REFERENCES TO METRIC AGGREGATION ===
+
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 75
+Line       :                 total_prompt_tokens=0,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 76
+Line       :                 total_completion_tokens=0,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 77
+Line       :                 avg_prompt_tokens=0.0,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 78
+Line       :                 avg_completion_tokens=0.0
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 85
+Line       :         total_prompt_tokens = sum(r.prompt_tokens for r in records)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 86
+Line       :         total_completion_tokens = sum(r.completion_tokens for r in records)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 97
+Line       :             total_prompt_tokens=total_prompt_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 98
+Line       :             total_completion_tokens=total_completion_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 99
+Line       :             avg_prompt_tokens=total_prompt_tokens / total_records,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 100
+Line       :             avg_completion_tokens=total_completion_tokens / total_records
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 257
+Line       :                 'prompt_tokens': int,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 258
+Line       :                 'completion_tokens': int
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 284
+Line       :                     'prompt_tokens': sampled_record.prompt_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 285
+Line       :                     'completion_tokens': sampled_record.completion_tokens
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 686
+Line       :         total_prompt_tokens = sum(r.prompt_tokens for r in self.records)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 687
+Line       :         total_completion_tokens = sum(r.completion_tokens for r in self.records)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 701
+Line       :             'total_prompt_tokens': total_prompt_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 702
+Line       :             'total_completion_tokens': total_completion_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 703
+Line       :             'avg_prompt_tokens': total_prompt_tokens / total_records,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 704
+Line       :             'avg_completion_tokens': total_completion_tokens / total_records,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 923
+Line       :             performance_df.loc['AVG'] = performance_df.loc[main_models].mean(axis=0, skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 924
+Line       :             cost_df.loc['AVG'] = cost_df.loc[main_models].mean(axis=0, skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 926
+Line       :             performance_df.loc['AVG'] = performance_df.mean(axis=0, skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 927
+Line       :             cost_df.loc['AVG'] = cost_df.mean(axis=0, skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1003
+Line       :                     performance_df.loc[model, 'In-Dist-Avg'] = performance_df.loc[model, in_dist_keys].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1008
+Line       :                 performance_df.loc['AVG', 'In-Dist-Avg'] = performance_df.loc[main_models, 'In-Dist-Avg'].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1026
+Line       :                     performance_df.loc[model, 'OOD-Avg'] = performance_df.loc[model, ood_keys].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1031
+Line       :                 performance_df.loc['AVG', 'OOD-Avg'] = performance_df.loc[main_models, 'OOD-Avg'].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1058
+Line       :                 cost_df.loc['AVG', 'In-Dist-Sum'] = cost_df.loc[main_models, 'In-Dist-Sum'].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1082
+Line       :                 cost_df.loc['AVG', 'OOD-Sum'] = cost_df.loc[main_models, 'OOD-Sum'].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1103
+Line       :                 performance_df.loc[model, 'Dataset-Avg'] = performance_df.loc[model, ordered_columns].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1108
+Line       :             performance_df.loc['AVG', 'Dataset-Avg'] = performance_df.loc[main_models, 'Dataset-Avg'].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1110
+Line       :             performance_df.loc['Max Expert', 'Dataset-Avg'] = performance_df.loc['Max Expert', ordered_columns].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\aggregators.py
+LineNumber : 1130
+Line       :             cost_df.loc['AVG', 'Dataset-Sum'] = cost_df.loc[main_models, 'Dataset-Sum'].mean(skipna=True)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\data_loader.py
+LineNumber : 266
+Line       :                         prompt_tokens=record_data.get('prompt_tokens', 0),
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\data_loader.py
+LineNumber : 267
+Line       :                         completion_tokens=record_data.get('completion_tokens', 0),
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 36
+Line       :         prompt_tokens: Number of tokens in the prompt
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 37
+Line       :         completion_tokens: Number of tokens in the completion
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 60
+Line       :     prompt_tokens: int
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 61
+Line       :     completion_tokens: int
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 121
+Line       :     total_prompt_tokens: int
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 122
+Line       :     total_completion_tokens: int
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 123
+Line       :     avg_prompt_tokens: float
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 124
+Line       :     avg_completion_tokens: float
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\schema.py
+LineNumber : 146
+Line       :         return self.total_prompt_tokens + self.total_completion_tokens
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 29
+Line       :         "usages": {model_name: {completion_tokens, cost, prompt_tokens}, ...}
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 166
+Line       :                     'completion_tokens': record.completion_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 168
+Line       :                     'prompt_tokens': record.prompt_tokens
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 176
+Line       :                     'completion_tokens': 0,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\avengerspro_adaptor.py
+LineNumber : 178
+Line       :                     'prompt_tokens': 0
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 30
+Line       :         "usages": {model_name: {completion_tokens, cost, prompt_tokens}, ...}
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 175
+Line       :                     'completion_tokens': record.completion_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 177
+Line       :                     'prompt_tokens': record.prompt_tokens
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 185
+Line       :                     'completion_tokens': 0,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\frugalgpt_adaptor.py
+LineNumber : 187
+Line       :                     'prompt_tokens': 0
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 39
+Line       :                 "token_num_prompt": num_prompt_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 40
+Line       :                 "token_num_responses": num_completion_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 243
+Line       :                             "token_num_prompt": record.prompt_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\hybridllm_adaptor.py
+LineNumber : 244
+Line       :                             "token_num_responses": record.completion_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\routerembedding_adaptor.py
+LineNumber : 187
+Line       :                             "prompt_tokens": r.prompt_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\adaptors\routerembedding_adaptor.py
+LineNumber : 188
+Line       :                             "completion_tokens": r.completion_tokens,
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\balance_cluster_router.py
+LineNumber : 125
+Line       :                 accuracy = np.mean(successes)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\balance_cluster_router.py
+LineNumber : 126
+Line       :                 avg_cost = np.mean(costs)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\experiment_exporter.py
+LineNumber : 73
+Line       :         dataset_performance = main_results.get('dataset_performance', {})
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\simple_cluster_router.py
+LineNumber : 389
+Line       :             model_performance = defaultdict(list)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\simple_cluster_router.py
+LineNumber : 400
+Line       :                     model_scores[model_name] = np.mean(scores)
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\cluster_ablation.py
+LineNumber : 539
+Line       :                 'mean_gradient': float(np.mean(acc_gradients)),
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\cluster_ablation.py
+LineNumber : 543
+Line       :                 'direction': 'increasing' if np.mean(acc_gradients) > 0 else 'decreasing'
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\cluster_ablation.py
+LineNumber : 550
+Line       :                     'mean_gradient': float(np.mean(valid_cost_gradients)),
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\cluster_ablation.py
+LineNumber : 554
+Line       :                     'direction': 'increasing' if np.mean(valid_cost_gradients) > 0 else 'decreasing'
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\cluster_ablation.py
+LineNumber : 559
+Line       :                 'mean_gradient': float(np.mean(eff_gradients)),
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\cluster_ablation.py
+LineNumber : 563
+Line       :                 'direction': 'increasing' if np.mean(eff_gradients) > 0 else 'decreasing'
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\visualization.py
+LineNumber : 251
+Line       :             avg_cost = np.mean(total_costs) if total_costs else 0.0
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\visualization.py
+LineNumber : 347
+Line       :             avg_cost = np.mean(costs) if costs else 0.0
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\weight_ablation.py
+LineNumber : 512
+Line       :                 'mean_gradient': float(np.mean(acc_gradients)),
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\weight_ablation.py
+LineNumber : 520
+Line       :                 'mean_gradient': float(np.mean(cost_gradients)),
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\AvengersPro\ablation\weight_ablation.py
+LineNumber : 528
+Line       :                 'mean_gradient': float(np.mean(eff_gradients)),
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\train_router_gte.py
+LineNumber : 757
+Line       :     agg_scores = np.mean(scores_3d, axis=-1)  # [B, C]
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\train_router_gte.py
+LineNumber : 769
+Line       :     sel_acc = float(np.mean(ranks[np.arange(B), selected_idx] == 0))
+
+Path       : D:\Research3\repos\LLMRouterBench\baselines\Best-route-llm\train_router_gte.py
+LineNumber : 774
+Line       :             "avg_score": float(np.mean(sel_scores)),
+
+
+
+
+
+=== EXISTING AUDIT FLAGS ===
+
+dataset          model                           split records declared_count count_diff duplicate_indices scored_records score_min score_max
+-------          -----                           ----- ------- -------------- ---------- ----------------- -------------- --------- ---------
+arenahard_coding DeepHermes-3-Llama-3-8B-Preview test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding DeepSeek-R1-Distill-Qwen-7B     test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding Qwen2.5-Coder-7B-Instruct       test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding qwen3-235b-a22b-2507            test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding deepseek-v3.1-terminus          test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding Llama-3.1-8B-Instruct           test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding MiniCPM4.1-8B                   test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding MiMo-7B-RL-0530                 test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding gemini-2.5-flash                test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding claude-sonnet-4                 test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding OpenThinker3-7B                 test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding internlm3-8b-instruct           test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding Fin-R1                          test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding cogito-v1-preview-llama-8B      test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding glm-4-9b-chat                   test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding GLM-Z1-9B-0414                  test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding gemini-2.5-pro                  test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding Llama-3.1-Nemotron-Nano-8B-v1   test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding Intern-S1-mini                  test  253     253            0          0                 253            0.0       1.0      
+arenahard_coding gemma-2-9b-it                   test  253     253            0          0                 253            0.0       1.0      
+
+
+
+
+=== ARCHIVE SHA256 ===
+
+
+Algorithm : SHA256
+Hash      : B79F8CDE1A6F029C2EFA663A3A3B6F7748DEFB22341FE59F328CEBEF6648C8F1
+Path      : D:\Research3\bench-release.tar.gz
+
+
+
+
+
+=== END ===
