@@ -199,7 +199,9 @@ def main():
     a.output_dir.mkdir(parents=True,exist_ok=True)
     def write(path,data):
         with path.open("w",encoding="utf-8",newline="\n") as f:
-            for r in data: f.write(json.dumps(r,ensure_ascii=False,separators=(",",":"))+"\n")
+            for r in data:
+                payload={k:v for k,v in r.items() if k!="_split_prompt"}
+                f.write(json.dumps(payload,ensure_ascii=False,separators=(",",":"))+"\\n")
     train_p=a.output_dir/"train.jsonl"; test_p=a.output_dir/"test.jsonl"
     write(train_p,train); write(test_p,test)
     report=a.output_dir/"BUILD_REPORT.txt"
